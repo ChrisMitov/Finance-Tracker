@@ -14,13 +14,13 @@ public class FinanceOperation implements IFinanceOperation {
 	private Category category;
 
 	public FinanceOperation(int id, int sum, LocalDateTime date, String description, String photoAddress,
-			Category category) {
-		this.id = id;
-		this.sum = sum;
-		this.date = date;
-		this.description = description;
-		this.photoAddress = photoAddress;
-		this.category = category;
+			Category category) throws FinanceTrackerException {
+		setId(id);
+		setSum(sum);
+		setDate(date);
+		setDescription(description);
+		setPhotoAddress(photoAddress);
+		setCategory(category);
 	}
 
 	@Override

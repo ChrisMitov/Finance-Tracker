@@ -16,10 +16,10 @@ public class Category {
 		tags = new HashSet<Tag>();
 	}
 
-	public Category(int id, String name) {
+	public Category(int id, String name) throws FinanceTrackerException {
 		super();
-		this.id = id;
-		this.name = name;
+		setId(id);
+		setName(name);
 	}
 
 	public void addTag(Tag tag) throws FinanceTrackerException {

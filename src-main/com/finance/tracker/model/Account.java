@@ -11,6 +11,12 @@ public class Account implements IAccount {
 	private String title;
 	private int sum;
 	private List<IFinanceOperation> operations;
+	
+	public Account(int id, String title, int sum) throws FinanceTrackerException {
+		setId(id);
+		setTitle(title);
+		setSum(sum);
+	}
 
 	@Override
 	public void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
