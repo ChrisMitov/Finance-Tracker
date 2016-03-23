@@ -1,12 +1,25 @@
 package com.finance.tracker.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
+@Entity
 public class Tag {
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
-	
+
+	public Tag() {
+	}
+
 	public Tag(int id, String name) throws FinanceTrackerException {
 		setId(id);
 		setName(name);

@@ -10,18 +10,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
 @Entity
-@Table
 public class Category implements ICategory {
 	private static final String TAG_CONTAINS_ERROR = "This tag is not in out collection of stacks";
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL)
@@ -31,9 +29,13 @@ public class Category implements ICategory {
 		tags = new HashSet<Tag>();
 	}
 
+	public Category(String name) throws FinanceTrackerException {
+		this();
+		setName(name);
+	}
+
 	public Category(int id, String name) throws FinanceTrackerException {
-		super();
-		setId(id);
+		this();
 		setName(name);
 	}
 

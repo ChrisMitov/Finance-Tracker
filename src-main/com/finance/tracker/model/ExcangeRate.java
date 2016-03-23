@@ -14,19 +14,19 @@ public class ExcangeRate {
 			if (cuurentCurrency.equals(Currency.BGN) && newCurrency.equals(Currency.EUR)) {
 				return converetFromBGNToEUR(amount);
 			}
-			if (cuurentCurrency.equals(Currency.BGN) && newCurrency.equals(Currency.UDS)) {
+			if (cuurentCurrency.equals(Currency.BGN) && newCurrency.equals(Currency.USD)) {
 				return converetFromBGNToUDS(amount);
 			}
 			if (cuurentCurrency.equals(Currency.EUR) && newCurrency.equals(Currency.BGN)) {
 				return converetFromEURToBGN(amount);
 			}
-			if (cuurentCurrency.equals(Currency.EUR) && newCurrency.equals(Currency.UDS)) {
+			if (cuurentCurrency.equals(Currency.EUR) && newCurrency.equals(Currency.USD)) {
 				return converetFromEURToUDS(amount);
 			}
-			if (cuurentCurrency.equals(Currency.UDS) && newCurrency.equals(Currency.BGN)) {
+			if (cuurentCurrency.equals(Currency.USD) && newCurrency.equals(Currency.BGN)) {
 				return converetFromUDSTOBGN(amount);
 			}
-			if (cuurentCurrency.equals(Currency.UDS) && newCurrency.equals(Currency.EUR)) {
+			if (cuurentCurrency.equals(Currency.USD) && newCurrency.equals(Currency.EUR)) {
 				return converetFromUDSToEUR(amount);
 			}
 		}
