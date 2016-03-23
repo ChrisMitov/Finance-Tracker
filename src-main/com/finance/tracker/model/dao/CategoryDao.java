@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Category;
 import com.finance.tracker.model.ICategory;
 import com.finance.tracker.validation.Validation;
 
@@ -18,16 +19,26 @@ public class CategoryDao {
 	@PersistenceContext
 	private EntityManager manager = emfactory.createEntityManager();
 
-	public void addCategory(ICategory category) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(category);
-		manager.getTransaction().begin();
-		manager.persist(category);
-		manager.getTransaction().commit();
+	public void addCategory(ICategory category) {
+		try {
+			new Validation().validateNotNullObject(category);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.persist(category);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
 	}
 
 	public ICategory foundCategoryByName(String name) {
-		TypedQuery<ICategory> query = manager.createNamedQuery("foundCategoryByName", ICategory.class)
-				.setParameter("name", name);
+		String txtQuery = "SELECT c FROM Category c WHERE c.name = :name";
+		TypedQuery<ICategory> query = manager.createQuery(txtQuery, ICategory.class).setParameter("name", name);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException e) {
@@ -35,8 +46,20 @@ public class CategoryDao {
 		}
 	}
 
-	public ICategory foundById(int id) {
-		return manager.find(ICategory.class, id);
+//	public void addTagToCategory(Tag tag, ICategory category) {
+//		try {
+//			new Validation().validateNotNullObject(tag);
+//			manager.getTransaction().begin();
+//			category.addTag(tag);
+//			manager.persist(category);
+//			manager.getTransaction().commit();
+//		} catch (FinanceTrackerException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+	public Category foundById(int id) {
+		return manager.find(Category.class, id);
 	}
 
 	public Collection<ICategory> getAllCategories() {

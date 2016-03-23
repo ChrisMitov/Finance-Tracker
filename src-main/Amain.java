@@ -7,7 +7,7 @@ public class Amain {
 	public static void main(String[] args) {
 		CategoryDao dao = new CategoryDao();
 		try {
-			dao.addCategory(new Category("Clothes"));
+			dao.addCategory(new Category("Cars"));
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
@@ -16,13 +17,28 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
+	@ManyToOne
+	private Category category;
 
 	public Tag() {
 	}
 
-	public Tag(int id, String name) throws FinanceTrackerException {
-		setId(id);
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Tag(String name, Category category) throws FinanceTrackerException {
 		setName(name);
+		setCategory(category);
+	}
+
+	public Tag(int id, String name, Category category) throws FinanceTrackerException {
+		this(name, category);
+		setId(id);
 	}
 
 	public int getId() {
