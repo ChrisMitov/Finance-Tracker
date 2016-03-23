@@ -9,24 +9,24 @@ public class ExcangeRate {
 	private static double bgnToEur = 0.51;
 
 
-	public double convertMoney(double amount, Currancy cuurentCurrancy, Currancy newCurrancy) {
+	public double convertMoney(double amount, Currency cuurentCurrency, Currency newCurrency) {
 		if (amount > 0) {
-			if (cuurentCurrancy.equals(Currancy.BGN) && newCurrancy.equals(Currancy.EUR)) {
+			if (cuurentCurrency.equals(Currency.BGN) && newCurrency.equals(Currency.EUR)) {
 				return converetFromBGNToEUR(amount);
 			}
-			if (cuurentCurrancy.equals(Currancy.BGN) && newCurrancy.equals(Currancy.UDS)) {
+			if (cuurentCurrency.equals(Currency.BGN) && newCurrency.equals(Currency.UDS)) {
 				return converetFromBGNToUDS(amount);
 			}
-			if (cuurentCurrancy.equals(Currancy.EUR) && newCurrancy.equals(Currancy.BGN)) {
+			if (cuurentCurrency.equals(Currency.EUR) && newCurrency.equals(Currency.BGN)) {
 				return converetFromEURToBGN(amount);
 			}
-			if (cuurentCurrancy.equals(Currancy.EUR) && newCurrancy.equals(Currancy.UDS)) {
+			if (cuurentCurrency.equals(Currency.EUR) && newCurrency.equals(Currency.UDS)) {
 				return converetFromEURToUDS(amount);
 			}
-			if (cuurentCurrancy.equals(Currancy.UDS) && newCurrancy.equals(Currancy.BGN)) {
+			if (cuurentCurrency.equals(Currency.UDS) && newCurrency.equals(Currency.BGN)) {
 				return converetFromUDSTOBGN(amount);
 			}
-			if (cuurentCurrancy.equals(Currancy.UDS) && newCurrancy.equals(Currancy.EUR)) {
+			if (cuurentCurrency.equals(Currency.UDS) && newCurrency.equals(Currency.EUR)) {
 				return converetFromUDSToEUR(amount);
 			}
 		}

@@ -25,7 +25,11 @@ public interface IBudget {
 	RepeatType getRepeatType();
 
 	void setRepeatType(RepeatType repeatType);
-	
-	void convertMoneyToNewCurrancy(Currancy newCurrancy);
+
+	void convertMoneyToNewCurrency(Currency newCurrency);
+
+	int getBudgetId();
+
+	void setBudgetId(int budgetId);
 
 }

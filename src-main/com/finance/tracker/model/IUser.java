@@ -6,6 +6,12 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IUser {
 
+	int getUserId();
+
+	void setUserId(int userId);
+
+	void convertCurrency(Currency newCurrency);
+
 	void addAcount(IAccount newAccount) throws FinanceTrackerException;
 
 	void removeAccount(IAccount accountToDelete) throws FinanceTrackerException;
@@ -20,9 +26,15 @@ public interface IUser {
 
 	String getFirstName();
 
+	void setFirstName(String firstName);
+
 	String getLastName();
 
+	void setLastName(String lastName);
+
 	String getEmail();
+
+	void setEmail(String email);
 
 	String getPassword();
 
@@ -31,7 +43,5 @@ public interface IUser {
 	void setCurrency(Currency currency);
 
 	LocalDate getJointedDate();
-	
-	void convertCurrency(Currency newCurrency);
 
 }

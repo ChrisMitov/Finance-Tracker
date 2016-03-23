@@ -30,19 +30,24 @@ public class User implements IUser {
 		allBudgets = new ArrayList<IBudget>();
 	}
 
+
+	@Override
 	public int getUserId() {
 		return userId;
 	}
 
+	@Override
 	public void setUserId(int userId) {
 		if (userId > 0)
 			this.userId = userId;
 	}
 
+
 	@Override
 	public void convertCurrency(Currency newCurrency) {
 		this.currency = newCurrency;
 	}
+
 
 	@Override
 	public void addAcount(IAccount newAccount) throws FinanceTrackerException {
@@ -55,6 +60,7 @@ public class User implements IUser {
 		}
 	}
 
+
 	@Override
 	public void removeAccount(IAccount accountToDelete) throws FinanceTrackerException {
 		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
@@ -66,6 +72,7 @@ public class User implements IUser {
 		}
 	}
 
+	
 	@Override
 	public IAccount getAccount(String accountTitle) throws FinanceTrackerException {
 		if (accountTitle != null && accountTitle.length() > 0) {
@@ -83,6 +90,7 @@ public class User implements IUser {
 		return null;
 	}
 
+
 	@Override
 	public void addBudget(IBudget newBudget) throws FinanceTrackerException {
 		if (newBudget != null) {
@@ -94,6 +102,7 @@ public class User implements IUser {
 		}
 	}
 
+	
 	@Override
 	public IBudget getBudget(String budgetTitle) throws FinanceTrackerException {
 		if (budgetTitle != null && budgetTitle.length() > 0) {
@@ -111,6 +120,7 @@ public class User implements IUser {
 		return null;
 	}
 
+	
 	@Override
 	public void removeBudget(IBudget budgetToDelete) throws FinanceTrackerException {
 		if (budgetToDelete != null && this.allBudgets.contains(budgetToDelete)) {
@@ -127,31 +137,39 @@ public class User implements IUser {
 		return firstName;
 	}
 
+	
+	@Override
 	public void setFirstName(String firstName) {
 		if (firstName != null && firstName.length() > 0)
 			this.firstName = firstName;
 	}
 
+	
 	@Override
 	public String getLastName() {
 		return lastName;
 	}
 
+	@Override
 	public void setLastName(String lastName) {
 		if (lastName != null && lastName.length() > 0)
 			this.lastName = lastName;
 	}
 
+	
 	@Override
 	public String getEmail() {
 		return email;
 	}
 
+	
+	@Override
 	public void setEmail(String email) {
 		if (email != null && email.length() > 0)
 			this.email = email;
 	}
 
+	
 	@Override
 	public String getPassword() {
 		return password;
@@ -169,16 +187,19 @@ public class User implements IUser {
 		}
 	}
 
+	
 	@Override
 	public Currency getCurrency() {
 		return currency;
 	}
 
+	
 	@Override
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
 
+	
 	@Override
 	public LocalDate getJointedDate() {
 		return jointedDate;
