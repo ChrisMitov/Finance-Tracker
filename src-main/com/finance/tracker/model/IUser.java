@@ -26,12 +26,12 @@ public interface IUser {
 
 	String getPassword();
 
-	Currancy getCurrancy();
+	Currency getCurrency();
 
-	void setCurrancy(Currancy currancy);
+	void setCurrency(Currency currency);
 
 	LocalDate getJointedDate();
 	
-	void convertCurruncy(Currancy newCurrancy);
+	void convertCurrency(Currency newCurrency);
 
 }

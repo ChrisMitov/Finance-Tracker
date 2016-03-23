@@ -12,28 +12,37 @@ public class User implements IUser {
 	private String lastName;
 	private String email;
 	private String password;
-	private Currancy currancy;
+	private Currency currency;
 	private LocalDate jointedDate;
 	private List<IAccount> allAccounts;
 	private List<IBudget> allBudgets;
+	private int userId;
 
-	public User(String firstName, String lastName, String email, String password, Currancy currancy) {
+	public User(int id, String firstName, String lastName, String email, String password, Currency currency) {
+		this.setUserId(id);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
 		this.setPassword(password);
-		this.setCurrancy(currancy);
+		this.setCurrency(currency);
 		this.jointedDate = LocalDate.now();
 		allAccounts = new ArrayList<IAccount>();
 		allBudgets = new ArrayList<IBudget>();
 	}
-	
-	@Override
-	public void convertCurruncy(Currancy newCurrancy) {
-		this.currancy=newCurrancy;		
+
+	public int getUserId() {
+		return userId;
 	}
-	
-	
+
+	public void setUserId(int userId) {
+		if (userId > 0)
+			this.userId = userId;
+	}
+
+	@Override
+	public void convertCurrency(Currency newCurrency) {
+		this.currency = newCurrency;
+	}
 
 	@Override
 	public void addAcount(IAccount newAccount) throws FinanceTrackerException {
@@ -118,7 +127,7 @@ public class User implements IUser {
 		return firstName;
 	}
 
-	private void setFirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		if (firstName != null && firstName.length() > 0)
 			this.firstName = firstName;
 	}
@@ -128,7 +137,7 @@ public class User implements IUser {
 		return lastName;
 	}
 
-	private void setLastName(String lastName) {
+	public void setLastName(String lastName) {
 		if (lastName != null && lastName.length() > 0)
 			this.lastName = lastName;
 	}
@@ -138,7 +147,7 @@ public class User implements IUser {
 		return email;
 	}
 
-	private void setEmail(String email) {
+	public void setEmail(String email) {
 		if (email != null && email.length() > 0)
 			this.email = email;
 	}
@@ -161,13 +170,13 @@ public class User implements IUser {
 	}
 
 	@Override
-	public Currancy getCurrancy() {
-		return currancy;
+	public Currency getCurrency() {
+		return currency;
 	}
 
 	@Override
-	public void setCurrancy(Currancy currancy) {
-		this.currancy = currancy;
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 
 	@Override
@@ -198,7 +207,5 @@ public class User implements IUser {
 		}
 		return false;
 	}
-
-
 
 }
