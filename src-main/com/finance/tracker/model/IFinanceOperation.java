@@ -26,8 +26,12 @@ public interface IFinanceOperation {
 
 	void setPhotoAddress(String photoAddress) throws FinanceTrackerException;
 
-	Category getCategory();
+	ICategory getCategory();
 
-	void setCategory(Category category) throws FinanceTrackerException;
+	void setCategory(ICategory category) throws FinanceTrackerException;
+
+	String getType();
+
+	void setType(String type) throws FinanceTrackerException;
 
 }

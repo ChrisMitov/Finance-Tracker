@@ -11,16 +11,18 @@ public class FinanceOperation implements IFinanceOperation {
 	private LocalDateTime date;
 	private String description;
 	private String photoAddress;
-	private Category category;
+	private ICategory category;
+	private String type;
 
 	public FinanceOperation(int id, int sum, LocalDateTime date, String description, String photoAddress,
-			Category category) throws FinanceTrackerException {
+			ICategory category,String type ) throws FinanceTrackerException {
 		setId(id);
 		setSum(sum);
 		setDate(date);
 		setDescription(description);
 		setPhotoAddress(photoAddress);
 		setCategory(category);
+		setType(type);
 	}
 
 	@Override
@@ -79,14 +81,23 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	@Override
-	public Category getCategory() {
+	public ICategory getCategory() {
 		return category;
 	}
 
 	@Override
-	public void setCategory(Category category) throws FinanceTrackerException {
+	public void setCategory(ICategory category) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(category);
 		this.category = category;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) throws FinanceTrackerException {
+		new Validation().validateString(type);
+		this.type = type;
 	}
 
 }
