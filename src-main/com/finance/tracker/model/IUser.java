@@ -44,4 +44,11 @@ public interface IUser {
 
 	LocalDate getJointedDate();
 
+	void setIsAdmin(boolean is);
+
+	boolean isAdmin();
+	
+	void setStartDate(LocalDate date);
+	
+	
 }
