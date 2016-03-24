@@ -16,8 +16,8 @@ public class CategoryTest {
 
 	@Test
 	public void addCategory() throws FinanceTrackerException {
-		categoryDao.addCategory(new Category("TV"));
-		assertNotNull(categoryDao.foundCategoryByName("TV"));
+		categoryDao.addCategory(new Category("Cars"));
+		assertNotNull(categoryDao.foundCategoryByName("Cars"));
 	}
 
 	@Test

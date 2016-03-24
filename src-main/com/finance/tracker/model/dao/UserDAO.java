@@ -87,12 +87,12 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public void updateUser(IUser user) {
 		if (user != null) {
-			IUser newUser = new User();
-			newUser.setFirstName(user.getFirstName());
-			newUser.setLastName(user.getLastName());
-			newUser.setCurrency(user.getCurrency().getId());
-			newUser.setIsAdmin(user.isAdmin());
-			newUser.setStartDate(user.getJointedDate());
+//			IUser newUser = new User();
+//			newUser.setFirstName(user.getFirstName());
+//			newUser.setLastName(user.getLastName());
+//			newUser.setCurrency(user.getCurrency().getId());
+//			newUser.setIsAdmin(user.isAdmin());
+//			newUser.setStartDate(user.getJointedDate());
 			try {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();

@@ -1,6 +1,6 @@
 package com.finance.tracker.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 
@@ -14,9 +14,9 @@ public interface IFinanceOperation {
 
 	void setSum(int sum) throws FinanceTrackerException;
 
-	LocalDateTime getDate();
+	LocalDate getDate();
 
-	void setDate(LocalDateTime date) throws FinanceTrackerException;
+	void setDate(LocalDate localDate) throws FinanceTrackerException;
 
 	String getDescription();
 
@@ -26,12 +26,18 @@ public interface IFinanceOperation {
 
 	void setPhotoAddress(String photoAddress) throws FinanceTrackerException;
 
-	ICategory getCategory();
+	Category getCategory();
 
-	void setCategory(ICategory category) throws FinanceTrackerException;
+	void setCategory(Category category) throws FinanceTrackerException;
 
 	String getType();
 
 	void setType(String type) throws FinanceTrackerException;
+
+	RepeatType getRepeatType();
+
+	void setRepeatType(RepeatType repeatType);
+
+	void addTag(Tag tag) throws FinanceTrackerException;
 
 }

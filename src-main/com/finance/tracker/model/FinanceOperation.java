@@ -1,21 +1,52 @@
 package com.finance.tracker.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
-
+@Entity
+@Table(name = "finance_operation")
 public class FinanceOperation implements IFinanceOperation {
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int sum;
-	private LocalDateTime date;
+	@Convert
+	private LocalDate date;
 	private String description;
+	@Column(name = "photo")
 	private String photoAddress;
-	private ICategory category;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "category_id")
+	private Category category;
 	private String type;
+	@Enumerated(EnumType.STRING)
+	@JoinColumn(name  = "repeat_type_id")
+	private RepeatType repeatType;
+	@ManyToMany
+	private Set<Tag> tags;
+	public FinanceOperation() {
 
-	public FinanceOperation(int id, int sum, LocalDateTime date, String description, String photoAddress,
-			ICategory category,String type ) throws FinanceTrackerException {
+	}
+
+	public FinanceOperation(int id, int sum, LocalDate date, String description, String photoAddress,
+			Category category, String type, RepeatType repeatType) throws FinanceTrackerException {
 		setId(id);
 		setSum(sum);
 		setDate(date);
@@ -23,8 +54,16 @@ public class FinanceOperation implements IFinanceOperation {
 		setPhotoAddress(photoAddress);
 		setCategory(category);
 		setType(type);
+		setRepeatType(repeatType);
 	}
 
+	public void addTag(Tag tag) throws FinanceTrackerException{
+		new Validation().validateNotNullObject(tag);
+		synchronized (tag) {
+			tags.add(tag);
+		}
+	}
+	
 	@Override
 	public int getId() {
 		return id;
@@ -48,12 +87,12 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	@Override
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
 	@Override
-	public void setDate(LocalDateTime date) throws FinanceTrackerException {
+	public void setDate(LocalDate date) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(date);
 		this.date = date;
 	}
@@ -81,23 +120,35 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	@Override
-	public ICategory getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
 	@Override
-	public void setCategory(ICategory category) throws FinanceTrackerException {
+	public void setCategory(Category category) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(category);
 		this.category = category;
 	}
 
+	@Override
 	public String getType() {
 		return type;
 	}
 
+	@Override
 	public void setType(String type) throws FinanceTrackerException {
 		new Validation().validateString(type);
 		this.type = type;
+	}
+	@Override
+	@Enumerated(EnumType.STRING)
+	public RepeatType getRepeatType() {
+		return repeatType;
+	}
+	@Override
+	@Enumerated(EnumType.STRING)
+	public void setRepeatType(RepeatType repeatType) {
+		this.repeatType = repeatType;
 	}
 
 }
