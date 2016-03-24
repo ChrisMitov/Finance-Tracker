@@ -1,6 +1,7 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,11 +15,12 @@ import com.finance.tracker.model.Category;
 import com.finance.tracker.model.ICategory;
 import com.finance.tracker.validation.Validation;
 
-public class CategoryDao {
+public class CategoryDao implements ICategoryDao {
 	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
 	@PersistenceContext
 	private EntityManager manager = emfactory.createEntityManager();
 
+	@Override
 	public void addCategory(ICategory category) {
 		try {
 			new Validation().validateNotNullObject(category);
@@ -36,6 +38,25 @@ public class CategoryDao {
 		}
 	}
 
+	@Override
+	public void removeCategory(int id) {
+		try {
+			new Validation().validateNegativeNumber(id);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(foundById(id));
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
+
+	@Override
 	public ICategory foundCategoryByName(String name) {
 		String txtQuery = "SELECT c FROM Category c WHERE c.name = :name";
 		TypedQuery<ICategory> query = manager.createQuery(txtQuery, ICategory.class).setParameter("name", name);
@@ -46,24 +67,15 @@ public class CategoryDao {
 		}
 	}
 
-//	public void addTagToCategory(Tag tag, ICategory category) {
-//		try {
-//			new Validation().validateNotNullObject(tag);
-//			manager.getTransaction().begin();
-//			category.addTag(tag);
-//			manager.persist(category);
-//			manager.getTransaction().commit();
-//		} catch (FinanceTrackerException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
+	@Override
 	public Category foundById(int id) {
 		return manager.find(Category.class, id);
 	}
 
-	public Collection<ICategory> getAllCategories() {
-		return manager.createNamedQuery("getAllCategories", ICategory.class).getResultList();
+	@Override
+	public Collection<Category> getAllCategories() {
+		List<Category> listOfAllCategories = manager.createQuery("SELECT c FROM Category c").getResultList();
+		return listOfAllCategories;
 	}
 
 }

@@ -11,70 +11,55 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.finance.tracker.exception.FinanceTrackerException;
-import com.finance.tracker.model.Category;
-import com.finance.tracker.model.Tag;
+import com.finance.tracker.model.Budget;
+import com.finance.tracker.model.IBudget;
 import com.finance.tracker.validation.Validation;
 
-public class TagDao implements ITagDao {
+public class BudgetDao implements IBudgetDao {
 	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
 	@PersistenceContext
 	private EntityManager manager = emfactory.createEntityManager();
-
+	
 	@Override
-	public void addTag(Tag tag) {
+	public void addBudget(IBudget budget){
 		try {
-			new Validation().validateNotNullObject(tag);
-			manager.getTransaction().begin();
-			manager.persist(tag);
-			manager.getTransaction().commit();
+			new Validation().validateNotNullObject(budget);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.persist(budget);
+			manager.getTransaction().commit();
 		} finally {
 			if (manager.getTransaction().isActive()) {
 				manager.getTransaction().rollback();
 			}
 		}
 	}
-
+	
 	@Override
-	public void updateTag(int id, Tag tag) {
+	public void removeBudget(int id) {
 		try {
 			new Validation().validateNegativeNumber(id);
-			new Validation().validateNotNullObject(tag);
-			manager.getTransaction().begin();
-			Tag t = foundById(id);
-			t.setName(tag.getName());
-			t.setCategory(tag.getCategory());
-			manager.getTransaction().commit();
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} finally {
-			if (manager.getTransaction().isActive()) {
-				manager.getTransaction().rollback();
-			}
 		}
-	}
-
-	@Override
-	public void removeTag(int id) {
 		try {
-			new Validation().validateNegativeNumber(id);
 			manager.getTransaction().begin();
 			manager.remove(foundById(id));
 			manager.getTransaction().commit();
-		} catch (FinanceTrackerException e) {
-			e.printStackTrace();
 		} finally {
 			if (manager.getTransaction().isActive()) {
 				manager.getTransaction().rollback();
 			}
 		}
 	}
-
+	
 	@Override
-	public Tag foundTagByName(String name) {
-		String txtQuery = "SELECT t FROM Tag t WHERE t.name = :name";
-		TypedQuery<Tag> query = manager.createQuery(txtQuery, Tag.class).setParameter("name", name);
+	public IBudget foundBudgetByName(String name) {
+		String txtQuery = "SELECT b FROM Budget b WHERE b.name = :name";
+		TypedQuery<IBudget> query = manager.createQuery(txtQuery, IBudget.class).setParameter("name", name);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException e) {
@@ -82,15 +67,15 @@ public class TagDao implements ITagDao {
 		}
 	}
 
+	
 	@Override
-	public Tag foundById(int id) {
-		return manager.find(Tag.class, id);
+	public Budget foundById(int id) {
+		return manager.find(Budget.class, id);
 	}
-
+	
 	@Override
-	public Collection<Tag> getAllTagsByCategory(Category category) {
-		List list = manager.createQuery("Select t FROM Tag t WHERE t.category = :id ").setParameter("id", category)
-				.getResultList();
-		return list;
+	public Collection<Budget> getAllBudgets() {
+		List<Budget> listOfAllBudgets = manager.createQuery("SELECT b FROM Budget b").getResultList();
+		return listOfAllBudgets;
 	}
 }
