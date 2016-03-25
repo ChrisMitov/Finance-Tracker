@@ -1,7 +1,6 @@
 package com.finance.tracker.model.dao;
 
-import java.util.List;
-
+import java.util.Collection;
 import com.finance.tracker.model.IUser;
 
 public interface IUserDAO {
@@ -10,9 +9,9 @@ public interface IUserDAO {
 
 	void deleteUser(int index);
 
-	IUser getUsre(int id);
+	IUser getUser(int id);
 
-	List<IUser> getAllUsers();
+	Collection<IUser> getAllUsers();
 
 	void updateUser(IUser user);
 
