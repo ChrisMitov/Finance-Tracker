@@ -54,22 +54,13 @@ public class FinanceOperationDao {
 		}
 	}
 	
-	public IFinanceOperation foundFinanceOperationByName(String name) {
-		String txtQuery = "SELECT f FROM finance_operation f WHERE f.name = :name";
-		TypedQuery<IFinanceOperation> query = manager.createQuery(txtQuery, IFinanceOperation.class).setParameter("name", name);
-		try {
-			return query.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
 
 	public FinanceOperation foundById(int id) {
 		return manager.find(FinanceOperation.class, id);
 	}
 	
 	public Collection<FinanceOperation> getAllFinanceOperation() {
-		List<FinanceOperation> listOfAllFinanceOperations= manager.createQuery("SELECT f FROM finance_operation f").getResultList();
+		List<FinanceOperation> listOfAllFinanceOperations= manager.createQuery("SELECT f FROM FinanceOperation f").getResultList();
 		return listOfAllFinanceOperations;
 	}
 }

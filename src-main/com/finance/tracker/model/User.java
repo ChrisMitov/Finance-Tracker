@@ -5,7 +5,7 @@ import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
 
-//@Entity
+@Entity
 @Table(name = "user")
 public class User implements IUser {
 
@@ -20,8 +20,9 @@ public class User implements IUser {
 	private String email;
 	@Column(name = "password")
 	private String password;
+	@JoinTable(name = "currency", joinColumns = @JoinColumn(name = "name"))
 	@Enumerated(EnumType.STRING)
-	@JoinColumn(name = "currency_name")
+	@Column(name = "currency_name")
 	private Currency currency;
 	@Convert
 	@Column(name = "start_day")

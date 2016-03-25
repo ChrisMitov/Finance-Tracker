@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
-
+@Entity
 public class Account implements IAccount {
 	private static final String OPERATION_CONTAINS_ERROR = "This operation is not valid";
 	@Id

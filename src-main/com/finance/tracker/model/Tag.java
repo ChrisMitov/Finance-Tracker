@@ -1,5 +1,7 @@
 package com.finance.tracker.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.finance.tracker.exception.FinanceTrackerException;
@@ -23,7 +26,8 @@ public class Tag {
 	@ManyToOne
 	@JoinColumn(name = "category_id_category")
 	private Category category;
-
+	@ManyToMany(mappedBy = "tag")
+	private Set<FinanceOperation> operations;
 	public Tag() {
 	}
 
