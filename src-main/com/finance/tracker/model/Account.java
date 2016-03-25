@@ -3,10 +3,13 @@ package com.finance.tracker.model;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
@@ -18,23 +21,49 @@ public class Account implements IAccount {
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(name = "title")
 	private String title;
+	@Column(name = "balance")
 	private int sum;
+	@OneToMany
+	@Convert
+	@JoinColumn(name = "user_id")
+	private IUser owner;
 	private List<IFinanceOperation> operations;
 
 	public Account() {
 
 	}
-
-	public Account(String title, int sum) throws FinanceTrackerException {
-		this();
-		setTitle(title);
-		setSum(sum);
+	
+	public Account(String title, int sum) throws FinanceTrackerException{
+		this.setTitle(title);
+		this.setSum(sum);
 	}
 
-	public Account(int id, String title, int sum) throws FinanceTrackerException {
-		this(title, sum);
+	public Account(String title, int sum, IUser owner) throws FinanceTrackerException {
+		this(title,sum);
+		this.setOwner(owner);
+	}
+
+	public Account(int id, String title, int sum, IUser owner) throws FinanceTrackerException {
+		this(title, sum, owner);
 		setId(id);
+	}
+
+	public IUser getOwner() {
+		return owner;
+	}
+
+	public void setOwner(IUser owner) {
+		if (owner != null) {
+			this.owner = owner;
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
+		}
 	}
 
 	@Override

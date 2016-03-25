@@ -19,5 +19,10 @@ public interface IAccount {
 	int getSum();
 
 	void setSum(int sum) throws FinanceTrackerException;
+	
+	public IUser getOwner();
 
+	public void setOwner(IUser owner);
+
+	
 }

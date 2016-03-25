@@ -21,18 +21,20 @@ public class User implements IUser {
 	@Column(name = "password")
 	private String password;
 	@Enumerated(EnumType.STRING)
-	@JoinColumn(name = "currency_name")
+	@Column(name = "currency_name")
 	private Currency currency;
 	@Convert
 	@Column(name = "start_day")
 	private LocalDate jointedDate;
-	@Convert
 	@Column(name = "is_admin")
 	private boolean isAdmin;
+	
+	public User() {
+		super();
+	}
 
-	public User(int id, String firstName, String lastName, String email, String password, Currency currency,
-			boolean isAdmin, LocalDate date) {
-		this.setUserId(id);
+	public User(String firstName, String lastName, String email, String password, Currency currency, boolean isAdmin,
+			LocalDate date) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -42,8 +44,10 @@ public class User implements IUser {
 		this.setIsAdmin(isAdmin);
 	}
 
-	public User() {
-		super();
+	public User(int id, String firstName, String lastName, String email, String password, Currency currency,
+			boolean isAdmin, LocalDate date) {
+		this(firstName, lastName, email, password, currency, isAdmin, date);
+		this.setUserId(id);
 	}
 
 	public void setIsAdmin(boolean is) {
