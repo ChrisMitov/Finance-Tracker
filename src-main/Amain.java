@@ -18,7 +18,6 @@ public class Amain {
 		List<Tag> tags =(List<Tag>) dao.getAllTagsByCategory(cat.foundById(1));
 		for (Tag tag : tags) {
 			System.out.println(tag.getName());
-			
 		}
 	}
 

@@ -23,7 +23,7 @@ import javax.persistence.Table;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
-@Entity
+//@Entity
 @Table(name = "finance_operation")
 public class FinanceOperation implements IFinanceOperation {
 	@Id

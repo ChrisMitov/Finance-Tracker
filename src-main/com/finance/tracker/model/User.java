@@ -9,7 +9,6 @@ import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
 
-@Entity
 @Table
 public class User implements IUser {
 

@@ -16,9 +16,8 @@ import com.finance.tracker.model.ICategory;
 import com.finance.tracker.validation.Validation;
 
 public class CategoryDao implements ICategoryDao {
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
 	@PersistenceContext
-	private EntityManager manager = emfactory.createEntityManager();
+	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
 
 	@Override
 	public void addCategory(ICategory category) {

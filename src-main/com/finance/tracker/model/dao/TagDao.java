@@ -16,9 +16,8 @@ import com.finance.tracker.model.Tag;
 import com.finance.tracker.validation.Validation;
 
 public class TagDao implements ITagDao {
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
 	@PersistenceContext
-	private EntityManager manager = emfactory.createEntityManager();
+	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
 
 	@Override
 	public void addTag(Tag tag) {
