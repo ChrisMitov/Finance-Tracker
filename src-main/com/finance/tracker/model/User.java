@@ -1,53 +1,56 @@
 package com.finance.tracker.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.*;
-
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
 
 @Entity
-@Table
+@Table(name = "user")
 public class User implements IUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(name = "first_name")
 	private String firstName;
+	@Column(name = "last_name")
 	private String lastName;
+	@Column(name = "email")
 	private String email;
+	@Column(name = "password")
 	private String password;
+	@Enumerated(EnumType.STRING)
+	@JoinColumn(name = "currency_name")
 	private Currency currency;
+	@Convert
+	@Column(name = "start_day")
 	private LocalDate jointedDate;
-	private List<IAccount> allAccounts;
-	private List<IBudget> allBudgets;
+	@Convert
+	@Column(name = "is_admin")
 	private boolean isAdmin;
 
-	public User(int id, String firstName, String lastName, String email, String password, Currency currency) {
+	public User(int id, String firstName, String lastName, String email, String password, Currency currency,
+			boolean isAdmin, LocalDate date) {
 		this.setUserId(id);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
 		this.setPassword(password);
 		this.setCurrency(currency);
-		this.jointedDate = LocalDate.now();
-		allAccounts = new ArrayList<IAccount>();
-		allBudgets = new ArrayList<IBudget>();
-		this.isAdmin = false;
+		this.setStartDate(date);
+		this.setIsAdmin(isAdmin);
 	}
-	
-	public User(){
+
+	public User() {
 		super();
 	}
-	
-	public void setIsAdmin(boolean is){
-		this.isAdmin=is;
+
+	public void setIsAdmin(boolean is) {
+		this.isAdmin = is;
 	}
-	
-	public boolean isAdmin(){
+
+	public boolean isAdmin() {
 		return this.isAdmin;
 	}
 
@@ -58,91 +61,20 @@ public class User implements IUser {
 
 	@Override
 	public void setUserId(int userId) {
-		if (userId > 0)
+		if (userId > 0) {
 			this.id = userId;
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
+		}
 	}
 
 	@Override
 	public void convertCurrency(Currency newCurrency) {
 		this.currency = newCurrency;
-	}
-
-	@Override
-	public void addAcount(IAccount newAccount) throws FinanceTrackerException {
-		if (newAccount != null) {
-			synchronized (this.allAccounts) {
-				this.allAccounts.add(newAccount);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
-
-	@Override
-	public void removeAccount(IAccount accountToDelete) throws FinanceTrackerException {
-		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
-			synchronized (this.allAccounts) {
-				this.allAccounts.remove(accountToDelete);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
-
-	@Override
-	public IAccount getAccount(String accountTitle) throws FinanceTrackerException {
-		if (accountTitle != null && accountTitle.length() > 0) {
-			boolean isAccountFound = false;
-			for (IAccount account : allAccounts) {
-				if (account.getTitle().equals(accountTitle)) {
-					isAccountFound = true;
-					return account;
-				}
-			}
-			if (isAccountFound == false) {
-				throw new FinanceTrackerException();
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void addBudget(IBudget newBudget) throws FinanceTrackerException {
-		if (newBudget != null) {
-			synchronized (this.allBudgets) {
-				this.allBudgets.add(newBudget);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
-
-	@Override
-	public IBudget getBudget(String budgetTitle) throws FinanceTrackerException {
-		if (budgetTitle != null && budgetTitle.length() > 0) {
-			boolean isBudgetFound = false;
-			for (IBudget budget : allBudgets) {
-				if (budget.getTitle().equals(budgetTitle)) {
-					isBudgetFound = true;
-					return budget;
-				}
-			}
-			if (isBudgetFound == false) {
-				throw new FinanceTrackerException();
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void removeBudget(IBudget budgetToDelete) throws FinanceTrackerException {
-		if (budgetToDelete != null && this.allBudgets.contains(budgetToDelete)) {
-			synchronized (budgetToDelete) {
-				this.allBudgets.remove(this.allBudgets);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
 	}
 
 	@Override
@@ -152,8 +84,15 @@ public class User implements IUser {
 
 	@Override
 	public void setFirstName(String firstName) {
-		if (firstName != null && firstName.length() > 0)
+		if (firstName != null && firstName.length() > 0) {
 			this.firstName = firstName;
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
+		}
 	}
 
 	@Override
@@ -163,8 +102,15 @@ public class User implements IUser {
 
 	@Override
 	public void setLastName(String lastName) {
-		if (lastName != null && lastName.length() > 0)
+		if (lastName != null && lastName.length() > 0) {
 			this.lastName = lastName;
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
+		}
 	}
 
 	@Override
@@ -174,8 +120,15 @@ public class User implements IUser {
 
 	@Override
 	public void setEmail(String email) {
-		if (email != null && email.length() > 0)
+		if (email != null && email.length() > 0) {
 			this.email = email;
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
+		}
 	}
 
 	@Override
@@ -188,18 +141,20 @@ public class User implements IUser {
 			this.password = password;
 		} else {
 			try {
-				throw new PasswordException();
+				throw new PasswordException("Password must contain a small letter, a capital letter and a figure!");
 			} catch (PasswordException e) {
 				e.getMessage();
 			}
 		}
 	}
 
+	@Enumerated(EnumType.STRING)
 	@Override
 	public Currency getCurrency() {
 		return currency;
 	}
 
+	@Enumerated(EnumType.STRING)
 	@Override
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
@@ -236,10 +191,16 @@ public class User implements IUser {
 
 	@Override
 	public void setStartDate(LocalDate date) {
-		if(date!=null){
-			this.jointedDate=date;
+		if (date != null) {
+			this.jointedDate = date;
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
 		}
-		
+
 	}
 
 }

@@ -1,10 +1,11 @@
 package com.finance.tracker.test;
 
+import static org.junit.Assert.*;
+
+import java.time.LocalDate;
 
 import org.junit.Test;
-
 import com.finance.tracker.model.Currency;
-import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
@@ -15,17 +16,28 @@ public class UserTest {
 
 	@Test
 	public void createUser() {
-		user.createUser(new User(1, "Ivan", "Petrov", "ivan_p@abv.bg", "IvanPetrov123", Currency.BGN));
+		user.createUser(
+				new User(1, "Petar", "Ivanov", "pesho_i@abv.bg", "Aa123", Currency.BGN, false, LocalDate.now()));
+		assertNotNull(user);
 	}
 
 	@Test
-	public void findUser(int id) {
-		user.getUsre(id);
+	public void findUser() {
+		IUser userToFind = user.getUser(1);
+		System.out.println(userToFind.getFirstName() + " " + userToFind.getLastName());
+		assertNotNull(user);
 	}
-	
+
 	@Test
-	public void deleteUser(IUser userToRemove){
-		user.deleteUser(userToRemove);
+	public void deleteUser() {
+		user.deleteUser(1);
+		assertNotNull(user);
+	}
+
+	@Test
+	public void updateUser() {
+		user.updateUser(user);
+		assertNotNull(user);
 	}
 
 }

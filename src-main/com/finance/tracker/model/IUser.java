@@ -2,7 +2,6 @@ package com.finance.tracker.model;
 
 import java.time.LocalDate;
 
-import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IUser {
 
@@ -11,19 +10,7 @@ public interface IUser {
 	void setUserId(int userId);
 
 	void convertCurrency(Currency newCurrency);
-
-	void addAcount(IAccount newAccount) throws FinanceTrackerException;
-
-	void removeAccount(IAccount accountToDelete) throws FinanceTrackerException;
-
-	IAccount getAccount(String accountTitle) throws FinanceTrackerException;
-
-	void addBudget(IBudget newBudget) throws FinanceTrackerException;
-
-	IBudget getBudget(String budgetTitle) throws FinanceTrackerException;
-
-	void removeBudget(IBudget budgetToDelete) throws FinanceTrackerException;
-
+	
 	String getFirstName();
 
 	void setFirstName(String firstName);

@@ -1,12 +1,13 @@
 package com.finance.tracker.model.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.*;
 
+import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.IUser;
-import com.finance.tracker.model.User;
 
 public class UserDAO implements IUserDAO {
 	@PersistenceContext
@@ -15,26 +16,25 @@ public class UserDAO implements IUserDAO {
 	private EntityManager manager = emfactory.createEntityManager();
 	private EntityTransaction entityTransaction = null;
 
-	
 	@Override
 	public void createUser(IUser user) {
 		if (user != null) {
-			IUser newUser = new User();
-			newUser.setFirstName(user.getFirstName());
-			newUser.setLastName(user.getLastName());
-			newUser.setCurrency(user.getCurrency().getId());
-			newUser.setIsAdmin(user.isAdmin());
-			newUser.setStartDate(user.getJointedDate());
 			try {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();
-				manager.persist(newUser);
+				manager.persist(user);
 				entityTransaction.commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
 					entityTransaction.rollback();
 					throw e;
 				}
+			}
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
 			}
 		}
 	}
@@ -55,17 +55,22 @@ public class UserDAO implements IUserDAO {
 					throw e;
 				}
 			}
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
 
 	@Override
-	public IUser getUsre(int id) {
+	public IUser getUser(int id) {
 		if (id > 0) {
 			try {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();
-
 				IUser user = manager.find(IUser.class, id);
 				entityTransaction.commit();
 				return user;
@@ -75,24 +80,25 @@ public class UserDAO implements IUserDAO {
 					throw e;
 				}
 			}
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
 		}
 		return null;
 	}
 
 	@Override
-	public List<IUser> getAllUsers() {
-		return null;
+	public Collection<IUser> getAllUsers() {
+		List<IUser> listOfAllFinanceOperations= manager.createQuery("SELECT u FROM user u").getResultList();
+		return listOfAllFinanceOperations;
 	}
 
 	@Override
 	public void updateUser(IUser user) {
 		if (user != null) {
-//			IUser newUser = new User();
-//			newUser.setFirstName(user.getFirstName());
-//			newUser.setLastName(user.getLastName());
-//			newUser.setCurrency(user.getCurrency().getId());
-//			newUser.setIsAdmin(user.isAdmin());
-//			newUser.setStartDate(user.getJointedDate());
 			try {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();
@@ -103,6 +109,12 @@ public class UserDAO implements IUserDAO {
 					entityTransaction.rollback();
 					throw e;
 				}
+			}
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
 			}
 		}
 
