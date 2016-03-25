@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
-@Entity
+//@Entity
 public class Account implements IAccount {
 	private static final String OPERATION_CONTAINS_ERROR = "This operation is not valid";
 	@Id
@@ -27,7 +27,6 @@ public class Account implements IAccount {
 	@Column(name = "balance")
 	private int sum;
 	@ManyToOne
-	@Convert
 	@JoinColumn(name = "user_id")
 	private IUser owner;
 	private List<IFinanceOperation> operations;

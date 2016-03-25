@@ -26,8 +26,9 @@ public class Tag {
 	@ManyToOne
 	@JoinColumn(name = "category_id_category")
 	private Category category;
-	@ManyToMany(mappedBy = "tag")
+	@ManyToMany
 	private Set<FinanceOperation> operations;
+
 	public Tag() {
 	}
 

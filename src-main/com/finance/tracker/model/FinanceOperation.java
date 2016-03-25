@@ -1,16 +1,13 @@
 package com.finance.tracker.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
@@ -31,9 +30,10 @@ public class FinanceOperation implements IFinanceOperation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int sum;
-	@Convert
+//	@Convert
 	@Column(name = "date")
-	private LocalDate date;
+	@Temporal(TemporalType.DATE)
+	private Date date;
 	private String description;
 	@Column(name = "photo")
 	private String photoAddress;
@@ -47,7 +47,7 @@ public class FinanceOperation implements IFinanceOperation {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "finance_operation_type")
 	private FinanceOperationType operationType;
-	@ManyToMany()
+	@ManyToMany
 	@JoinTable(name = "finance_operation_has_tag", joinColumns = { @JoinColumn(name = "finance_operation_id"),
 			@JoinColumn(name = "tag_id") })
 	private Set<Tag> tag;
@@ -59,7 +59,7 @@ public class FinanceOperation implements IFinanceOperation {
 		tag = new HashSet<Tag>();
 	}
 
-	public FinanceOperation(int id, int sum, LocalDate date, String description, String photoAddress, Category category,
+	public FinanceOperation(int id, int sum, Date date, String description, String photoAddress, Category category,
 			String type, RepeatType repeatType, FinanceOperationType operationType) throws FinanceTrackerException {
 		this();
 		setId(id);
@@ -104,12 +104,12 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	@Override
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 
 	@Override
-	public void setDate(LocalDate date) throws FinanceTrackerException {
+	public void setDate(Date date) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(date);
 		this.date = date;
 	}
@@ -179,6 +179,73 @@ public class FinanceOperation implements IFinanceOperation {
 	@Enumerated(EnumType.STRING)
 	public void setOperationType(FinanceOperationType operationType) {
 		this.operationType = operationType;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((operationType == null) ? 0 : operationType.hashCode());
+		result = prime * result + ((photoAddress == null) ? 0 : photoAddress.hashCode());
+		result = prime * result + ((repeatType == null) ? 0 : repeatType.hashCode());
+		result = prime * result + sum;
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FinanceOperation other = (FinanceOperation) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		if (operationType != other.operationType)
+			return false;
+		if (photoAddress == null) {
+			if (other.photoAddress != null)
+				return false;
+		} else if (!photoAddress.equals(other.photoAddress))
+			return false;
+		if (repeatType != other.repeatType)
+			return false;
+		if (sum != other.sum)
+			return false;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
+		return true;
 	}
 
 	// @Override
