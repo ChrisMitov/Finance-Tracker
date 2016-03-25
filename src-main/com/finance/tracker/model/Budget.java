@@ -21,7 +21,6 @@ import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
 
-@Entity
 @Table(name = "budget")
 public class Budget implements IBudget {
 	@Id

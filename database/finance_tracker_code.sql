@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account` (
-  `id_account` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
   `balance` int(11) NOT NULL,
-  `user_id_users` int(11) NOT NULL,
-  PRIMARY KEY (`id_account`),
-  KEY `fk_account_user1_idx` (`user_id_users`),
-  CONSTRAINT `fk_account_user1` FOREIGN KEY (`user_id_users`) REFERENCES `user` (`id_users`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_account_user1_idx` (`user_id`),
+  CONSTRAINT `fk_account_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,18 +50,18 @@ DROP TABLE IF EXISTS `budget`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `budget` (
-  `id_budget` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
   `sum` int(11) NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `user_id_users` int(11) NOT NULL,
-  `repeat_type_idrepeat_type` int(11) NOT NULL,
-  PRIMARY KEY (`id_budget`),
-  KEY `fk_budget_user1_idx` (`user_id_users`),
-  KEY `fk_budget_repeat_type1_idx` (`repeat_type_idrepeat_type`),
-  CONSTRAINT `fk_budget_repeat_type1` FOREIGN KEY (`repeat_type_idrepeat_type`) REFERENCES `repeat_type` (`idrepeat_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_budget_user1` FOREIGN KEY (`user_id_users`) REFERENCES `user` (`id_users`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `user_id` int(11) NOT NULL,
+  `repeat_type_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_budget_user1_idx` (`user_id`),
+  KEY `fk_budget_repeat_type1_idx` (`repeat_type_type`),
+  CONSTRAINT `fk_budget_repeat_type1` FOREIGN KEY (`repeat_type_type`) REFERENCES `repeat_type` (`type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_budget_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,13 +82,13 @@ DROP TABLE IF EXISTS `budget_has_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `budget_has_account` (
-  `budget_id_budget` int(11) NOT NULL,
-  `account_id_account` int(11) NOT NULL,
-  PRIMARY KEY (`budget_id_budget`,`account_id_account`),
-  KEY `fk_budget_has_account_account1_idx` (`account_id_account`),
-  KEY `fk_budget_has_account_budget1_idx` (`budget_id_budget`),
-  CONSTRAINT `fk_budget_has_account_account1` FOREIGN KEY (`account_id_account`) REFERENCES `account` (`id_account`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_budget_has_account_budget1` FOREIGN KEY (`budget_id_budget`) REFERENCES `budget` (`id_budget`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `budget_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  PRIMARY KEY (`budget_id`,`account_id`),
+  KEY `fk_budget_has_account_account1_idx` (`account_id`),
+  KEY `fk_budget_has_account_budget1_idx` (`budget_id`),
+  CONSTRAINT `fk_budget_has_account_account1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_budget_has_account_budget1` FOREIGN KEY (`budget_id`) REFERENCES `budget` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,9 +109,9 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
-  `id_category` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_category`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -132,9 +132,8 @@ DROP TABLE IF EXISTS `currency`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `currency` (
-  `id_currency` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_currency`)
+  `name` varchar(3) NOT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,22 +154,25 @@ DROP TABLE IF EXISTS `finance_operation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `finance_operation` (
-  `id_operation` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `sum` int(11) NOT NULL,
   `date` date NOT NULL,
   `description` varchar(400) NOT NULL,
   `photo` varchar(100) DEFAULT NULL,
-  `account_id_account` int(11) NOT NULL,
-  `repeat_type_idrepeat_type` int(11) NOT NULL,
-  `category_id_category` int(11) NOT NULL,
   `type` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_operation`),
-  KEY `fk_finance_operation_account1_idx` (`account_id_account`),
-  KEY `fk_finance_operation_repeat_type1_idx` (`repeat_type_idrepeat_type`),
-  KEY `fk_finance_operation_category1_idx` (`category_id_category`),
-  CONSTRAINT `fk_finance_operation_account1` FOREIGN KEY (`account_id_account`) REFERENCES `account` (`id_account`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_finance_operation_category1` FOREIGN KEY (`category_id_category`) REFERENCES `category` (`id_category`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_finance_operation_repeat_type1` FOREIGN KEY (`repeat_type_idrepeat_type`) REFERENCES `repeat_type` (`idrepeat_type`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `category_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `repeat_type_type` varchar(10) NOT NULL,
+  `finance_operation_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_finance_operation_category1_idx` (`category_id`),
+  KEY `fk_finance_operation_account1_idx` (`account_id`),
+  KEY `fk_finance_operation_repeat_type1_idx` (`repeat_type_type`),
+  KEY `fk_finance_operation_finance_operation_type1_idx` (`finance_operation_type`),
+  CONSTRAINT `fk_finance_operation_account1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_finance_operation_category1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_finance_operation_finance_operation_type1` FOREIGN KEY (`finance_operation_type`) REFERENCES `finance_operation_type` (`type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_finance_operation_repeat_type1` FOREIGN KEY (`repeat_type_type`) REFERENCES `repeat_type` (`type`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -191,13 +193,13 @@ DROP TABLE IF EXISTS `finance_operation_has_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `finance_operation_has_tag` (
-  `finance_operation_id_operation` int(11) NOT NULL,
-  `tag_id_tag` int(11) NOT NULL,
-  PRIMARY KEY (`finance_operation_id_operation`,`tag_id_tag`),
-  KEY `fk_finance_operation_has_tag_tag1_idx` (`tag_id_tag`),
-  KEY `fk_finance_operation_has_tag_finance_operation1_idx` (`finance_operation_id_operation`),
-  CONSTRAINT `fk_finance_operation_has_tag_finance_operation1` FOREIGN KEY (`finance_operation_id_operation`) REFERENCES `finance_operation` (`id_operation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_finance_operation_has_tag_tag1` FOREIGN KEY (`tag_id_tag`) REFERENCES `tag` (`id_tag`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `finance_operation_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`finance_operation_id`,`tag_id`),
+  KEY `fk_finance_operation_has_tag_tag1_idx` (`tag_id`),
+  KEY `fk_finance_operation_has_tag_finance_operation1_idx` (`finance_operation_id`),
+  CONSTRAINT `fk_finance_operation_has_tag_finance_operation1` FOREIGN KEY (`finance_operation_id`) REFERENCES `finance_operation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_finance_operation_has_tag_tag1` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -211,6 +213,28 @@ LOCK TABLES `finance_operation_has_tag` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `finance_operation_type`
+--
+
+DROP TABLE IF EXISTS `finance_operation_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `finance_operation_type` (
+  `type` varchar(10) NOT NULL,
+  PRIMARY KEY (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `finance_operation_type`
+--
+
+LOCK TABLES `finance_operation_type` WRITE;
+/*!40000 ALTER TABLE `finance_operation_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `finance_operation_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `repeat_type`
 --
 
@@ -218,9 +242,8 @@ DROP TABLE IF EXISTS `repeat_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `repeat_type` (
-  `idrepeat_type` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`idrepeat_type`)
+  `type` varchar(10) NOT NULL,
+  PRIMARY KEY (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -241,12 +264,12 @@ DROP TABLE IF EXISTS `tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tag` (
-  `id_tag` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `category_id_category` int(11) NOT NULL,
-  PRIMARY KEY (`id_tag`),
+  PRIMARY KEY (`id`),
   KEY `fk_tag_category_idx` (`category_id_category`),
-  CONSTRAINT `fk_tag_category` FOREIGN KEY (`category_id_category`) REFERENCES `category` (`id_category`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_tag_category` FOREIGN KEY (`category_id_category`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -267,17 +290,18 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `id_users` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `password` varchar(45) NOT NULL,
   `email` varchar(30) NOT NULL,
   `start_day` date DEFAULT NULL,
   `is_admin` tinyint(1) NOT NULL,
-  `currency_id_currency` int(11) NOT NULL,
-  PRIMARY KEY (`id_users`),
-  KEY `fk_user_currency1_idx` (`currency_id_currency`),
-  CONSTRAINT `fk_user_currency1` FOREIGN KEY (`currency_id_currency`) REFERENCES `currency` (`id_currency`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `currency_name` varchar(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `fk_user_currency1_idx` (`currency_name`),
+  CONSTRAINT `fk_user_currency1` FOREIGN KEY (`currency_name`) REFERENCES `currency` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -299,4 +323,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-23 18:56:10
+-- Dump completed on 2016-03-25 19:55:35

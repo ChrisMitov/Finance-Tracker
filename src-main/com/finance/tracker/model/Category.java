@@ -24,11 +24,8 @@ public class Category implements ICategory {
 	private int id;
 	@Column(unique = true)
 	private String name;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
-	private Set<Tag> tags;
 
 	public Category() {
-		tags = new HashSet<Tag>();
 	}
 
 	public Category(String name) throws FinanceTrackerException {
@@ -41,24 +38,24 @@ public class Category implements ICategory {
 		setId(id);
 	}
 
-	@Override
-	public void addTag(Tag tag) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(tag);
-		synchronized (tags) {
-			tags.add(tag);
-		}
-	}
-
-	@Override
-	public void removeTag(Tag tag) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(tag);
-		if (!tags.contains(tag)) {
-			throw new FinanceTrackerException(TAG_CONTAINS_ERROR);
-		}
-		synchronized (tags) {
-			tags.remove(tag);
-		}
-	}
+//	@Override
+//	public void addTag(Tag tag) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(tag);
+//		synchronized (tags) {
+//			tags.add(tag);
+//		}
+//	}
+//
+//	@Override
+//	public void removeTag(Tag tag) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(tag);
+//		if (!tags.contains(tag)) {
+//			throw new FinanceTrackerException(TAG_CONTAINS_ERROR);
+//		}
+//		synchronized (tags) {
+//			tags.remove(tag);
+//		}
+//	}
 
 	@Override
 	public int getId() {

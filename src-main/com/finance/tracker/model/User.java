@@ -5,7 +5,7 @@ import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
 
-@Entity
+//@Entity
 @Table(name = "user")
 public class User implements IUser {
 

@@ -7,10 +7,6 @@
 
 		<class>com.finance.tracker.model.Category</class>
 		<class>com.finance.tracker.model.Tag</class>
-		<class>com.finance.tracker.model.FinanceOperation</class>
-		<class>com.finance.tracker.model.Account</class>
-		<class>com.finance.tracker.model.Budget</class>
-		<class>com.finance.tracker.model.User</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
