@@ -19,8 +19,6 @@ public class Amain {
 		for (Tag tag : tags) {
 			System.out.println(tag.getName());
 			
-			
-			
 		}
 	}
 
