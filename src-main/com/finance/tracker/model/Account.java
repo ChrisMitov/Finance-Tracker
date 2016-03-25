@@ -2,20 +2,39 @@ package com.finance.tracker.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
+@Entity
 public class Account implements IAccount {
 	private static final String OPERATION_CONTAINS_ERROR = "This operation is not valid";
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String title;
 	private int sum;
 	private List<IFinanceOperation> operations;
-	
-	public Account(int id, String title, int sum) throws FinanceTrackerException {
-		setId(id);
+
+	public Account() {
+
+	}
+
+	public Account(String title, int sum) throws FinanceTrackerException {
+		this();
 		setTitle(title);
 		setSum(sum);
+	}
+
+	public Account(int id, String title, int sum) throws FinanceTrackerException {
+		this(title, sum);
+		setId(id);
 	}
 
 	@Override

@@ -4,9 +4,9 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface ICategory {
 
-//	void addTag(Tag tag) throws FinanceTrackerException;
-//
-//	void removeTag(Tag tag) throws FinanceTrackerException;
+	void addTag(Tag tag) throws FinanceTrackerException;
+
+	void removeTag(Tag tag) throws FinanceTrackerException;
 
 	int getId();
 

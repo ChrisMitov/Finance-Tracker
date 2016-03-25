@@ -23,7 +23,6 @@ public class Tag {
 	public Tag() {
 	}
 
-
 	public Tag(String name, Category category) throws FinanceTrackerException {
 		setName(name);
 		setCategory(category);
@@ -51,7 +50,7 @@ public class Tag {
 		new Validation().validateString(name);
 		this.name = name;
 	}
-	
+
 	public Category getCategory() {
 		return category;
 	}
@@ -59,5 +58,39 @@ public class Tag {
 	public void setCategory(Category category) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(category);
 		this.category = category;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tag other = (Tag) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 }

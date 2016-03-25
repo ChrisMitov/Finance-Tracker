@@ -6,9 +6,9 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IBudget {
 
-	void addAcount(IAccount newAccount) throws FinanceTrackerException;
+	void addAcount(Account newAccount) throws FinanceTrackerException;
 
-	void removeAccount(IAccount accountToDelete) throws FinanceTrackerException;
+	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
 
 	double getTotalAmount();
 
@@ -38,8 +38,8 @@ public interface IBudget {
 
 	void setEndDate(LocalDate endDate) throws FinanceTrackerException;
 
-	IUser getUser();
+	User getUser();
 
-	void setUser(IUser user);
+	void setUser(User user);
 
 }

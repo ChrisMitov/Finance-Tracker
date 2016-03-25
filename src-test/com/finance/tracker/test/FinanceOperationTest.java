@@ -3,6 +3,7 @@ package com.finance.tracker.test;
 import org.junit.Test;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Category;
 import com.finance.tracker.model.FinanceOperation;
 import com.finance.tracker.model.IFinanceOperation;
@@ -22,7 +23,8 @@ public class FinanceOperationTest {
 
 	@Test
 	public void addFinanceOperation() throws FinanceTrackerException {
-		Category cat = new Category("Books");
+		CategoryDao dao = new CategoryDao();
+		Category cat = (Category) dao.foundCategoryByName("Clothes");
 		IFinanceOperation finance = new FinanceOperation();
 		finance.setSum(100);
 		finance.setCategory(cat);
@@ -30,12 +32,12 @@ public class FinanceOperationTest {
 		finance.setDate(LocalDate.now());
 		finance.setRepeatType(RepeatType.MONTHLY);
 		finance.setType("Expenses");
+		finance.setAccount(new Account("Spestovna",1000));
 		TagDao tags = new TagDao();
 		Collection<Tag> tagove = tags.getAllTagsByCategory(cat);
 		for (Tag tag2 : tagove) {
 			finance.addTag(tag2);
 		}
-
 		foDao.addFinanceOperation(finance);
 		Collection<FinanceOperation> operations = foDao.getAllFinanceOperation();
 		int id = 1;

@@ -40,4 +40,8 @@ public interface IFinanceOperation {
 
 	void addTag(Tag tag) throws FinanceTrackerException;
 
+	Account getAccount();
+
+	void setAccount(Account account) throws FinanceTrackerException;
+
 }

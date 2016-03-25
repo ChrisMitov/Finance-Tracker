@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,20 +38,21 @@ public class Budget implements IBudget {
 	private LocalDate startDate;
 	@Column(name = "end_date")
 	private LocalDate endDate;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
 	@JoinColumn(name = "repeat_type_id")
 	private RepeatType repeatType;
 	@ManyToMany
-	private List<IAccount> accounts;
+	private List<Account> accounts;
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
-	private IUser user;
+	private User user;
 
 	public Budget() {
 
 	}
 
 	public Budget(int id, String title, double totalAmount, LocalDate startDate, LocalDate endDate,
-			RepeatType repeatType, IUser user) throws FinanceTrackerException {
+			RepeatType repeatType, User user) throws FinanceTrackerException {
 		this.setBudgetId(id);
 		this.setRepeatType(repeatType);
 		this.setTotalAmount(totalAmount);
@@ -77,7 +77,7 @@ public class Budget implements IBudget {
 	}
 
 	@Override
-	public void addAcount(IAccount newAccount) throws FinanceTrackerException {
+	public void addAcount(Account newAccount) throws FinanceTrackerException {
 		if (newAccount != null) {
 			synchronized (this.accounts) {
 				this.accounts.add(newAccount);
@@ -88,7 +88,7 @@ public class Budget implements IBudget {
 	}
 
 	@Override
-	public void removeAccount(IAccount accountToDelete) throws FinanceTrackerException {
+	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
 		if (accountToDelete != null && this.accounts.contains(accountToDelete)) {
 			synchronized (accounts) {
 				this.accounts.remove(accountToDelete);
@@ -151,11 +151,11 @@ public class Budget implements IBudget {
 		this.endDate = endDate;
 	}
 	@Override
-	public IUser getUser() {
+	public User getUser() {
 		return user;
 	}
 	@Override
-	public void setUser(IUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	@Override
