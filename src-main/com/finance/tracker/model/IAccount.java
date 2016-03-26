@@ -4,9 +4,9 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IAccount {
 
-	void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException;
-
-	void removeFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException;
+//	void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException;
+//
+//	void removeFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException;
 
 	int getId();
 
@@ -20,9 +20,9 @@ public interface IAccount {
 
 	void setSum(int sum) throws FinanceTrackerException;
 	
-	public IUser getOwner();
+	public User getOwner();
 
-	public void setOwner(IUser owner);
+	public void setOwner(User owner);
 
 	
 }

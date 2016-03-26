@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.User;
 
 public class UserDAO implements IUserDAO {
 	@PersistenceContext
@@ -66,12 +67,12 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public IUser getUser(int id) {
+	public User getUser(int id) {
 		if (id > 0) {
 			try {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();
-				IUser user = manager.find(IUser.class, id);
+				User user = manager.find(User.class, id);
 				entityTransaction.commit();
 				return user;
 			} catch (RuntimeException e) {

@@ -30,7 +30,6 @@ public class FinanceOperation implements IFinanceOperation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int sum;
-//	@Convert
 	@Column(name = "date")
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -40,7 +39,6 @@ public class FinanceOperation implements IFinanceOperation {
 	@ManyToOne()
 	@JoinColumn(name = "category_id")
 	private Category category;
-	private String type;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "repeat_type_type")
 	private RepeatType repeatType;
@@ -48,19 +46,18 @@ public class FinanceOperation implements IFinanceOperation {
 	@Column(name = "finance_operation_type")
 	private FinanceOperationType operationType;
 	@ManyToMany
-	@JoinTable(name = "finance_operation_has_tag", joinColumns = { @JoinColumn(name = "finance_operation_id"),
-			@JoinColumn(name = "tag_id") })
+	@JoinTable(name = "finance_operation_has_tag", joinColumns = @JoinColumn(name = "finance_operation_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private Set<Tag> tag;
-	// @ManyToOne
-	// @JoinColumn(name = "account_id")
-	// private Account account;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 
 	public FinanceOperation() {
 		tag = new HashSet<Tag>();
 	}
 
 	public FinanceOperation(int id, int sum, Date date, String description, String photoAddress, Category category,
-			String type, RepeatType repeatType, FinanceOperationType operationType) throws FinanceTrackerException {
+			RepeatType repeatType, FinanceOperationType operationType, Account account) throws FinanceTrackerException {
 		this();
 		setId(id);
 		setSum(sum);
@@ -68,13 +65,20 @@ public class FinanceOperation implements IFinanceOperation {
 		setDescription(description);
 		setPhotoAddress(photoAddress);
 		setCategory(category);
-		setType(type);
 		setRepeatType(repeatType);
 		setOperationType(operationType);
+		setAccount(account);
 	}
 
 	@Override
 	public void addTag(Tag t) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(t);
+		synchronized (tag) {
+			tag.add(t);
+		}
+	}
+
+	public void getAllTags(Tag t) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(t);
 		synchronized (tag) {
 			tag.add(t);
@@ -147,17 +151,6 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	@Override
-	public String getType() {
-		return type;
-	}
-
-	@Override
-	public void setType(String type) throws FinanceTrackerException {
-		new Validation().validateString(type);
-		this.type = type;
-	}
-
-	@Override
 	@Enumerated(EnumType.STRING)
 	public RepeatType getRepeatType() {
 		return repeatType;
@@ -194,7 +187,6 @@ public class FinanceOperation implements IFinanceOperation {
 		result = prime * result + ((repeatType == null) ? 0 : repeatType.hashCode());
 		result = prime * result + sum;
 		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -240,23 +232,18 @@ public class FinanceOperation implements IFinanceOperation {
 				return false;
 		} else if (!tag.equals(other.tag))
 			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
 		return true;
 	}
 
-	// @Override
-	// public Account getAccount() {
-	// return account;
-	// }
-	//
-	// @Override
-	// public void setAccount(Account account) throws FinanceTrackerException {
-	// new Validation().validateNotNullObject(account);
-	// this.account = account;
-	// }
+	@Override
+	public Account getAccount() {
+		return account;
+	}
+
+	@Override
+	public void setAccount(Account account) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(account);
+		this.account = account;
+	}
 
 }

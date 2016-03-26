@@ -1,26 +1,25 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
+import javax.persistence.Query;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
+import com.finance.tracker.model.Expense;
 import com.finance.tracker.model.FinanceOperation;
+import com.finance.tracker.model.FinanceOperationType;
 import com.finance.tracker.model.IFinanceOperation;
+import com.finance.tracker.model.Income;
 import com.finance.tracker.validation.Validation;
 
-public class FinanceOperationDao {
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
+public class FinanceOperationDao implements IFinanceOperationDao {
 	@PersistenceContext
-	private EntityManager manager = emfactory.createEntityManager();
-	
-	public void addFinanceOperation(IFinanceOperation operation){
+	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
+
+	@Override
+	public void addFinanceOperation(IFinanceOperation operation) {
 		try {
 			new Validation().validateNotNullObject(operation);
 		} catch (FinanceTrackerException e) {
@@ -36,7 +35,8 @@ public class FinanceOperationDao {
 			}
 		}
 	}
-	
+
+	@Override
 	public void removeFinanceOperation(int id) {
 		try {
 			new Validation().validateNegativeNumber(id);
@@ -53,14 +53,29 @@ public class FinanceOperationDao {
 			}
 		}
 	}
-	
 
+	@Override
 	public FinanceOperation foundById(int id) {
 		return manager.find(FinanceOperation.class, id);
 	}
-	
-	public Collection<FinanceOperation> getAllFinanceOperation() {
-		List<FinanceOperation> listOfAllFinanceOperations= manager.createQuery("SELECT f FROM FinanceOperation f").getResultList();
-		return listOfAllFinanceOperations;
+
+	@Override
+	public Collection<Expense> getAllExpencesByAccount(Account account) {
+		Query query = manager.createQuery(
+				"From FinanceOperation f where f.operationType = :operationType and f.account = :account_id");
+		query.setParameter("operationType", FinanceOperationType.EXPENCES);
+		query.setParameter("account_id", account);
+		Collection<Expense> expense = query.getResultList();
+		return expense;
+	}
+
+	@Override
+	public Collection<Income> getAllIncomeByAccount(Account account) {
+		Query query = manager.createQuery(
+				"From FinanceOperation f where f.operationType = :operationType and f.account = :account_id");
+		query.setParameter("operationType", FinanceOperationType.INCOMES);
+		query.setParameter("account_id", account);
+		Collection<Income> income = query.getResultList();
+		return income;
 	}
 }

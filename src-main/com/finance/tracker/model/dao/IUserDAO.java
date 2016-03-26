@@ -2,6 +2,7 @@ package com.finance.tracker.model.dao;
 
 import java.util.Collection;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.User;
 
 public interface IUserDAO {
 
@@ -9,7 +10,7 @@ public interface IUserDAO {
 
 	void deleteUser(int index);
 
-	IUser getUser(int id);
+	User getUser(int id);
 
 	Collection<IUser> getAllUsers();
 

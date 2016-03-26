@@ -1,6 +1,7 @@
 package com.finance.tracker.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 
 public interface IUser {
@@ -29,13 +30,13 @@ public interface IUser {
 
 	void setCurrency(Currency currency);
 
-	LocalDate getJointedDate();
+	Date getJointedDate();
 
 	void setIsAdmin(boolean is);
 
 	boolean isAdmin();
 	
-	void setStartDate(LocalDate date);
+	void setStartDate(Date date);
 	
 	
 }

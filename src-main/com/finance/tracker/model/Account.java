@@ -1,21 +1,16 @@
 package com.finance.tracker.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
-//@Entity
+@Entity
 public class Account implements IAccount {
 	private static final String OPERATION_CONTAINS_ERROR = "This operation is not valid";
 	@Id
@@ -28,8 +23,7 @@ public class Account implements IAccount {
 	private int sum;
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private IUser owner;
-	private List<IFinanceOperation> operations;
+	private User owner;
 
 	public Account() {
 
@@ -40,21 +34,21 @@ public class Account implements IAccount {
 		this.setSum(sum);
 	}
 
-	public Account(String title, int sum, IUser owner) throws FinanceTrackerException {
+	public Account(String title, int sum, User owner) throws FinanceTrackerException {
 		this(title,sum);
 		this.setOwner(owner);
 	}
 
-	public Account(int id, String title, int sum, IUser owner) throws FinanceTrackerException {
+	public Account(int id, String title, int sum, User owner) throws FinanceTrackerException {
 		this(title, sum, owner);
 		setId(id);
 	}
 
-	public IUser getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
-	public void setOwner(IUser owner) {
+	public void setOwner(User owner) {
 		if (owner != null) {
 			this.owner = owner;
 		} else {
@@ -66,24 +60,24 @@ public class Account implements IAccount {
 		}
 	}
 
-	@Override
-	public void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(operation);
-		synchronized (operations) {
-			operations.add(operation);
-		}
-	}
-
-	@Override
-	public void removeFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(operation);
-		if (!operations.contains(operations)) {
-			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
-		}
-		synchronized (operations) {
-			operations.remove(operation);
-		}
-	}
+//	@Override
+//	public void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(operation);
+//		synchronized (operations) {
+//			operations.add(operation);
+//		}
+//	}
+//
+//	@Override
+//	public void removeFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(operation);
+//		if (!operations.contains(operations)) {
+//			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+//		}
+//		synchronized (operations) {
+//			operations.remove(operation);
+//		}
+//	}
 
 	@Override
 	public int getId() {

@@ -1,7 +1,5 @@
 package com.finance.tracker.model;
 
-
-import java.time.LocalDate;
 import java.util.Date;
 
 import com.finance.tracker.exception.FinanceTrackerException;
@@ -32,22 +30,20 @@ public interface IFinanceOperation {
 
 	void setCategory(Category category) throws FinanceTrackerException;
 
-	String getType();
-
-	void setType(String type) throws FinanceTrackerException;
-
 	RepeatType getRepeatType();
 
 	void setRepeatType(RepeatType repeatType);
 
 	void addTag(Tag tag) throws FinanceTrackerException;
-	
+
 	FinanceOperationType getOperationType();
-	
+
 	void setOperationType(FinanceOperationType operationType);
 
-//	Account getAccount();
-//
-//	void setAccount(Account account) throws FinanceTrackerException;
+	Account getAccount();
+
+	void setAccount(Account account) throws FinanceTrackerException;
+
+	void getAllTags(Tag t) throws FinanceTrackerException;
 
 }

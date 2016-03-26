@@ -1,6 +1,8 @@
 package com.finance.tracker.model;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -24,9 +26,9 @@ public class User implements IUser {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "currency_name")
 	private Currency currency;
-	@Convert
+	@Temporal(TemporalType.DATE)
 	@Column(name = "start_day")
-	private LocalDate jointedDate;
+	private Date jointedDate;
 	@Column(name = "is_admin")
 	private boolean isAdmin;
 	
@@ -35,7 +37,7 @@ public class User implements IUser {
 	}
 
 	public User(String firstName, String lastName, String email, String password, Currency currency, boolean isAdmin,
-			LocalDate date) {
+			Date date) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -46,7 +48,7 @@ public class User implements IUser {
 	}
 
 	public User(int id, String firstName, String lastName, String email, String password, Currency currency,
-			boolean isAdmin, LocalDate date) {
+			boolean isAdmin, Date date) {
 		this(firstName, lastName, email, password, currency, isAdmin, date);
 		this.setUserId(id);
 	}
@@ -166,7 +168,7 @@ public class User implements IUser {
 	}
 
 	@Override
-	public LocalDate getJointedDate() {
+	public Date getJointedDate() {
 		return jointedDate;
 	}
 
@@ -195,7 +197,7 @@ public class User implements IUser {
 	}
 
 	@Override
-	public void setStartDate(LocalDate date) {
+	public void setStartDate(Date date) {
 		if (date != null) {
 			this.jointedDate = date;
 		} else {

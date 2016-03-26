@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
 import com.finance.tracker.model.IAccount;
 
 public class AccountDAO implements IAccountDAO {
@@ -50,7 +51,7 @@ public class AccountDAO implements IAccountDAO {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();
 
-				IAccount account = manager.find(IAccount.class, index);
+				Account account = manager.find(Account.class, index);
 				manager.remove(account);
 				entityTransaction.commit();
 			} catch (RuntimeException e) {
@@ -75,7 +76,7 @@ public class AccountDAO implements IAccountDAO {
 			try {
 				entityTransaction = manager.getTransaction();
 				entityTransaction.begin();
-				IAccount account = manager.find(IAccount.class, id);
+				Account account = manager.find(Account.class, id);
 				entityTransaction.commit();
 				return account;
 			} catch (RuntimeException e) {
