@@ -17,11 +17,20 @@ public class TagTest {
 	ITagDao dao = new TagDao();
 	ICategoryDao catDao = new CategoryDao();
 	@Test
-	public void addTag() throws FinanceTrackerException {
-		Category cat =  (Category) catDao.foundCategoryByName("TV");
-		dao.addTag(new Tag("Pony", cat));
-		dao.addTag(new Tag("KT", cat));
-		assertNotNull(dao.foundTagByName("KT"));
+	public void addTag()  {
+		try {
+			Category cat =  (Category) catDao.foundCategoryByName("Cars");
+			dao.addTag(new Tag("Ford", cat));
+			dao.addTag(new Tag("Ferrari", cat));
+			assertNotNull(dao.foundTagByName("Ferrari"));
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void updateTag(){
+		
 	}
 	
 	@Test
