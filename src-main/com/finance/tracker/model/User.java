@@ -23,6 +23,7 @@ public class User implements IUser {
 	private String email;
 	@Column(name = "password")
 	private String password;
+	@JoinTable(name = "currency", joinColumns = @JoinColumn(name = "name"))
 	@Enumerated(EnumType.STRING)
 	@OneToOne(mappedBy="name")
 	@Column(name = "currency_name")

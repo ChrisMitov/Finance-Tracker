@@ -24,18 +24,18 @@ public class TagTest {
 		assertNotNull(dao.foundTagByName("KT"));
 	}
 	
-	@Test
-	public void removeTag(){
-		Collection<Category> categories = catDao.getAllCategories();
-		int id = 1;
-		for (Category category : categories) {
-			id = category.getId();
-		}
-		Collection<Tag> tags = dao.getAllTagsByCategory(catDao.foundById(id));
-		for (Tag tag : tags) {
-			id = tag.getId();
-			dao.removeTag(id);
-		}
-		assertNull(dao.foundById(id));
-	}
+//	@Test
+//	public void removeTag(){
+//		Collection<Category> categories = catDao.getAllCategories();
+//		int id = 1;
+//		for (Category category : categories) {
+//			id = category.getId();
+//		}
+//		Collection<Tag> tags = dao.getAllTagsByCategory(catDao.foundById(id));
+//		for (Tag tag : tags) {
+//			id = tag.getId();
+//			dao.removeTag(id);
+//		}
+//		assertNull(dao.foundById(id));
+//	}
 }

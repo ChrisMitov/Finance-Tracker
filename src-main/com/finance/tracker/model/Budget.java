@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -43,6 +44,7 @@ public class Budget implements IBudget {
 	@JoinColumn(name = "id")
 	private User user;
 	@ManyToMany(mappedBy="allBudgets")
+	@ElementCollection
 	private Set<Account> allAccounts = new HashSet<Account>();
 
 	public Budget() {

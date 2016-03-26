@@ -13,10 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
+
 
 @Entity
 public class Account implements IAccount {
@@ -30,8 +32,8 @@ public class Account implements IAccount {
 	@Column(name = "balance")
 	private int sum;
 	@OneToMany
-	@JoinColumn(name = "id")
-	private IUser owner;
+	@JoinColumn(name = "user_id")
+	private User owner;
 	private List<IFinanceOperation> operations;
 	@ManyToMany
 	@ElementCollection
@@ -47,21 +49,21 @@ public class Account implements IAccount {
 		this.setSum(sum);
 	}
 
-	public Account(String title, int sum, IUser owner) throws FinanceTrackerException {
+	public Account(String title, int sum, User owner) throws FinanceTrackerException {
 		this(title, sum);
 		this.setOwner(owner);
 	}
 
-	public Account(int id, String title, int sum, IUser owner) throws FinanceTrackerException {
+	public Account(int id, String title, int sum, User owner) throws FinanceTrackerException {
 		this(title, sum, owner);
 		setId(id);
 	}
 
-	public IUser getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
-	public void setOwner(IUser owner) {
+	public void setOwner(User owner) {
 		if (owner != null) {
 			this.owner = owner;
 		} else {

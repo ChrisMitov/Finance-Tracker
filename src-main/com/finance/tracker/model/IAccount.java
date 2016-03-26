@@ -20,9 +20,9 @@ public interface IAccount {
 
 	void setSum(int sum) throws FinanceTrackerException;
 	
-	public IUser getOwner();
+	public User getOwner();
 
-	public void setOwner(IUser owner);
+	public void setOwner(User owner);
 
 	
 }
