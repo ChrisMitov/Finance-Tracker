@@ -18,7 +18,7 @@ public interface IBudget {
 
 	void setTitle(String title) throws FinanceTrackerException;
 
-	double getSumPerDay();
+//	double getSumPerDay();
 
 	LocalDate getStartDate();
 

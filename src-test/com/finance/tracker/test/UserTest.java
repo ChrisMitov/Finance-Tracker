@@ -18,7 +18,7 @@ public class UserTest {
 	@Test
 	public void createUser() {
 		user.createUser(
-				new User(5, "Pesho", "Hakera", "pesho_haker3a@abv.bg", "Aa123", Currency.USD, true, new Date()));
+				new User(10, "Pesho", "Hakera", "@pesho_haker3a@abv.bg", "Aa123", Currency.USD, true, new Date()));
 		assertNotNull(user);
 //				new User(1, "Petar", "Ivanov", "pesho_iv@abv.bg", "Aa123", Currency.EUR, false, LocalDate.now()));
 //		assertNotNull(user);

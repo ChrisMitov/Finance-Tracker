@@ -4,9 +4,9 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IAccount {
 
-//	void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException;
-//
-//	void removeFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException;
+	void addFinanceOperation(FinanceOperation operation) throws FinanceTrackerException;
+
+	void removeFinanceOperation(FinanceOperation operation) throws FinanceTrackerException;
 
 	int getId();
 

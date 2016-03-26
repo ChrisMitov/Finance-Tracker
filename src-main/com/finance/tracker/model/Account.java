@@ -1,12 +1,21 @@
 package com.finance.tracker.model;
 
 import javax.persistence.Column;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
@@ -24,12 +33,17 @@ public class Account implements IAccount {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
-
+	@OneToMany(mappedBy = "account")
+	private List<FinanceOperation> operations;
+//	@ManyToMany
+//	@ElementCollection
+//	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+//	private Set<Budget> allBudgets = new HashSet<Budget>();
 	public Account() {
 
 	}
-	
-	public Account(String title, int sum) throws FinanceTrackerException{
+
+	public Account(String title, int sum) throws FinanceTrackerException {
 		this.setTitle(title);
 		this.setSum(sum);
 	}
@@ -60,24 +74,24 @@ public class Account implements IAccount {
 		}
 	}
 
-//	@Override
-//	public void addFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(operation);
-//		synchronized (operations) {
-//			operations.add(operation);
-//		}
-//	}
-//
-//	@Override
-//	public void removeFinanceOperation(IFinanceOperation operation) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(operation);
-//		if (!operations.contains(operations)) {
-//			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
-//		}
-//		synchronized (operations) {
-//			operations.remove(operation);
-//		}
-//	}
+	@Override
+	public void addFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(operation);
+		synchronized (operations) {
+			operations.add(operation);
+		}
+	}
+
+	@Override
+	public void removeFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(operation);
+		if (!operations.contains(operations)) {
+			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+		}
+		synchronized (operations) {
+			operations.remove(operation);
+		}
+	}
 
 	@Override
 	public int getId() {
@@ -111,5 +125,22 @@ public class Account implements IAccount {
 		new Validation().validateNegativeNumber(sum);
 		this.sum = sum;
 	}
+	
+//	public void addBudget(Budget budget) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(budget);
+//		synchronized (this.allBudgets) {
+//			this.allBudgets.add(budget);
+//		}
+//	}
+//
+//	public void removeBudget(Budget budget) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(budget);
+//		if (!allBudgets.contains(budget)) {
+//			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+//		}
+//		synchronized (budget) {
+//			allBudgets.remove(budget);
+//		}
+//	}
 
 }

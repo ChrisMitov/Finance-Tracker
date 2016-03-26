@@ -1,8 +1,8 @@
 package com.finance.tracker.model;
 
-import java.time.LocalDate;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -22,7 +22,7 @@ public class User implements IUser {
 	private String email;
 	@Column(name = "password")
 	private String password;
-	@JoinTable(name = "currency", joinColumns = @JoinColumn(name = "name"))
+//	@JoinTable(name = "currency", joinColumns = @JoinColumn(name = "name"))
 	@Enumerated(EnumType.STRING)
 	@Column(name = "currency_name")
 	private Currency currency;
@@ -31,6 +31,10 @@ public class User implements IUser {
 	private Date jointedDate;
 	@Column(name = "is_admin")
 	private boolean isAdmin;
+//	@OneToMany(mappedBy="user")
+//	private Set<Budget> allBudgets = new HashSet<Budget>();
+	@OneToMany(mappedBy="owner")
+	private Set<Account> allAccounts = new HashSet<Account>();
 	
 	public User() {
 		super();
@@ -207,7 +211,46 @@ public class User implements IUser {
 				e.getMessage();
 			}
 		}
-
 	}
+	
+	public void addAcount(Account newAccount) throws FinanceTrackerException {
+		if (newAccount != null) {
+			synchronized (this.allAccounts) {
+				this.allAccounts.add(newAccount);
+			}
+		} else {
+			throw new FinanceTrackerException();
+		}
+	}
+
+	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
+		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
+			synchronized (allAccounts) {
+				this.allAccounts.remove(accountToDelete);
+			}
+		} else {
+			throw new FinanceTrackerException();
+		}
+	}
+	
+//	public void addBudget(Budget budget) throws FinanceTrackerException {
+//		if (budget != null) {
+//			synchronized (this.allBudgets) {
+//				this.allBudgets.add(budget);
+//			}
+//		} else {
+//			throw new FinanceTrackerException();
+//		}
+//	}
+//
+//	public void removeBudget(Budget budget) throws FinanceTrackerException {
+//		if (budget != null && this.allBudgets.contains(budget)) {
+//			synchronized (allBudgets) {
+//				this.allBudgets.remove(budget);
+//			}
+//		} else {
+//			throw new FinanceTrackerException();
+//		}
+//	}
 
 }

@@ -20,7 +20,7 @@ public class AccountTest {
 	@Test
 	public void createAccount() throws FinanceTrackerException {
 		IUserDAO userdao = new UserDAO();
-		account.createAccount(new Account("Work", 1000, userdao.getUser(5)));
+		account.createAccount(new Account("Sport", 200, userdao.getUser(10)));
 		assertNotNull(account);
 	}
 
