@@ -1,20 +1,24 @@
 package com.finance.tracker.model;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
-
+@Entity
 public class Account implements IAccount {
 	private static final String OPERATION_CONTAINS_ERROR = "This operation is not valid";
 	@Id
@@ -26,22 +30,25 @@ public class Account implements IAccount {
 	@Column(name = "balance")
 	private int sum;
 	@OneToMany
-	@Convert
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "id")
 	private IUser owner;
 	private List<IFinanceOperation> operations;
+	@ManyToMany
+	@ElementCollection
+	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+	private Set<Budget> allBudgets = new HashSet<Budget>();
 
 	public Account() {
 
 	}
-	
-	public Account(String title, int sum) throws FinanceTrackerException{
+
+	public Account(String title, int sum) throws FinanceTrackerException {
 		this.setTitle(title);
 		this.setSum(sum);
 	}
 
 	public Account(String title, int sum, IUser owner) throws FinanceTrackerException {
-		this(title,sum);
+		this(title, sum);
 		this.setOwner(owner);
 	}
 
@@ -116,6 +123,23 @@ public class Account implements IAccount {
 	public void setSum(int sum) throws FinanceTrackerException {
 		new Validation().validateNegativeNumber(sum);
 		this.sum = sum;
+	}
+	
+	public void addBudget(Budget budget) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(budget);
+		synchronized (this.allBudgets) {
+			this.allBudgets.add(budget);
+		}
+	}
+
+	public void removeBudget(Budget budget) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(budget);
+		if (!allBudgets.contains(budget)) {
+			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+		}
+		synchronized (budget) {
+			allBudgets.remove(budget);
+		}
 	}
 
 }
