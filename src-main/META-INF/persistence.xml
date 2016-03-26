@@ -9,6 +9,7 @@
 		<class>com.finance.tracker.model.Category</class>
 		<class>com.finance.tracker.model.Tag</class>
 		<class>com.finance.tracker.model.FinanceOperation</class>
+		<class>com.finance.tracker.model.Budget</class>
 
 		
 		<properties>

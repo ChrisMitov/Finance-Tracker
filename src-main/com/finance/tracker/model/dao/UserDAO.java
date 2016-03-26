@@ -37,7 +37,7 @@ public class UserDAO implements IUserDAO {
 			} catch (FinanceTrackerException e) {
 				e.getMessage();
 			}
-		}
+		} 
 	}
 
 	@Override

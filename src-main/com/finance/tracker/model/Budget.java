@@ -1,11 +1,7 @@
 package com.finance.tracker.model;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,45 +9,46 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
-//@Entity
+@Entity
 @Table(name = "budget")
 public class Budget implements IBudget {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int budgetId;
+	private int id;
 	@Column(name="title")
 	private String title;
 	@Column(name = "sum")
 	private double totalAmount;
 //	private double sumPerDay;
-	@Convert
+	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
-	private LocalDate startDate;
-	@Convert
+	private Date startDate;
+	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date")
-	private LocalDate endDate;
+	private Date endDate;
 	@Enumerated(EnumType.STRING)
-	@JoinColumn(name = "repeat_type_id")
+	@Column(name = "repeat_type_type")
 	private RepeatType repeatType;
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	@ManyToMany(mappedBy="allBudgets")
+//	@ManyToMany(mappedBy="allBudgets")
 //	@ElementCollection
-	private Set<Account> allAccounts = new HashSet<Account>();
+//	private Set<Account> allAccounts = new HashSet<Account>();
 
 	public Budget() {
 
 	}
 	
-	public Budget(String title, double totalAmount, LocalDate startDate, LocalDate endDate,
+	public Budget(String title, double totalAmount, Date startDate, Date endDate,
 			RepeatType repeatType, User user) throws FinanceTrackerException {
 		this.setRepeatType(repeatType);
 		this.setTotalAmount(totalAmount);
@@ -62,46 +59,46 @@ public class Budget implements IBudget {
 		setUser(user);
 	}
 
-	public Budget(int id, String title, double totalAmount, LocalDate startDate, LocalDate endDate,
+	public Budget(int id, String title, double totalAmount, Date startDate, Date endDate,
 			RepeatType repeatType, User user) throws FinanceTrackerException {
 		this(title, totalAmount, startDate, endDate, repeatType, user);
-		this.setBudgetId(id);
+		this.setId(id);
 	}
 
 	public void convertMoneyToNewCurrency(Currency newCurrency) {
 		this.totalAmount = new ExcangeRate().convertMoney(this.totalAmount, user.getCurrency(), newCurrency);
 	}
 	@Override
-	public int getBudgetId() {
-		return budgetId;
+	public int getId() {
+		return id;
 	}
 	@Override
-	public void setBudgetId(int budgetId) {
-		if (budgetId > 0)
-			this.budgetId = budgetId;
+	public void setId(int id) {
+		if (id > 0)
+			this.id = id;
 	}
 
-	@Override
-	public void addAcount(Account newAccount) throws FinanceTrackerException {
-		if (newAccount != null) {
-			synchronized (this.allAccounts) {
-				this.allAccounts.add(newAccount);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
-
-	@Override
-	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
-		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
-			synchronized (allAccounts) {
-				this.allAccounts.remove(accountToDelete);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
+//	@Override
+//	public void addAcount(Account newAccount) throws FinanceTrackerException {
+//		if (newAccount != null) {
+//			synchronized (this.allAccounts) {
+//				this.allAccounts.add(newAccount);
+//			}
+//		} else {
+//			throw new FinanceTrackerException();
+//		}
+//	}
+//
+//	@Override
+//	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
+//		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
+//			synchronized (allAccounts) {
+//				this.allAccounts.remove(accountToDelete);
+//			}
+//		} else {
+//			throw new FinanceTrackerException();
+//		}
+//	}
 
 	@Override
 	public double getTotalAmount() {
@@ -131,7 +128,7 @@ public class Budget implements IBudget {
 //	}
 
 	@Override
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -147,11 +144,11 @@ public class Budget implements IBudget {
 		this.repeatType = repeatType;
 	}
 	@Override
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 	@Override
-	public void setEndDate(LocalDate endDate) throws FinanceTrackerException {
+	public void setEndDate(Date endDate) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(endDate);
 		this.endDate = endDate;
 	}
@@ -164,7 +161,7 @@ public class Budget implements IBudget {
 		this.user = user;
 	}
 	@Override
-	public void setStartDate(LocalDate startDate) throws FinanceTrackerException {
+	public void setStartDate(Date startDate) throws FinanceTrackerException {
 		new Validation().validateNotNullObject(startDate);
 		this.startDate = startDate;
 	}
