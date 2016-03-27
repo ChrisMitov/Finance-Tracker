@@ -1,13 +1,10 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
-import java.util.List;
 
+import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 import com.finance.tracker.exception.FinanceTrackerException;
@@ -16,22 +13,19 @@ import com.finance.tracker.model.IAccount;
 
 public class AccountDAO implements IAccountDAO {
 	@PersistenceContext
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
-	@Resource
-	private EntityManager manager = emfactory.createEntityManager();
-	private EntityTransaction entityTransaction = null;
+	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
+
 
 	@Override
-	public void createAccount(IAccount account) {
+	public int createAccount(IAccount account) {
 		if (account != null) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
+				manager.getTransaction().begin();
 				manager.persist(account);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -42,21 +36,20 @@ public class AccountDAO implements IAccountDAO {
 				e.getMessage();
 			}
 		}
+		return account.getId();
 	}
 
 	@Override
 	public void deleteAccount(int index) {
 		if (index > 0) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
-
+				manager.getTransaction().begin();
 				Account account = manager.find(Account.class, index);
 				manager.remove(account);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -74,14 +67,13 @@ public class AccountDAO implements IAccountDAO {
 	public IAccount getAccount(int id) {
 		if (id > 0) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
+				manager.getTransaction().begin();
 				Account account = manager.find(Account.class, id);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 				return account;
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -105,13 +97,12 @@ public class AccountDAO implements IAccountDAO {
 	public void updateAccount(IAccount account) {
 		if (account != null) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
+				manager.getTransaction().begin();
 				manager.merge(account);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}

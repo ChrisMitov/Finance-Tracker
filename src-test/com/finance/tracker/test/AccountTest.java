@@ -20,26 +20,26 @@ public class AccountTest {
 	@Test
 	public void createAccount() throws FinanceTrackerException {
 		IUserDAO userdao = new UserDAO();
-		account.createAccount(new Account("Sport", 200, userdao.getUser(10)));
+		account.createAccount(new Account("Free Time", 200, userdao.getUser(10)));
 		assertNotNull(account);
 	}
 
-//	@Test
-//	public void findUser() {
-//		IAccount accountToFind = account.getAccount(1801);
-//		assertNotNull(accountToFind);
-//	}
-//
-//	@Test
-//	public void deleteAccount() {
-//		account.deleteAccount(1851);
-//		assertNotNull(account);
-//	}
-	//
-	// @Test
-	// public void updateAccount() {
-	// account.updateAccount(account.getAccount(1));
-	// assertNotNull(account);
-	// }
+	@Test
+	public void findUser() {
+		IAccount accountToFind = account.getAccount(1801);
+		assertNotNull(accountToFind);
+	}
+
+	@Test
+	public void deleteAccount() {
+		account.deleteAccount(1851);
+		assertNotNull(account);
+	}
+	
+	 @Test
+	 public void updateAccount() {
+	 account.updateAccount(account.getAccount(1));
+	 assertNotNull(account);
+	 }
 
 }

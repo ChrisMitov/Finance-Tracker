@@ -2,32 +2,32 @@ package com.finance.tracker.model.dao;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.persistence.*;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
+import com.finance.tracker.model.IAccount;
+import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
 
 public class UserDAO implements IUserDAO {
 	@PersistenceContext
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
-	@Resource
-	private EntityManager manager = emfactory.createEntityManager();
-	private EntityTransaction entityTransaction = null;
-
+	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
+	
 	@Override
-	public void createUser(IUser user) {
+	public int createUser(IUser user) {
 		if (user != null) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
+				manager.getTransaction().begin();
 				manager.persist(user);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -38,21 +38,20 @@ public class UserDAO implements IUserDAO {
 				e.getMessage();
 			}
 		}
+		return user.getUserId();
 	}
 
 	@Override
 	public void deleteUser(int index) {
 		if (index > 0) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
-
+				manager.getTransaction().begin();
 				IUser user = manager.find(IUser.class, index);
 				manager.remove(user);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -70,14 +69,13 @@ public class UserDAO implements IUserDAO {
 	public User getUser(int id) {
 		if (id > 0) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
+				manager.getTransaction().begin();
 				User user = manager.find(User.class, id);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 				return user;
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -93,7 +91,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public Collection<IUser> getAllUsers() {
-		List<IUser> listOfAllFinanceOperations= manager.createQuery("SELECT u FROM user u").getResultList();
+		List<IUser> listOfAllFinanceOperations = manager.createQuery("SELECT u FROM user u").getResultList();
 		return listOfAllFinanceOperations;
 	}
 
@@ -101,13 +99,12 @@ public class UserDAO implements IUserDAO {
 	public void updateUser(IUser user) {
 		if (user != null) {
 			try {
-				entityTransaction = manager.getTransaction();
-				entityTransaction.begin();
+				manager.getTransaction().begin();
 				manager.merge(user);
-				entityTransaction.commit();
+				manager.getTransaction().commit();
 			} catch (RuntimeException e) {
 				if (manager.getTransaction().isActive()) {
-					entityTransaction.rollback();
+					manager.getTransaction().rollback();
 					throw e;
 				}
 			}
@@ -119,6 +116,38 @@ public class UserDAO implements IUserDAO {
 			}
 		}
 
+	}
+
+	public IUser getUserByMail(String email) {
+		if (email != null && email.length() > 0) {
+			String txtQuery = "SELECT u FROM user u WHERE u.email = '" + email + "'";
+			TypedQuery<IUser> query = manager.createQuery(txtQuery, IUser.class);
+			try {
+				return query.getSingleResult();
+			} catch (NoResultException e) {
+				return null;
+			}
+		} else {
+			try {
+				throw new FinanceTrackerException();
+			} catch (FinanceTrackerException e) {
+				e.getMessage();
+			}
+		}
+		return null;
+	}
+
+	public List<IAccount> getAllAccounts(int id) {
+		if (id > 0) {
+			Query query = manager.createQuery("Select a " + "from Account a " + "where a.user_id:=id", IAccount.class);
+			try {
+				return (List<IAccount>) query.getResultList();
+			} catch (NoResultException e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 }

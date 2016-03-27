@@ -20,7 +20,7 @@ public class CategoryDao implements ICategoryDao {
 	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
 
 	@Override
-	public void addCategory(ICategory category) {
+	public int addCategory(ICategory category) {
 		try {
 			new Validation().validateNotNullObject(category);
 		} catch (FinanceTrackerException e) {
@@ -35,6 +35,7 @@ public class CategoryDao implements ICategoryDao {
 				manager.getTransaction().rollback();
 			}
 		}
+		return category.getId();
 	}
 
 	@Override

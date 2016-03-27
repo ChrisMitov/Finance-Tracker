@@ -1,12 +1,11 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -16,12 +15,11 @@ import com.finance.tracker.model.IBudget;
 import com.finance.tracker.validation.Validation;
 
 public class BudgetDao implements IBudgetDao {
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Finance-Tracker");
 	@PersistenceContext
-	private EntityManager manager = emfactory.createEntityManager();
+	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
 	
 	@Override
-	public void addBudget(IBudget budget){
+	public int addBudget(IBudget budget){
 		try {
 			new Validation().validateNotNullObject(budget);
 		} catch (FinanceTrackerException e) {
@@ -36,6 +34,7 @@ public class BudgetDao implements IBudgetDao {
 				manager.getTransaction().rollback();
 			}
 		}
+		return budget.getBudgetId();
 	}
 	
 	@Override

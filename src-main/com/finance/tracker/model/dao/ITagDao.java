@@ -7,7 +7,7 @@ import com.finance.tracker.model.Tag;
 
 public interface ITagDao {
 
-	void addTag(Tag tag);
+	int addTag(Tag tag);
 
 	void updateTag(int id, Tag tag);
 

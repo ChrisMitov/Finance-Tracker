@@ -19,7 +19,7 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
 
 	@Override
-	public void addFinanceOperation(IFinanceOperation operation) {
+	public int addFinanceOperation(IFinanceOperation operation) {
 		try {
 			new Validation().validateNotNullObject(operation);
 		} catch (FinanceTrackerException e) {
@@ -34,6 +34,7 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 				manager.getTransaction().rollback();
 			}
 		}
+		return operation.getId();
 	}
 
 	@Override

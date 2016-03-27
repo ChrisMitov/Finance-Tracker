@@ -6,7 +6,7 @@ import com.finance.tracker.model.IAccount;
 
 public interface IAccountDAO {
 
-	void createAccount(IAccount account);
+	int createAccount(IAccount account);
 
 	void deleteAccount(int index);
 

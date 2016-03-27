@@ -7,7 +7,7 @@ import com.finance.tracker.model.IBudget;
 
 public interface IBudgetDao {
 
-	void addBudget(IBudget budget);
+	int addBudget(IBudget budget);
 
 	void removeBudget(int id);
 

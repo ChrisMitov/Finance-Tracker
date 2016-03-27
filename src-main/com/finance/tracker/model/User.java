@@ -1,8 +1,9 @@
 package com.finance.tracker.model;
 
+import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -34,7 +35,7 @@ public class User implements IUser {
 //	@OneToMany(mappedBy="user")
 //	private Set<Budget> allBudgets = new HashSet<Budget>();
 	@OneToMany(mappedBy="owner")
-	private Set<Account> allAccounts = new HashSet<Account>();
+	private List<Account> allAccounts = new ArrayList<Account>();
 	
 	public User() {
 		super();

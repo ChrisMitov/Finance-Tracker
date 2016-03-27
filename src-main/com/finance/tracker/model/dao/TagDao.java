@@ -20,7 +20,7 @@ public class TagDao implements ITagDao {
 	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
 
 	@Override
-	public void addTag(Tag tag) {
+	public int addTag(Tag tag) {
 		try {
 			new Validation().validateNotNullObject(tag);
 			manager.getTransaction().begin();
@@ -33,6 +33,7 @@ public class TagDao implements ITagDao {
 				manager.getTransaction().rollback();
 			}
 		}
+		return tag.getId();
 	}
 
 	@Override
