@@ -129,7 +129,7 @@ public class FinanceOperationTest {
 		IUser user = new User();
 		user.setFirstName("Luis");
 		user.setLastName("Suarez");
-		user.setEmail("see5@gmail.com");
+		user.setEmail("HAPPY@gmail.com");
 		user.setPassword("aqqqW9a");
 		user.setCurrency(Currency.BGN);
 		user.setIsAdmin(false);
