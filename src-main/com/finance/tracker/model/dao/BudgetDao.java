@@ -5,10 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-<<<<<<< HEAD
-import javax.persistence.NoResultException;
-=======
->>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.finance.tracker.exception.FinanceTrackerException;
@@ -20,15 +16,9 @@ import com.finance.tracker.validation.Validation;
 public class BudgetDao implements IBudgetDao {
 	@PersistenceContext
 	private EntityManager manager = DaoUtils.getEmfactory().createEntityManager();
-<<<<<<< HEAD
-	
-	@Override
-	public int addBudget(IBudget budget){
-=======
 
 	@Override
 	public int addBudget(IBudget budget) {
->>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 		try {
 			new Validation().validateNotNullObject(budget);
 		} catch (FinanceTrackerException e) {
@@ -43,11 +33,7 @@ public class BudgetDao implements IBudgetDao {
 				manager.getTransaction().rollback();
 			}
 		}
-<<<<<<< HEAD
-		return budget.getBudgetId();
-=======
 		return foundBudgetByTitle(budget.getTitle()).getId();
->>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 	}
 
 	@Override

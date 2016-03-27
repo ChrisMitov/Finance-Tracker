@@ -1,16 +1,9 @@
 package com.finance.tracker.model;
-<<<<<<< HEAD
 
 import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
-=======
-
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
->>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -39,19 +32,10 @@ public class User implements IUser {
 	private Date jointedDate;
 	@Column(name = "is_admin")
 	private boolean isAdmin;
-<<<<<<< HEAD
 //	@OneToMany(mappedBy="user")
 //	private Set<Budget> allBudgets = new HashSet<Budget>();
 	@OneToMany(mappedBy="owner")
 	private List<Account> allAccounts = new ArrayList<Account>();
-	
-=======
-	// @OneToMany(mappedBy="user")
-	// private Set<Budget> allBudgets = new HashSet<Budget>();
-	@OneToMany(mappedBy = "owner")
-	private Set<Account> allAccounts = new HashSet<Account>();
-
->>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 	public User() {
 		super();
 	}
