@@ -1,5 +1,7 @@
 package com.finance.tracker.model;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -78,11 +80,8 @@ public class FinanceOperation implements IFinanceOperation {
 		}
 	}
 
-	public void getAllTags(Tag t) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(t);
-		synchronized (tag) {
-			tag.add(t);
-		}
+	public Collection<Tag> getAllTags() throws FinanceTrackerException {
+		return Collections.unmodifiableCollection(tag);
 	}
 
 	@Override

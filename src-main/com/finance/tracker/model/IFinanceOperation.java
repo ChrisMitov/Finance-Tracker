@@ -1,5 +1,6 @@
 package com.finance.tracker.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.finance.tracker.exception.FinanceTrackerException;
@@ -44,6 +45,6 @@ public interface IFinanceOperation {
 
 	void setAccount(Account account) throws FinanceTrackerException;
 
-	void getAllTags(Tag t) throws FinanceTrackerException;
+	Collection<Tag> getAllTags() throws FinanceTrackerException;
 
 }

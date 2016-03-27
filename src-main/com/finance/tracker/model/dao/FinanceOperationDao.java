@@ -66,6 +66,7 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 				"From FinanceOperation f where f.operationType = :operationType and f.account = :account_id");
 		query.setParameter("operationType", FinanceOperationType.EXPENCES);
 		query.setParameter("account_id", account);
+		@SuppressWarnings("unchecked")
 		Collection<Expense> expense = query.getResultList();
 		return expense;
 	}
@@ -76,6 +77,7 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 				"From FinanceOperation f where f.operationType = :operationType and f.account = :account_id");
 		query.setParameter("operationType", FinanceOperationType.INCOMES);
 		query.setParameter("account_id", account);
+		@SuppressWarnings("unchecked")
 		Collection<Income> income = query.getResultList();
 		return income;
 	}

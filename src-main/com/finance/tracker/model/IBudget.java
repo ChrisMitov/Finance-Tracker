@@ -1,14 +1,14 @@
 package com.finance.tracker.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IBudget {
 
-	void addAcount(Account newAccount) throws FinanceTrackerException;
-
-	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
+//	void addAcount(Account newAccount) throws FinanceTrackerException;
+//
+//	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
 
 	double getTotalAmount();
 
@@ -20,7 +20,7 @@ public interface IBudget {
 
 //	double getSumPerDay();
 
-	LocalDate getStartDate();
+	Date getStartDate();
 
 	RepeatType getRepeatType();
 
@@ -28,15 +28,15 @@ public interface IBudget {
 
 	void convertMoneyToNewCurrency(Currency newCurrency);
 
-	int getBudgetId();
+	int getId();
 
-	void setBudgetId(int budgetId);
+	void setId(int id);
 
-	void setStartDate(LocalDate startDate) throws FinanceTrackerException;
+	void setStartDate(Date startDate) throws FinanceTrackerException;
 
-	LocalDate getEndDate();
+	Date getEndDate();
 
-	void setEndDate(LocalDate endDate) throws FinanceTrackerException;
+	void setEndDate(Date endDate) throws FinanceTrackerException;
 
 	User getUser();
 

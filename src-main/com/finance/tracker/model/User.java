@@ -1,9 +1,16 @@
 package com.finance.tracker.model;
+<<<<<<< HEAD
 
 import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
+=======
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+>>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -23,7 +30,7 @@ public class User implements IUser {
 	private String email;
 	@Column(name = "password")
 	private String password;
-//	@JoinTable(name = "currency", joinColumns = @JoinColumn(name = "name"))
+	// @JoinTable(name = "currency", joinColumns = @JoinColumn(name = "name"))
 	@Enumerated(EnumType.STRING)
 	@Column(name = "currency_name")
 	private Currency currency;
@@ -32,11 +39,19 @@ public class User implements IUser {
 	private Date jointedDate;
 	@Column(name = "is_admin")
 	private boolean isAdmin;
+<<<<<<< HEAD
 //	@OneToMany(mappedBy="user")
 //	private Set<Budget> allBudgets = new HashSet<Budget>();
 	@OneToMany(mappedBy="owner")
 	private List<Account> allAccounts = new ArrayList<Account>();
 	
+=======
+	// @OneToMany(mappedBy="user")
+	// private Set<Budget> allBudgets = new HashSet<Budget>();
+	@OneToMany(mappedBy = "owner")
+	private Set<Account> allAccounts = new HashSet<Account>();
+
+>>>>>>> 9e3353e279baef657999ff56707dc364a6c6f350
 	public User() {
 		super();
 	}
@@ -148,7 +163,8 @@ public class User implements IUser {
 		return password;
 	}
 
-	private void setPassword(String password) {
+	@Override
+	public void setPassword(String password) {
 		if (password != null && isPasswordSecured(password)) {
 			this.password = password;
 		} else {
@@ -213,7 +229,7 @@ public class User implements IUser {
 			}
 		}
 	}
-	
+
 	public void addAcount(Account newAccount) throws FinanceTrackerException {
 		if (newAccount != null) {
 			synchronized (this.allAccounts) {
@@ -233,25 +249,25 @@ public class User implements IUser {
 			throw new FinanceTrackerException();
 		}
 	}
-	
-//	public void addBudget(Budget budget) throws FinanceTrackerException {
-//		if (budget != null) {
-//			synchronized (this.allBudgets) {
-//				this.allBudgets.add(budget);
-//			}
-//		} else {
-//			throw new FinanceTrackerException();
-//		}
-//	}
-//
-//	public void removeBudget(Budget budget) throws FinanceTrackerException {
-//		if (budget != null && this.allBudgets.contains(budget)) {
-//			synchronized (allBudgets) {
-//				this.allBudgets.remove(budget);
-//			}
-//		} else {
-//			throw new FinanceTrackerException();
-//		}
-//	}
+
+	// public void addBudget(Budget budget) throws FinanceTrackerException {
+	// if (budget != null) {
+	// synchronized (this.allBudgets) {
+	// this.allBudgets.add(budget);
+	// }
+	// } else {
+	// throw new FinanceTrackerException();
+	// }
+	// }
+	//
+	// public void removeBudget(Budget budget) throws FinanceTrackerException {
+	// if (budget != null && this.allBudgets.contains(budget)) {
+	// synchronized (allBudgets) {
+	// this.allBudgets.remove(budget);
+	// }
+	// } else {
+	// throw new FinanceTrackerException();
+	// }
+	// }
 
 }

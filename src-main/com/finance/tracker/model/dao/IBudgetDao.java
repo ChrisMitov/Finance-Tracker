@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.IBudget;
+import com.finance.tracker.model.IUser;
 
 public interface IBudgetDao {
 
@@ -11,10 +12,11 @@ public interface IBudgetDao {
 
 	void removeBudget(int id);
 
-	IBudget foundBudgetByName(String name);
+	IBudget foundBudgetByTitle(String name);
 
 	Budget foundById(int id);
 
 	Collection<Budget> getAllBudgets();
 
+	Collection<Budget> getAllBudgetsByUser(IUser user);
 }

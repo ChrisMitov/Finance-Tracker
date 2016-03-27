@@ -9,7 +9,6 @@ import com.finance.tracker.model.Expense;
 import com.finance.tracker.model.FinanceOperation;
 import com.finance.tracker.model.FinanceOperationType;
 import com.finance.tracker.model.IAccount;
-import com.finance.tracker.model.IFinanceOperation;
 import com.finance.tracker.model.Income;
 import com.finance.tracker.model.RepeatType;
 import com.finance.tracker.model.Tag;
@@ -33,13 +32,14 @@ public class FinanceOperationTest {
 		CategoryDao dao = new CategoryDao();
 		IAccountDAO acc = new AccountDAO();
 		Category cat = (Category) dao.foundCategoryByName("TV");
-		IFinanceOperation finance = new FinanceOperation();
-		finance.setSum(200);
+		Account account = (Account) acc.getAccount(2651);
+		FinanceOperation finance = new FinanceOperation();
+		finance.setSum(1000);
 		finance.setCategory(cat);
-		finance.setDescription("Kupih si mnogo qk Samsung");
+		finance.setDescription("Vzeh si novo tv, da zamenq stariq bokluk");
 		finance.setDate(new Date());
-		finance.setRepeatType(RepeatType.MONTHLY);
-		finance.setOperationType(FinanceOperationType.INCOMES);
+		finance.setRepeatType(RepeatType.NO_REPEAT);
+		finance.setOperationType(FinanceOperationType.EXPENCES);
 		finance.setAccount((Account) acc.getAccount(2651));
 		TagDao tags = new TagDao();
 		Collection<Tag> tagove = tags.getAllTagsByCategory(cat);
@@ -47,37 +47,41 @@ public class FinanceOperationTest {
 			finance.addTag(tag2);
 		}
 		foDao.addFinanceOperation(finance);
-		assertNotNull(foDao);
+		Collection<Expense> expenses = foDao.getAllExpencesByAccount(account);
+		int id = 1;
+		for (FinanceOperation expense : expenses) {
+			id = expense.getId();
+		}
+		FinanceOperation financeOperation = foDao.foundById(id) ;
+		assertEquals(finance.getSum(), financeOperation.getSum());
+		assertEquals(finance.getDate(), financeOperation.getDate());
+		assertEquals(finance.getDescription(), financeOperation.getDescription());
+		assertEquals(finance.getOperationType(), financeOperation.getOperationType());
+		assertEquals(finance.getAccount(), financeOperation.getAccount());
+		assertEquals(finance.getCategory(), financeOperation.getCategory());
+		assertEquals(finance.getPhotoAddress(), financeOperation.getPhotoAddress());
+		assertEquals(finance.getRepeatType(), financeOperation.getRepeatType());
+		assertEquals(tagove.size(), financeOperation.getAllTags().size());
+		foDao.removeFinanceOperation(id);
 	}
 
-	// @Test
-	// public void findFinanceOperation() {
-	// assertNotNull(foDao.foundById(1001));
-	// }
-	//
-//	@Test
-//	public void removeFinanceOperation() {
-//		foDao.removeFinanceOperation(2101);
-//		assertNull(foDao.foundById(2101));
-//	}
+	@Test
+	public void getAllExpences() {
+		IAccountDAO dao = new AccountDAO();
+		IAccount acc = dao.getAccount(2651);
+		Collection<Expense> expense = foDao.getAllExpencesByAccount((Account) acc);
+		for (FinanceOperation expenses2 : expense) {
+			System.out.println(expenses2.getId());
 
-//	@Test
-//	public void getAllExpences() {
-//		IAccountDAO dao = new AccountDAO();
-//		IAccount acc = dao.getAccount(1901);
-//		Collection<Expense> expense = foDao.getAllExpencesByAccount((Account) acc);
-//		for (FinanceOperation expenses2 : expense) {
-//			System.out.println(expenses2.getId());
-//
-//			System.out.println(expenses2.getSum());
-//			System.out.println(expenses2.getDescription());
-//			System.out.println(expenses2.getCategory().getName());
-//			System.out.println(expenses2.getAccount().getTitle());
-//			System.out.println(expenses2.getDate());
-//		}
-//		assertNotNull(expense);
-//	}
-//
+			System.out.println(expenses2.getSum());
+			System.out.println(expenses2.getDescription());
+			System.out.println(expenses2.getCategory().getName());
+			System.out.println(expenses2.getAccount().getTitle());
+			System.out.println(expenses2.getDate());
+		}
+		assertNotNull(expense);
+	}
+
 	@Test
 	public void getAllIncomes() {
 		IAccountDAO dao = new AccountDAO();

@@ -1,12 +1,8 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -89,8 +85,9 @@ public class TagDao implements ITagDao {
 
 	@Override
 	public Collection<Tag> getAllTagsByCategory(Category category) {
-		List list = manager.createQuery("Select t FROM Tag t WHERE t.category = :id ").setParameter("id", category)
-				.getResultList();
+		@SuppressWarnings("unchecked")
+		Collection<Tag> list = manager.createQuery("Select t FROM Tag t WHERE t.category = :id ")
+				.setParameter("id", category).getResultList();
 		return list;
 	}
 }

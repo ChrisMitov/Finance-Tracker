@@ -1,12 +1,8 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -74,7 +70,8 @@ public class CategoryDao implements ICategoryDao {
 
 	@Override
 	public Collection<Category> getAllCategories() {
-		List<Category> listOfAllCategories = manager.createQuery("SELECT c FROM Category c").getResultList();
+		@SuppressWarnings("unchecked")
+		Collection<Category> listOfAllCategories = manager.createQuery("SELECT c FROM Category c").getResultList();
 		return listOfAllCategories;
 	}
 
