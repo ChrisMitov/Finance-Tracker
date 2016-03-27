@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,9 +47,9 @@ public class FinanceOperation implements IFinanceOperation {
 	@Column(name = "repeat_type_type")
 	private RepeatType repeatType;
 	@Enumerated(EnumType.STRING)
-	@Column(name = "finance_operation_type")
+	@Column(name = "finance_operation_type_type")
 	private FinanceOperationType operationType;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "finance_operation_has_tag", joinColumns = @JoinColumn(name = "finance_operation_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private Set<Tag> tag;
 	@ManyToOne
@@ -59,7 +61,7 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	public FinanceOperation(int id, int sum, Date date, String description, String photoAddress, Category category,
-			RepeatType repeatType, FinanceOperationType operationType, Account account) throws FinanceTrackerException {
+			RepeatType repeatType, FinanceOperationType operationType) throws FinanceTrackerException {
 		this();
 		setId(id);
 		setSum(sum);
@@ -69,7 +71,7 @@ public class FinanceOperation implements IFinanceOperation {
 		setCategory(category);
 		setRepeatType(repeatType);
 		setOperationType(operationType);
-		setAccount(account);
+//		setAccount(account);
 	}
 
 	@Override

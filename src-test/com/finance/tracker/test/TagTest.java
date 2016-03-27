@@ -3,10 +3,13 @@ package com.finance.tracker.test;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Category;
+import com.finance.tracker.model.ICategory;
 import com.finance.tracker.model.Tag;
 import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.ICategoryDao;
@@ -14,15 +17,24 @@ import com.finance.tracker.model.dao.ITagDao;
 import com.finance.tracker.model.dao.TagDao;
 
 public class TagTest {
+	private static final int NUMBER_OF_ADDED_TAGS = 5;
+	private static final String SECOND_TAG_TEST_NAME = "Airbus";
+	private static final String TAG_TEST_NAME = "Boing 737";
+	private static final String CATEGORY_TEST_NAME = "Airplane";
 	ITagDao dao = new TagDao();
 	ICategoryDao catDao = new CategoryDao();
 	@Test
 	public void addTag()  {
 		try {
-			Category cat =  (Category) catDao.foundCategoryByName("Cars");
-			dao.addTag(new Tag("Ford", cat));
-			dao.addTag(new Tag("Ferrari", cat));
-			assertNotNull(dao.foundTagByName("Ferrari"));
+			ICategory cat = makeCategory();
+			int id = catDao.addCategory(cat);
+			Tag tag = makeTag(TAG_TEST_NAME, id);
+			int tagId = dao.addTag(tag);
+			Tag newTag = dao.foundById(tagId);
+			assertEquals(tag.getName(), newTag.getName());
+			assertEquals(tag.getCategory(), newTag.getCategory());
+			dao.removeTag(tag);
+			catDao.removeCategory(cat);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
@@ -30,21 +42,56 @@ public class TagTest {
 	
 	@Test
 	public void updateTag(){
-		
+		try {
+			ICategory cat = makeCategory();
+			int id = catDao.addCategory(cat);
+			Tag tag = makeTag(TAG_TEST_NAME, id);
+			int tagId = dao.addTag(tag);
+			tag.setName(SECOND_TAG_TEST_NAME);
+			tag.setCategory(catDao.foundById(id));
+			dao.updateTag(tag);
+			Tag newTag = dao.foundById(tagId);
+			assertEquals(newTag.getName(), tag.getName());
+			assertEquals(newTag.getCategory(), tag.getCategory());
+			dao.removeTag(newTag);
+			catDao.removeCategory(cat);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	
 	@Test
-	public void removeTag() {
-		Collection<Category> categories = catDao.getAllCategories();
-		int id = 1;
-		for (Category category : categories) {
-			id = category.getId();
+	public void getAllTagsByCategory(){
+		try {
+			ICategory cat = makeCategory();
+			int id = catDao.addCategory(cat);
+			List<Tag> tags = new ArrayList<Tag>();
+			for (int i = 0; i < NUMBER_OF_ADDED_TAGS; i++) {
+				Tag tag = makeTag(TAG_TEST_NAME + i, id);
+				tags.add(tag);
+				dao.addTag(tag);
+			}
+			Collection<Tag> getTags = dao.getAllTagsByCategory(cat);
+			assertEquals(tags.size(), getTags.size());
+			for (Tag tag : getTags) {
+				dao.removeTag(tag);
+			}
+			catDao.removeCategory(cat);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
 		}
-		Collection<Tag> tags = dao.getAllTagsByCategory(catDao.foundById(id));
-		for (Tag tag : tags) {
-			id = tag.getId();
-			dao.removeTag(id);
-		}
-		assertNull(dao.foundById(id));
+	}
+	
+	private ICategory makeCategory() throws FinanceTrackerException {
+		ICategory cat = new Category(CATEGORY_TEST_NAME);
+		return cat;
+	}
+
+	private Tag makeTag(String name ,int id) throws FinanceTrackerException {
+		Tag tag = new Tag();
+		tag.setName(name);
+		tag.setCategory(catDao.foundById(id));
+		return tag;
 	}
 }

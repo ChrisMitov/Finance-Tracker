@@ -33,17 +33,35 @@ public class CategoryDao implements ICategoryDao {
 		}
 		return category.getId();
 	}
-
+	
 	@Override
-	public void removeCategory(int id) {
+	public void updateCategory(ICategory category) {
 		try {
-			new Validation().validateNegativeNumber(id);
+			new Validation().validateNotNullObject(category);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
 		try {
 			manager.getTransaction().begin();
-			manager.remove(foundById(id));
+			manager.merge(category);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
+
+	@Override
+	public void removeCategory(ICategory category) {
+		try {
+			new Validation().validateNotNullObject(category);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(category);
 			manager.getTransaction().commit();
 		} finally {
 			if (manager.getTransaction().isActive()) {

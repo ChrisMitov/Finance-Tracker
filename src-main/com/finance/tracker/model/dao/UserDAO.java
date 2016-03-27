@@ -13,6 +13,7 @@ import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
+import com.finance.tracker.validation.Validation;
 
 public class UserDAO implements IUserDAO {
 	@PersistenceContext
@@ -42,27 +43,22 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public void deleteUser(int index) {
-		if (index > 0) {
-			try {
-				manager.getTransaction().begin();
-				IUser user = manager.find(IUser.class, index);
-				manager.remove(user);
-				manager.getTransaction().commit();
-			} catch (RuntimeException e) {
-				if (manager.getTransaction().isActive()) {
-					manager.getTransaction().rollback();
-					throw e;
-				}
-			}
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.printStackTrace();
+	public void deleteUser(IUser user) { 
+		try {
+			new Validation().validateNotNullObject(user);
+		} catch (FinanceTrackerException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(user);
+			manager.getTransaction().commit();
+		} catch (RuntimeException e) {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+				throw e;
 			}
 		}
-
 	}
 
 	@Override

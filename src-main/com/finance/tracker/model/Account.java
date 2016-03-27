@@ -1,8 +1,10 @@
 package com.finance.tracker.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,8 +29,8 @@ public class Account implements IAccount {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
-	@OneToMany(mappedBy = "account")
-	private List<FinanceOperation> operations;
+//	@OneToMany
+//	private List<FinanceOperation> operations;
 //	@ManyToMany
 //	@ElementCollection
 //	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
@@ -68,24 +70,24 @@ public class Account implements IAccount {
 		}
 	}
 
-	@Override
-	public void addFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(operation);
-		synchronized (operations) {
-			operations.add(operation);
-		}
-	}
-
-	@Override
-	public void removeFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
-		new Validation().validateNotNullObject(operation);
-		if (!operations.contains(operations)) {
-			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
-		}
-		synchronized (operations) {
-			operations.remove(operation);
-		}
-	}
+//	@Override
+//	public void addFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(operation);
+//		synchronized (operations) {
+//			operations.add(operation);
+//		}
+//	}
+//
+//	@Override
+//	public void removeFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
+//		new Validation().validateNotNullObject(operation);
+//		if (!operations.contains(operations)) {
+//			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+//		}
+//		synchronized (operations) {
+//			operations.remove(operation);
+//		}
+//	}
 
 	@Override
 	public int getId() {

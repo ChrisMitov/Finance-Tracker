@@ -11,7 +11,7 @@ public interface IUserDAO {
 
 	int createUser(IUser user);
 
-	void deleteUser(int index);
+	void deleteUser(IUser user);
 
 	User getUser(int id);
 

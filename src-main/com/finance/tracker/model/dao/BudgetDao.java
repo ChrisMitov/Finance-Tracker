@@ -61,10 +61,10 @@ public class BudgetDao implements IBudgetDao {
 		query.setMaxResults(1);
 		@SuppressWarnings("unchecked")
 		List<Budget> budgets = query.getResultList();
-		if (budgets != null || budgets.size() > 0) {
-			return budgets.get(0);
+		if (budgets == null || budgets.size() < 0) {
+			return null;
 		}
-		return null;
+		return budgets.get(0);
 	}
 
 	@Override

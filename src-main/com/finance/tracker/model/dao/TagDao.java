@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Category;
+import com.finance.tracker.model.ICategory;
 import com.finance.tracker.model.Tag;
 import com.finance.tracker.validation.Validation;
 
@@ -33,14 +34,11 @@ public class TagDao implements ITagDao {
 	}
 
 	@Override
-	public void updateTag(int id, Tag tag) {
+	public void updateTag(Tag tag) {
 		try {
-			new Validation().validateNegativeNumber(id);
 			new Validation().validateNotNullObject(tag);
 			manager.getTransaction().begin();
-			Tag t = foundById(id);
-			t.setName(tag.getName());
-			t.setCategory(tag.getCategory());
+			manager.merge(tag);
 			manager.getTransaction().commit();
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
@@ -52,11 +50,11 @@ public class TagDao implements ITagDao {
 	}
 
 	@Override
-	public void removeTag(int id) {
+	public void removeTag(Tag tag) {
 		try {
-			new Validation().validateNegativeNumber(id);
+			new Validation().validateNotNullObject(tag);
 			manager.getTransaction().begin();
-			manager.remove(foundById(id));
+			manager.remove(tag);
 			manager.getTransaction().commit();
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
@@ -84,7 +82,7 @@ public class TagDao implements ITagDao {
 	}
 
 	@Override
-	public Collection<Tag> getAllTagsByCategory(Category category) {
+	public Collection<Tag> getAllTagsByCategory(ICategory category) {
 		@SuppressWarnings("unchecked")
 		Collection<Tag> list = manager.createQuery("Select t FROM Tag t WHERE t.category = :id ")
 				.setParameter("id", category).getResultList();

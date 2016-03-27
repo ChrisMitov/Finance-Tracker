@@ -38,15 +38,15 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 	}
 
 	@Override
-	public void removeFinanceOperation(int id) {
+	public void removeFinanceOperation(IFinanceOperation operation) {
 		try {
-			new Validation().validateNegativeNumber(id);
+			new Validation().validateNotNullObject(operation);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
 		try {
 			manager.getTransaction().begin();
-			manager.remove(foundById(id));
+			manager.remove(operation);
 			manager.getTransaction().commit();
 		} finally {
 			if (manager.getTransaction().isActive()) {

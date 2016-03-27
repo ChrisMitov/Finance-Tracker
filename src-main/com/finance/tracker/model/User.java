@@ -13,6 +13,7 @@ import com.finance.tracker.exception.PasswordException;
 public class User implements IUser {
 
 	@Id
+	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(name = "first_name")
@@ -33,9 +34,9 @@ public class User implements IUser {
 	@Column(name = "is_admin")
 	private boolean isAdmin;
 //	@OneToMany(mappedBy="user")
-//	private Set<Budget> allBudgets = new HashSet<Budget>();
-	@OneToMany(mappedBy="owner")
-	private List<Account> allAccounts = new ArrayList<Account>();
+////	private Set<Budget> allBudgets = new HashSet<Budget>();
+//	@OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
+//	private List<Account> allAccounts = new ArrayList<Account>();
 	public User() {
 		super();
 	}
@@ -214,25 +215,25 @@ public class User implements IUser {
 		}
 	}
 
-	public void addAcount(Account newAccount) throws FinanceTrackerException {
-		if (newAccount != null) {
-			synchronized (this.allAccounts) {
-				this.allAccounts.add(newAccount);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
-
-	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
-		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
-			synchronized (allAccounts) {
-				this.allAccounts.remove(accountToDelete);
-			}
-		} else {
-			throw new FinanceTrackerException();
-		}
-	}
+//	public void addAcount(Account newAccount) throws FinanceTrackerException {
+//		if (newAccount != null) {
+//			synchronized (this.allAccounts) {
+//				this.allAccounts.add(newAccount);
+//			}
+//		} else {
+//			throw new FinanceTrackerException();
+//		}
+//	}
+//
+//	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
+//		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
+//			synchronized (allAccounts) {
+//				this.allAccounts.remove(accountToDelete);
+//			}
+//		} else {
+//			throw new FinanceTrackerException();
+//		}
+//	}
 
 	// public void addBudget(Budget budget) throws FinanceTrackerException {
 	// if (budget != null) {

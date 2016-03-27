@@ -12,7 +12,7 @@ public interface IFinanceOperationDao {
 
 	int addFinanceOperation(IFinanceOperation operation);
 
-	void removeFinanceOperation(int id);
+	void removeFinanceOperation(IFinanceOperation operation);
 
 	FinanceOperation foundById(int id);
 

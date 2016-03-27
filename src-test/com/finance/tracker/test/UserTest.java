@@ -15,18 +15,16 @@ import com.finance.tracker.model.dao.UserDAO;
 
 public class UserTest {
 
-	IUserDAO user = new UserDAO();
+	IUserDAO userDAO = new UserDAO();
 
-	// @Test
-	// public void createUser() {
-	// user.createUser(
-	// new User(11, "Stanio", "Hakera", "@pesho_haker3b@abv.bg", "Aa123",
-	// Currency.USD, true, new Date()));
-	// assertNotNull(user);
-	//// new User(1, "Petar", "Ivanov", "pesho_iv@abv.bg", "Aa123",
-	// Currency.EUR, false, LocalDate.now()));
-	//// assertNotNull(user);
-	// }
+	@Test
+	public void createUser() {
+		IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false, new Date());
+		int id = userDAO.createUser(user);
+		IUser newUser = userDAO.getUser(id);
+		assertEquals(user.getFirstName(), newUser.getFirstName());
+		userDAO.deleteUser(user);
+	}
 	//
 	// @Test
 	// public void findUser() {
@@ -50,20 +48,22 @@ public class UserTest {
 	// assertNotNull(user);
 	// }
 
+	// @Test
+	// public void getUserByMail() {
+	// IUser userWithEmail = user.getUserByMail("pesho_i@abv.bg");
+	// System.out.println(userWithEmail.getFirstName() + " " +
+	// userWithEmail.getLastName());
+	// assertNotNull(user);
+	// }
+
 //	@Test
-//	public void getUserByMail() {
-//		IUser userWithEmail = user.getUserByMail("pesho_i@abv.bg");
-//		System.out.println(userWithEmail.getFirstName() + " " + userWithEmail.getLastName());
-//		assertNotNull(user);
+//	public void getAllAccounts() {
+//		List<IAccount> allAccounts = user.getAllAccounts(5);
+//		;
+//		for (IAccount a : allAccounts) {
+//			System.out.println(a.getTitle() + " " + a.getSum());
+//		}
+//		assertNotNull("user");
 //	}
-	
-	@Test
-	public void getAllAccounts(){
-		List<IAccount> allAccounts = user.getAllAccounts(5);;
-		for(IAccount a:allAccounts){
-			System.out.println(a.getTitle()+" "+a.getSum());
-		}
-		assertNotNull("user");
-	}
 
 }

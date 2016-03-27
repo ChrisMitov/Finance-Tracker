@@ -10,6 +10,10 @@ import javax.persistence.PersistenceContext;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.IAccount;
+import com.finance.tracker.model.ICategory;
+import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.Tag;
+import com.finance.tracker.validation.Validation;
 
 public class AccountDAO implements IAccountDAO {
 	@PersistenceContext
@@ -18,49 +22,39 @@ public class AccountDAO implements IAccountDAO {
 
 	@Override
 	public int createAccount(IAccount account) {
-		if (account != null) {
-			try {
-				manager.getTransaction().begin();
-				manager.persist(account);
-				manager.getTransaction().commit();
-			} catch (RuntimeException e) {
-				if (manager.getTransaction().isActive()) {
-					manager.getTransaction().rollback();
-					throw e;
-				}
-			}
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.getMessage();
+		try {
+			new Validation().validateNotNullObject(account);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.persist(account);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
 			}
 		}
 		return account.getId();
 	}
 
 	@Override
-	public void deleteAccount(int index) {
-		if (index > 0) {
-			try {
-				manager.getTransaction().begin();
-				Account account = manager.find(Account.class, index);
-				manager.remove(account);
-				manager.getTransaction().commit();
-			} catch (RuntimeException e) {
-				if (manager.getTransaction().isActive()) {
-					manager.getTransaction().rollback();
-					throw e;
-				}
-			}
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.printStackTrace();
+	public void deleteAccount(IAccount account) {
+		try {
+			new Validation().validateNotNullObject(account);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(account);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
 			}
 		}
-
 	}
 
 	@Override
@@ -88,11 +82,13 @@ public class AccountDAO implements IAccountDAO {
 	}
 
 	@Override
-	public Collection<IAccount> getAllAccounts() {
-		List<IAccount> listOfAllFinanceOperations= manager.createQuery("SELECT a FROM account a").getResultList();
-		return listOfAllFinanceOperations;
+	public Collection<IAccount> getAllAccountsByUser(IUser user) {
+		@SuppressWarnings("unchecked")
+		Collection<IAccount> listOfAllAccountByUser = manager.createQuery("SELECT a FROM Account a WHERE a.owner = :user").setParameter("user",user).getResultList();
+		return listOfAllAccountByUser;
 	}
 
+	
 	@Override
 	public void updateAccount(IAccount account) {
 		if (account != null) {

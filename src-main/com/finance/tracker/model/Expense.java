@@ -10,8 +10,8 @@ public class Expense extends FinanceOperation {
 	}
 
 	public Expense(int id, int sum, Date date, String description, String photoAddress, Category category,
-			RepeatType repeatType, Account account) throws FinanceTrackerException {
-		super(id, sum, date, description, photoAddress, category, repeatType, FinanceOperationType.EXPENCES, account);
+			RepeatType repeatType) throws FinanceTrackerException {
+		super(id, sum, date, description, photoAddress, category, repeatType, FinanceOperationType.EXPENCES);
 	}
 
 }

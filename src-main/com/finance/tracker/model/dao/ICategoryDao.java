@@ -8,8 +8,10 @@ import com.finance.tracker.model.ICategory;
 public interface ICategoryDao {
 
 	int addCategory(ICategory category);
+	
+	void updateCategory(ICategory category);
 
-	void removeCategory(int id);
+	void removeCategory(ICategory category);
 
 	ICategory foundCategoryByName(String name);
 
