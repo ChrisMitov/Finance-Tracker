@@ -1,5 +1,6 @@
 package com.finance.tracker.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.finance.tracker.exception.FinanceTrackerException;
@@ -10,6 +11,8 @@ public interface IBudget {
 
 	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
 
+	Collection<Account> getAllAccounts();
+	
 	double getTotalAmount();
 
 	void setTotalAmount(double totalAmount);
