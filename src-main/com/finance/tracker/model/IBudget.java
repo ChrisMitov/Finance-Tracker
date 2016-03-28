@@ -6,9 +6,9 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IBudget {
 
-//	void addAcount(Account newAccount) throws FinanceTrackerException;
-//
-//	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
+	void addAcount(Account newAccount) throws FinanceTrackerException;
+
+	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
 
 	double getTotalAmount();
 

@@ -87,7 +87,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public Collection<IUser> getAllUsers() {
-		List<IUser> listOfAllFinanceOperations = manager.createQuery("SELECT u FROM user u").getResultList();
+		List<IUser> listOfAllFinanceOperations = manager.createQuery("SELECT u FROM User u").getResultList();
 		return listOfAllFinanceOperations;
 	}
 

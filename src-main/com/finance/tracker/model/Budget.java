@@ -1,14 +1,20 @@
 package com.finance.tracker.model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,6 +46,9 @@ public class Budget implements IBudget {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "account_id"))
+	private List<Account> accounts;
 //	@ManyToMany(mappedBy="allBudgets")
 //	@ElementCollection
 //	private Set<Account> allAccounts = new HashSet<Account>();
@@ -78,27 +87,27 @@ public class Budget implements IBudget {
 			this.id = id;
 	}
 
-//	@Override
-//	public void addAcount(Account newAccount) throws FinanceTrackerException {
-//		if (newAccount != null) {
-//			synchronized (this.allAccounts) {
-//				this.allAccounts.add(newAccount);
-//			}
-//		} else {
-//			throw new FinanceTrackerException();
-//		}
-//	}
-//
-//	@Override
-//	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
-//		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
-//			synchronized (allAccounts) {
-//				this.allAccounts.remove(accountToDelete);
-//			}
-//		} else {
-//			throw new FinanceTrackerException();
-//		}
-//	}
+	@Override
+	public void addAcount(Account newAccount) throws FinanceTrackerException {
+		if (newAccount != null) {
+			synchronized (this.accounts) {
+				this.accounts.add(newAccount);
+			}
+		} else {
+			throw new FinanceTrackerException();
+		}
+	}
+
+	@Override
+	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
+		if (accountToDelete != null && this.accounts.contains(accountToDelete)) {
+			synchronized (accounts) {
+				this.accounts.remove(accountToDelete);
+			}
+		} else {
+			throw new FinanceTrackerException();
+		}
+	}
 
 	@Override
 	public double getTotalAmount() {

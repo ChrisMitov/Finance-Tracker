@@ -1,17 +1,17 @@
 package com.finance.tracker.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
@@ -29,12 +29,14 @@ public class Account implements IAccount {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
+//	private Set<FinanceOperation> operations;
 //	@OneToMany
 //	private List<FinanceOperation> operations;
 //	@ManyToMany
 //	@ElementCollection
 //	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
-//	private Set<Budget> allBudgets = new HashSet<Budget>();
+	@ManyToMany(mappedBy = "accounts")
+	private Set<Budget> allBudgets = new HashSet<Budget>();
 	public Account() {
 
 	}

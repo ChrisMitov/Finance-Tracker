@@ -9,8 +9,10 @@ import com.finance.tracker.model.IUser;
 public interface IBudgetDao {
 
 	int addBudget(IBudget budget);
+	
+	void updateBudget(IBudget budget);
 
-	void removeBudget(int id);
+	void removeBudget(IBudget budget);
 
 	IBudget foundBudgetByTitle(String name);
 

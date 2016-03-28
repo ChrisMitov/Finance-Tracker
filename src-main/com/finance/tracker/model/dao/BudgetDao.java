@@ -35,17 +35,35 @@ public class BudgetDao implements IBudgetDao {
 		}
 		return foundBudgetByTitle(budget.getTitle()).getId();
 	}
-
+	
 	@Override
-	public void removeBudget(int id) {
+	public void updateBudget(IBudget budget) {
 		try {
-			new Validation().validateNegativeNumber(id);
+			new Validation().validateNotNullObject(budget);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
 		try {
 			manager.getTransaction().begin();
-			manager.remove(foundById(id));
+			manager.merge(budget);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
+
+	@Override
+	public void removeBudget(IBudget budget) {
+		try {
+			new Validation().validateNotNullObject(budget);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(budget);
 			manager.getTransaction().commit();
 		} finally {
 			if (manager.getTransaction().isActive()) {
@@ -82,7 +100,7 @@ public class BudgetDao implements IBudgetDao {
 	@Override
 	public Collection<Budget> getAllBudgets() {
 		@SuppressWarnings("unchecked")
-		List<Budget> listOfAllBudgets = manager.createQuery("SELECT b FROM Budget b").getResultList();
+		Collection<Budget> listOfAllBudgets = manager.createQuery("SELECT b FROM Budget b").getResultList();
 		return listOfAllBudgets;
 	}
 }

@@ -84,7 +84,9 @@ public class AccountDAO implements IAccountDAO {
 	@Override
 	public Collection<IAccount> getAllAccountsByUser(IUser user) {
 		@SuppressWarnings("unchecked")
-		Collection<IAccount> listOfAllAccountByUser = manager.createQuery("SELECT a FROM Account a WHERE a.owner = :user").setParameter("user",user).getResultList();
+		Collection<IAccount> listOfAllAccountByUser = manager.
+	createQuery("SELECT a FROM Account a WHERE a.owner = :user").
+		setParameter("user",user).getResultList();
 		return listOfAllAccountByUser;
 	}
 
@@ -109,7 +111,5 @@ public class AccountDAO implements IAccountDAO {
 				e.getMessage();
 			}
 		}
-
 	}
-
 }
