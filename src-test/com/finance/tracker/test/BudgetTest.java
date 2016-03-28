@@ -50,7 +50,7 @@ public class BudgetTest {
 			assertEquals(budget.getAllAccounts().size(),accounts.size());
 			dao.removeBudget(budget);
 			accountDao.deleteAccount(account);
-			userDao.deleteUser(user);
+			userDao.deleteUser(user.getUserId());
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}

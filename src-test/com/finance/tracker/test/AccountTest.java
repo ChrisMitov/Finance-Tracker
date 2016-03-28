@@ -32,11 +32,11 @@ public class AccountTest {
 		IAccount newAcc = account.getAccount(idAcc);
 		assertEquals(acc.getTitle(), newAcc.getTitle());
 		account.deleteAccount(acc);
-		userDao.deleteUser(user);
+		userDao.deleteUser(user.getUserId());
 	}
 
 	@Test
-	public void getAllAcounts() {
+	public void getAllAcountsByOneUser() {
 		Collection<IAccount> list = account.getAllAccountsByUser(userDao.getUser(1001));
 		for (IAccount acc : list) {
 			System.out.println(acc.getTitle());
@@ -44,22 +44,11 @@ public class AccountTest {
 		}
 	}
 
-	// @Test
-	// public void findUser() {
-	// IAccount accountToFind = account.getAccount(1801);
-	// assertNotNull(accountToFind);
-	// }
-	//
-	// @Test
-	// public void deleteAccount() {
-	// account.deleteAccount(1851);
-	// assertNotNull(account);
-	// }
-	//
-	// @Test
-	// public void updateAccount() {
-	// account.updateAccount(account.getAccount(1));
-	// assertNotNull(account);
-	// }
+		
+	 @Test
+	 public void updateAccount() {
+	 account.updateAccount(account.getAccount(1));
+	 assertNotNull(account);
+	 }
 
 }

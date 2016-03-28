@@ -1,12 +1,12 @@
 package com.finance.tracker.model;
 
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
+import com.finance.tracker.validation.Validation;
 
 @Entity
 @Table(name = "user")
@@ -33,10 +33,11 @@ public class User implements IUser {
 	private Date jointedDate;
 	@Column(name = "is_admin")
 	private boolean isAdmin;
-//	@OneToMany(mappedBy="user")
-////	private Set<Budget> allBudgets = new HashSet<Budget>();
-//	@OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
-//	private List<Account> allAccounts = new ArrayList<Account>();
+
+	// @OneToMany(mappedBy="user")
+	//// private Set<Budget> allBudgets = new HashSet<Budget>();
+	// @OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
+	// private List<Account> allAccounts = new ArrayList<Account>();
 	public User() {
 		super();
 	}
@@ -73,15 +74,12 @@ public class User implements IUser {
 
 	@Override
 	public void setUserId(int userId) {
-		if (userId > 0) {
-			this.id = userId;
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.getMessage();
-			}
+		try {
+			new Validation().validateNegativeNumber(userId);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
 		}
+		this.id = userId;
 	}
 
 	@Override
@@ -96,15 +94,12 @@ public class User implements IUser {
 
 	@Override
 	public void setFirstName(String firstName) {
-		if (firstName != null && firstName.length() > 0) {
-			this.firstName = firstName;
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.getMessage();
-			}
+		try {
+			new Validation().validateString(firstName);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
 		}
+		this.firstName = firstName;
 	}
 
 	@Override
@@ -114,15 +109,12 @@ public class User implements IUser {
 
 	@Override
 	public void setLastName(String lastName) {
-		if (lastName != null && lastName.length() > 0) {
-			this.lastName = lastName;
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.getMessage();
-			}
+		try {
+			new Validation().validateString(lastName);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
 		}
+		this.lastName = lastName;
 	}
 
 	@Override
@@ -132,15 +124,13 @@ public class User implements IUser {
 
 	@Override
 	public void setEmail(String email) {
-		if (email != null && email.length() > 0) {
-			this.email = email;
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.getMessage();
-			}
+		try {
+			new Validation().validateString(email);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
 		}
+		this.email = email;
+
 	}
 
 	@Override
@@ -150,7 +140,7 @@ public class User implements IUser {
 
 	@Override
 	public void setPassword(String password) {
-		if (password != null && isPasswordSecured(password)) {
+		if (isPasswordSecured(password)) {
 			this.password = password;
 		} else {
 			try {
@@ -159,6 +149,7 @@ public class User implements IUser {
 				e.getMessage();
 			}
 		}
+
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -204,36 +195,37 @@ public class User implements IUser {
 
 	@Override
 	public void setStartDate(Date date) {
-		if (date != null) {
-			this.jointedDate = date;
-		} else {
-			try {
-				throw new FinanceTrackerException();
-			} catch (FinanceTrackerException e) {
-				e.getMessage();
-			}
+		try {
+			new Validation().validateNotNullObject(date);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
 		}
+		this.jointedDate = date;
+
 	}
 
-//	public void addAcount(Account newAccount) throws FinanceTrackerException {
-//		if (newAccount != null) {
-//			synchronized (this.allAccounts) {
-//				this.allAccounts.add(newAccount);
-//			}
-//		} else {
-//			throw new FinanceTrackerException();
-//		}
-//	}
-//
-//	public void removeAccount(Account accountToDelete) throws FinanceTrackerException {
-//		if (accountToDelete != null && this.allAccounts.contains(accountToDelete)) {
-//			synchronized (allAccounts) {
-//				this.allAccounts.remove(accountToDelete);
-//			}
-//		} else {
-//			throw new FinanceTrackerException();
-//		}
-//	}
+	// public void addAcount(Account newAccount) throws FinanceTrackerException
+	// {
+	// if (newAccount != null) {
+	// synchronized (this.allAccounts) {
+	// this.allAccounts.add(newAccount);
+	// }
+	// } else {
+	// throw new FinanceTrackerException();
+	// }
+	// }
+	//
+	// public void removeAccount(Account accountToDelete) throws
+	// FinanceTrackerException {
+	// if (accountToDelete != null &&
+	// this.allAccounts.contains(accountToDelete)) {
+	// synchronized (allAccounts) {
+	// this.allAccounts.remove(accountToDelete);
+	// }
+	// } else {
+	// throw new FinanceTrackerException();
+	// }
+	// }
 
 	// public void addBudget(Budget budget) throws FinanceTrackerException {
 	// if (budget != null) {

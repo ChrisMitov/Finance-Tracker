@@ -73,7 +73,7 @@ public class FinanceOperationTest {
 //		assertEquals(tagove.size(), financeOperation.getAllTags().size());
 		foDao.removeFinanceOperation(finance);
 		accountDao.deleteAccount(account);
-		userDao.deleteUser(user);
+		userDao.deleteUser(user.getUserId());
 		tags.removeTag(tag);
 		categoryDao.removeCategory(cat);
 	}

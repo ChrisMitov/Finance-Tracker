@@ -11,7 +11,7 @@ public interface IUserDAO {
 
 	int createUser(IUser user);
 
-	void deleteUser(IUser user);
+	void deleteUser(int id);
 
 	User getUser(int id);
 
@@ -21,6 +21,6 @@ public interface IUserDAO {
 	
 	IUser getUserByMail(String email);
 	
-	List<IAccount> getAllAccounts(int id);
+	Collection<IAccount> getAllAccounts(int id);
 
 }
