@@ -24,11 +24,27 @@ import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
 
 public class BudgetTest {
+	private static final int ACCOUNT_SUM = 1000;
+	private static final int NEW_ACCOUNT_SUM = 5000;
+	private static final String NEW_ACCOUNT_NAME = "Goods";
+	private static final String NEW_USER_PASSWORD = "aA12";
+	private static final String NEW_USER_EMAIL = "Kenobi@gmail.com";
+	private static final String NEW_USER_LAST_NAME = "Kenobi";
+	private static final String NEW_USER_FIRST_NAME = "Obi-One";
+	private static final int UPDATE_SUM = 100;
+	private static final String ACCOUNT_TITLE = "Cars";
+	private static final int BUDGET_SUM = 2000;
+	private static final String BUDGET_TITLE = "Spestoven";
+	private static final String USER_PASSWORD = "918jajA";
+	private static final String USER_EMAIL = "gosho.petkov2190@gmail.com";
+	private static final String USER_LASTNAME = "Petkov";
+	private static final String USER_NAME = "Gosho";
+	private static final String UPDATE_TITLE = "Mesechen";
 	private static final double DELTA = 1e-15;
 	IBudgetDao dao = new BudgetDao();
 	IUserDAO userDao = new UserDAO();
 	IAccountDAO accountDao = new AccountDAO();
-	
+
 	@Test
 	public void addBudget() {
 		try {
@@ -36,7 +52,7 @@ public class BudgetTest {
 			userDao.createUser(user);
 			IAccount account = makeNewAccount((User) user);
 			accountDao.createAccount(account);
-			IBudget budget = makeNewBudget((User) user,(Account) account);
+			IBudget budget = makeNewBudget((User) user, (Account) account);
 			int id = dao.addBudget(budget);
 			IBudget newBudget = dao.foundById(id);
 			Collection<Account> accounts = newBudget.getAllAccounts();
@@ -46,8 +62,7 @@ public class BudgetTest {
 			assertEquals(budget.getUser(), newBudget.getUser());
 			assertEquals(budget.getStartDate(), newBudget.getStartDate());
 			assertEquals(budget.getEndDate(), newBudget.getEndDate());
-			System.err.println(accounts.size());
-			assertEquals(budget.getAllAccounts().size(),accounts.size());
+			assertEquals(budget.getAllAccounts().size(), accounts.size());
 			dao.removeBudget(budget);
 			accountDao.deleteAccount(account);
 			userDao.deleteUser(user);
@@ -56,60 +71,109 @@ public class BudgetTest {
 		}
 	}
 
-	
-	private IBudget makeNewBudget(User user,Account account) throws FinanceTrackerException{
+	@Test
+	public void updateBudget() {
+
+		try {
+			IUser user = makeNewUser();
+			userDao.createUser(user);
+			IAccount account = makeNewAccount((User) user);
+			accountDao.createAccount(account);
+			IBudget budget = makeNewBudget((User) user, (Account) account);
+			int id = dao.addBudget(budget);
+			budget.removeAccount((Account) account);
+			budget.setId(id);
+			budget.setTitle(UPDATE_TITLE);
+			budget.setTotalAmount(UPDATE_SUM);
+			budget.addAcount((Account) account);
+			budget.setRepeatType(RepeatType.MONTHLY);
+			budget.setStartDate(new Date());
+			dao.updateBudget(budget);
+			IBudget newBudget = dao.foundById(id);
+			Collection<Account> accounts = newBudget.getAllAccounts();
+			assertEquals(budget.getTitle(), newBudget.getTitle());
+			assertEquals(budget.getTotalAmount(), newBudget.getTotalAmount(), DELTA);
+			assertEquals(budget.getRepeatType(), newBudget.getRepeatType());
+			assertEquals(budget.getStartDate(), newBudget.getStartDate());
+			assertEquals(budget.getEndDate(), newBudget.getEndDate());
+			assertEquals(budget.getAllAccounts().size(), accounts.size());
+			accountDao.deleteAccount(account);
+			dao.removeBudget(budget);
+			userDao.deleteUser(user);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void getAllBudgetsPerUser() {
+		try {
+			User user = new User();
+			user.setFirstName(NEW_USER_FIRST_NAME);
+			user.setLastName(NEW_USER_LAST_NAME);
+			user.setEmail(NEW_USER_EMAIL);
+			user.setCurrency(Currency.BGN);
+			user.setIsAdmin(false);
+			user.setPassword(NEW_USER_PASSWORD);
+			int idUser = userDao.createUser(user);
+			IAccount account = new Account(NEW_ACCOUNT_NAME, NEW_ACCOUNT_SUM, user);
+			accountDao.createAccount(account);
+			IBudget budget = makeNewBudget((User) user, (Account) account);
+			dao.addBudget(budget);
+			assertNotNull(dao.getAllBudgetsByUser(userDao.getUser(idUser)));
+			dao.removeBudget(budget);
+			accountDao.deleteAccount(account);
+			userDao.deleteUser(user);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void getAllBudgets() {
+		try {
+			IUser user = makeNewUser();
+			userDao.createUser(user);
+			IAccount account = makeNewAccount((User) user);
+			accountDao.createAccount(account);
+			IBudget budget = makeNewBudget((User) user, (Account) account);
+			dao.addBudget(budget);
+			assertNotNull(dao.getAllBudgets());
+			dao.removeBudget(budget);
+			accountDao.deleteAccount(account);
+			userDao.deleteUser(user);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private IBudget makeNewBudget(User user, Account account) throws FinanceTrackerException {
 		IBudget budget = new Budget();
-		budget.setTitle("Spestoven");
+		budget.setTitle(BUDGET_TITLE);
 		budget.setStartDate(new Date());
 		budget.setRepeatType(RepeatType.MONTHLY);
-		budget.setTotalAmount(2000);
+		budget.setTotalAmount(BUDGET_SUM);
 		budget.setUser((User) user);
 		budget.addAcount(account);
 		return budget;
 	}
-	
-	private IUser makeNewUser(){
+
+	private IUser makeNewUser() {
 		IUser user = new User();
-		user.setFirstName("Gosho");
-		user.setLastName("Petkov");
-		user.setEmail("gosho.petkov@gmail.com");
+		user.setFirstName(USER_NAME);
+		user.setLastName(USER_LASTNAME);
+		user.setEmail(USER_EMAIL);
 		user.setCurrency(Currency.BGN);
 		user.setIsAdmin(false);
-		user.setPassword("918jajA");
+		user.setPassword(USER_PASSWORD);
 		return user;
 	}
-	
-	private IAccount makeNewAccount(User user) throws FinanceTrackerException{
+
+	private IAccount makeNewAccount(User user) throws FinanceTrackerException {
 		IAccount account = new Account();
-		account.setSum(1000);
+		account.setSum(ACCOUNT_SUM);
 		account.setOwner(user);
-		account.setTitle("Vse taq");
+		account.setTitle(ACCOUNT_TITLE);
 		return account;
 	}
-	
-//	@Test
-//	public void getAllBudgetsPerUser() {
-//		IUserDAO userDao = new UserDAO();
-////		User user = new User();
-////		user.setFirstName("Gosho");
-////		user.setLastName("Petkov");
-////		user.setEmail("gosho.petkov@gmail.com");
-////		user.setCurrency(Currency.BGN);
-////		user.setIsAdmin(false);
-////		user.setPassword("aA@");
-////		userDao.createUser(user);
-//		
-//		assertNotNull(dao.getAllBudgetsByUser(userDao.getUser(10)));
-//	}
-
-	// private User createUser() {
-	// IUserDAO userDao = new UserDAO();
-	// User user = new User();
-	// user.setFirstName("Gosho");
-	// user.setLastName("Petkov");
-	// user.setEmail("gosho.petkov@gmail.com");
-	//
-	// return userDao.createUser(user);
-	//
-	// }
 }

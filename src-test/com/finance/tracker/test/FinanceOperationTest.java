@@ -52,8 +52,8 @@ public class FinanceOperationTest {
 		finance.setSum(1000);
 		finance.setCategory((Category) cat);
 		finance.setDescription("Vzeh si novo tv, da zamenq stariq bokluk");
-		finance.setDate(new Date());
-		finance.setRepeatType(RepeatType.MONTHLY);
+		finance.setDate(new Date(2016,1,28));
+		finance.setRepeatType(RepeatType.DAILY);
 		finance.setOperationType(FinanceOperationType.EXPENCES);
 		finance.setAccount((Account) account);
 		TagDao tags = new TagDao();
@@ -129,7 +129,7 @@ public class FinanceOperationTest {
 		IUser user = new User();
 		user.setFirstName("Luis");
 		user.setLastName("Suarez");
-		user.setEmail("HAPPY@gmail.com");
+		user.setEmail("HAPPYaama@gmail.com");
 		user.setPassword("aqqqW9a");
 		user.setCurrency(Currency.BGN);
 		user.setIsAdmin(false);
