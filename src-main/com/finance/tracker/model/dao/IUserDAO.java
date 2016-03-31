@@ -21,6 +21,6 @@ public interface IUserDAO {
 	
 	IUser getUserByMail(String email);
 	
-	List<IAccount> getAllAccounts(int id);
+	Collection<IAccount> getAllAccounts(int id);
 
 }

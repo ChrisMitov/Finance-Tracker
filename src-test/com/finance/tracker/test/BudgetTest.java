@@ -36,7 +36,7 @@ public class BudgetTest {
 	private static final int BUDGET_SUM = 2000;
 	private static final String BUDGET_TITLE = "Spestoven";
 	private static final String USER_PASSWORD = "918jajA";
-	private static final String USER_EMAIL = "gosho.petkov2190@gmail.com";
+	private static final String USER_EMAIL = "aaa2@gmail.com";
 	private static final String USER_LASTNAME = "Petkov";
 	private static final String USER_NAME = "Gosho";
 	private static final String UPDATE_TITLE = "Mesechen";
@@ -49,8 +49,8 @@ public class BudgetTest {
 	public void addBudget() {
 		try {
 			IUser user = makeNewUser();
-			userDao.createUser(user);
 			IAccount account = makeNewAccount((User) user);
+			userDao.createUser(user);
 			accountDao.createAccount(account);
 			IBudget budget = makeNewBudget((User) user, (Account) account);
 			int id = dao.addBudget(budget);
