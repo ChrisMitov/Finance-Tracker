@@ -11,7 +11,6 @@
 		<class>com.finance.tracker.model.FinanceOperation</class>
 		<class>com.finance.tracker.model.Budget</class>
 
-
 		<properties>
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://localhost:3306/finance_tracker?useSSL=false" />
