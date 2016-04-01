@@ -24,52 +24,52 @@ public class UserTest {
 
 	IUserDAO userDAO = new UserDAO();
 
-//	@Test
-//	public void createUser() {
-//		IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false,
-//				new Date());
-//		// int id = userDAO.createUser(user);
-//		// IUser newUser = userDAO.getUser(id);
-//		// assertEquals(user.getFirstName(), newUser.getFirstName());
-//		// userDAO.deleteUser(user);
-//	}
-//
-//	@Test
-//	public void findUser() {
-//		IUser userToFind = userDAO.getUser(51);
-//		System.out.println(userToFind.getFirstName() + " " + userToFind.getLastName());
-//		assertNotNull(userDAO);
-//	}
-//
-//	@Test
-//	public void deleteUser() {
-//		userDAO.deleteUser(2);
-//		assertNotNull(userDAO);
-//	}
-//
-//	@Test
-//	public void updateUser() {
-//		User userToUpdate = userDAO.getUser(51);
-//		userToUpdate.setFirstName("Pecan");
-//		userDAO.updateUser(userToUpdate);
-//		assertNotNull(userDAO);
-//	}
-//
-//	@Test
-//	public void getUserByMail() {
-//		IUser userWithEmail = userDAO.getUserByMail("petata2@abv.bg");
-//		System.out.println(userWithEmail.getFirstName() + " " + userWithEmail.getLastName());
-//		assertNotNull(userDAO);
-//	}
-//
-//	@Test
-//	public void getAllUsers() {
-//		Collection<IUser> allUsers = userDAO.getAllUsers();
-//		for (IUser u : allUsers) {
-//			System.out.println(u.getFirstName() + " " + u.getLastName());
-//		}
-//		assertNotNull("userDAO");
-//	}
+	@Test
+	public void createUser() {
+		IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false,
+				new Date());
+		// int id = userDAO.createUser(user);
+		// IUser newUser = userDAO.getUser(id);
+		// assertEquals(user.getFirstName(), newUser.getFirstName());
+		// userDAO.deleteUser(user);
+	}
+
+	@Test
+	public void findUser() {
+		IUser userToFind = userDAO.getUser(51);
+		System.out.println(userToFind.getFirstName() + " " + userToFind.getLastName());
+		assertNotNull(userDAO);
+	}
+
+	@Test
+	public void deleteUser() {
+		userDAO.deleteUser(2);
+		assertNotNull(userDAO);
+	}
+
+	@Test
+	public void updateUser() {
+		User userToUpdate = userDAO.getUser(51);
+		userToUpdate.setFirstName("Pecan");
+		userDAO.updateUser(userToUpdate);
+		assertNotNull(userDAO);
+	}
+
+	@Test
+	public void getUserByMail() {
+		IUser userWithEmail = userDAO.getUserByMail("petata2@abv.bg");
+		System.out.println(userWithEmail.getFirstName() + " " + userWithEmail.getLastName());
+		assertNotNull(userDAO);
+	}
+
+	@Test
+	public void getAllUsers() {
+		Collection<IUser> allUsers = userDAO.getAllUsers();
+		for (IUser u : allUsers) {
+			System.out.println(u.getFirstName() + " " + u.getLastName());
+		}
+		assertNotNull("userDAO");
+	}
 
 	@Test
 	public void userFullSolution() {
@@ -98,6 +98,18 @@ public class UserTest {
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void checkForExistingUser(){
+		IUser user = new User("Malina", "Petkova","malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
+		if(userDAO.isUserExsisting(user.getEmail())){
+			System.out.println("YES!");
+		}
+		else{
+			System.out.println("NO!");
+		}
+		
 	}
 
 }

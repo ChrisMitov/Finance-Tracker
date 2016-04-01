@@ -22,5 +22,7 @@ public interface IUserDAO {
 	IUser getUserByMail(String email);
 	
 	Collection<IAccount> getAllAccounts(int id);
+	
+	boolean isUserExsisting(String email);
 
 }
