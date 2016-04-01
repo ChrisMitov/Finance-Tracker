@@ -1,0 +1,24 @@
+package com.finance.tracker.model.dao;
+
+import com.finance.tracker.model.IUser;
+
+public class RegisterDAO {
+	IUserDAO userDAO = new UserDAO();
+	
+	
+	public void registerNewuser(IUser user){
+		userDAO.createUser(user);
+	}
+	
+	public boolean passwordValidation(String password, String password2){
+		return (password.equals(password2));		
+	}
+	
+	public boolean isEmailTaken(String email){
+		if(userDAO.getUserByMail(email)==null){
+			return false;
+		}
+		return true;
+	}
+
+}

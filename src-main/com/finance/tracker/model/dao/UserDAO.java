@@ -131,5 +131,21 @@ public class UserDAO implements IUserDAO {
 		}
 
 	}
-
+	
+	public boolean isUserExisting(String email){
+		IUser user= getUserByMail(email);
+		if(user!=null){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
+	public int getUserId(String email){
+		return (getUserByMail(email).getUserId());
+	}
+	
+	
 }

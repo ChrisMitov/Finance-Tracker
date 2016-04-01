@@ -1,8 +1,6 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
-import java.util.List;
-
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
@@ -22,5 +20,9 @@ public interface IUserDAO {
 	IUser getUserByMail(String email);
 	
 	Collection<IAccount> getAllAccounts(int id);
+	
+	boolean isUserExisting(String email);
+	
+	int getUserId(String email);
 
 }
