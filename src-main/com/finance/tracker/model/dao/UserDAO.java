@@ -36,15 +36,14 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public void deleteUser(int id) {
+	public void deleteUser(IUser user) {
 		try {
-			new Validation().validateNegativeNumber(id);
+			new Validation().validateNotNullObject(user);
 		} catch (FinanceTrackerException e1) {
 			e1.printStackTrace();
 		}
 		try {
 			manager.getTransaction().begin();
-			IUser user = getUser(id);
 			manager.remove(user);
 			manager.getTransaction().commit();
 		} catch (RuntimeException e) {
@@ -133,7 +132,7 @@ public class UserDAO implements IUserDAO {
 
 	}
 	
-	public boolean isUserExsisting(String email){
+	public boolean isUserExisting(String email){
 		IUser user= getUserByMail(email);
 		if(user!=null){
 			return true;
@@ -142,6 +141,10 @@ public class UserDAO implements IUserDAO {
 			return false;
 		}
 		
+	}
+	
+	public int getUserId(String email){
+		return (getUserByMail(email).getUserId());
 	}
 	
 	

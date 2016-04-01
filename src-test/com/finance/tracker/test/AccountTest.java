@@ -32,7 +32,7 @@ public class AccountTest {
 		IAccount newAcc = account.getAccount(idAcc);
 		assertEquals(acc.getTitle(), newAcc.getTitle());
 		account.deleteAccount(acc);
-		userDao.deleteUser(user.getUserId());
+		userDao.deleteUser(user);
 	}
 
 	@Test

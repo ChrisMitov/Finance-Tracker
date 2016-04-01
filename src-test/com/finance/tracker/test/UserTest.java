@@ -1,12 +1,10 @@
 package com.finance.tracker.test;
 
 import static org.junit.Assert.*;
-import java.time.LocalDate;
+
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import org.junit.Test;
-
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
@@ -43,7 +41,7 @@ public class UserTest {
 
 	@Test
 	public void deleteUser() {
-		userDAO.deleteUser(2);
+		userDAO.deleteUser(userDAO.getUser(51));
 		assertNotNull(userDAO);
 	}
 
@@ -73,43 +71,40 @@ public class UserTest {
 
 	@Test
 	public void userFullSolution() {
-		IUser user = new User("Haralampii", "Stoyanov", "haho2@abv.bg", "Azsumvelik1", Currency.BGN, false,
-				new Date());
+		IUser user = new User("Haralampii", "Stoyanov", "haho2@abv.bg", "Azsumvelik1", Currency.BGN, false, new Date());
 		userDAO.createUser(user);
-		 IBudget budju = new Budget();
-		 try {
-		 budju.setTitle("Vacations");
-		 budju.setId(5893);
-		 budju.setUser((User)user);
-		 budju.setRepeatType(RepeatType.MONTHLY);
-		 budju.setStartDate(new Date());
-		 budju.setEndDate(new Date());
-		
-		 } catch (FinanceTrackerException e) {
-		 e.printStackTrace();
-		 }
-		 new BudgetDao().addBudget(budju);
+		IBudget budju = new Budget();
+		try {
+			budju.setTitle("Vacations");
+			budju.setId(5893);
+			budju.setUser((User) user);
+			budju.setRepeatType(RepeatType.MONTHLY);
+			budju.setStartDate(new Date());
+			budju.setEndDate(new Date());
+
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		new BudgetDao().addBudget(budju);
 		IAccount acc = new Account();
 		try {
 			acc.setTitle("Books");
-			acc.setOwner((User)user);
+			acc.setOwner((User) user);
 			acc.setId(7893);
 			acc.setSum(8576);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
-	public void checkForExistingUser(){
-		IUser user = new User("Malina", "Petkova","malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
-		if(userDAO.isUserExsisting(user.getEmail())){
+	public void checkForExistingUser() {
+		IUser user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
+		if (userDAO.isUserExisting(user.getEmail())) {
 			System.out.println("YES!");
-		}
-		else{
+		} else {
 			System.out.println("NO!");
 		}
-		
-	}
 
+	}
 }

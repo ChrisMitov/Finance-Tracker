@@ -10,12 +10,15 @@ public class RegisterDAO {
 		userDAO.createUser(user);
 	}
 	
-	public void passwordValidation(){
-		
+	public boolean passwordValidation(String password, String password2){
+		return (password.equals(password2));		
 	}
 	
-	public void doesUserExist(IUser user){
-		
+	public boolean isEmailTaken(String email){
+		if(userDAO.getUserByMail(email)==null){
+			return false;
+		}
+		return true;
 	}
 
 }

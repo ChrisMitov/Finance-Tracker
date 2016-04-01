@@ -1,6 +1,8 @@
 package com.finance.tracker.model.dao;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,6 +14,8 @@ import com.finance.tracker.model.FinanceOperation;
 import com.finance.tracker.model.FinanceOperationType;
 import com.finance.tracker.model.IFinanceOperation;
 import com.finance.tracker.model.Income;
+import com.finance.tracker.model.RepeatType;
+import com.finance.tracker.model.Tag;
 import com.finance.tracker.validation.Validation;
 
 public class FinanceOperationDao implements IFinanceOperationDao {
@@ -25,6 +29,44 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
+		Date date = operation.getDate();
+		date.setYear(date.getYear() - 1900);
+		if (operation.getDate().after(new Date())) {
+			addMany(operation);
+		} else {
+			addMany(operation);
+				int howManyTimesToAdd = addManyTimes(operation);
+				int repeatDays = getDaysToRepeat(operation.getRepeatType());
+				for (int i = 0; i < howManyTimesToAdd; i++) {
+					try {
+						IFinanceOperation operationTmp =  new FinanceOperation();
+						operationTmp.setAccount(operation.getAccount());
+						operationTmp.setCategory(operation.getCategory());
+						operationTmp.setDescription(operation.getDescription());
+						operationTmp.setOperationType(operation.getOperationType());
+						operationTmp.setPhotoAddress(operation.getPhotoAddress());
+						operationTmp.setRepeatType(operation.getRepeatType());
+						operationTmp.setSum(operation.getSum());
+						Calendar c = Calendar.getInstance();
+						c.setTime(date);
+						c.add(Calendar.DATE, repeatDays);
+						date = c.getTime();
+						operation.setDate(date);
+						operationTmp.setDate(date);
+						Collection<Tag> tags = operation.getAllTags();
+						for (Tag tag : tags) {
+							operationTmp.addTag(tag);
+						}
+						addMany(operationTmp);
+					} catch (FinanceTrackerException e) {
+						e.printStackTrace();
+					}
+				}
+		}
+		return operation.getId();
+	}
+	
+	private void addMany(IFinanceOperation operation){
 		try {
 			manager.getTransaction().begin();
 			manager.persist(operation);
@@ -34,7 +76,6 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 				manager.getTransaction().rollback();
 			}
 		}
-		return operation.getId();
 	}
 
 	@Override
@@ -80,5 +121,34 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 		@SuppressWarnings("unchecked")
 		Collection<Income> income = query.getResultList();
 		return income;
+	}
+
+	private int addManyTimes(IFinanceOperation operation) {
+		if (operation.getRepeatType().equals(RepeatType.NO_REPEAT)) {
+			return 1;
+		}
+		Date date = operation.getDate();
+//		date.setYear(date.getYear() - 1900);
+		long days = daysBetween(date, new Date());
+		int repeatDays = getDaysToRepeat(operation.getRepeatType());
+		return (int) (days / repeatDays);
+
+	}
+
+	private int getDaysToRepeat(RepeatType type) {
+		if (type.equals(RepeatType.DAILY))
+			return 1;
+		if (type.equals(RepeatType.WEEKLY))
+			return 7;
+		if (type.equals(RepeatType.MONTHLY))
+			return 30;
+		if (type.equals(RepeatType.YEARLY))
+			return 365;
+		return 0;
+	}
+
+	private static long daysBetween(Date one, Date two) {
+		long difference = (one.getTime() - two.getTime()) / (24 * 60 * 60 * 1000);
+		return Math.abs(difference);
 	}
 }
