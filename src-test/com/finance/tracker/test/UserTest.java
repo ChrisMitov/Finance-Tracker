@@ -34,20 +34,20 @@ public class UserTest {
 
 	@Test
 	public void findUser() {
-		IUser userToFind = userDAO.getUser(51);
+		IUser userToFind = userDAO.getUser(151);
 		System.out.println(userToFind.getFirstName() + " " + userToFind.getLastName());
 		assertNotNull(userDAO);
 	}
 
 	@Test
 	public void deleteUser() {
-		userDAO.deleteUser(userDAO.getUser(51));
+		userDAO.deleteUser(userDAO.getUser(202));
 		assertNotNull(userDAO);
 	}
 
 	@Test
 	public void updateUser() {
-		User userToUpdate = userDAO.getUser(51);
+		User userToUpdate = userDAO.getUser(151);
 		userToUpdate.setFirstName("Pecan");
 		userDAO.updateUser(userToUpdate);
 		assertNotNull(userDAO);
@@ -55,7 +55,7 @@ public class UserTest {
 
 	@Test
 	public void getUserByMail() {
-		IUser userWithEmail = userDAO.getUserByMail("petata2@abv.bg");
+		IUser userWithEmail = userDAO.getUserByMail("haho@abv.bg");
 		System.out.println(userWithEmail.getFirstName() + " " + userWithEmail.getLastName());
 		assertNotNull(userDAO);
 	}

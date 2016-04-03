@@ -11,25 +11,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <title>Log in</title>
-<%@ include file="./partials/headerLogIn&Register.jsp" %>
+<%@ include file="./partials/headerLogIn&Register.jsp"%>
 </head>
 <body>
 	<div class="login">
-	<c:if test="${not empty sessionScope.userId}">
-			<p>${sessionScope.userId}</p>
-		</c:if>
 		<h1>Finance Tracker</h1>
 		<div class="login-bottom">
 			<h2>Login</h2>
 			<form method="post" action="../LogInServlet">
 				<div class="col-md-6">
 					<div class="login-mail">
-						<input type="text" placeholder="Email" name="username"> <i
-							class="fa fa-envelope"></i>
+						<input type="text" pattern="[^ @]*@[^ @]*" placeholder="Email"
+							name="username" required> <i class="fa fa-envelope"></i>
 					</div>
 					<div class="login-mail">
-						<input type="password" placeholder="Password" name="password">
-						<i class="fa fa-lock"></i>
+						<input type="password" placeholder="Password" name="password"
+							required> <i class="fa fa-lock"></i>
 					</div>
 					<!--  <a class="news-letter " href="#">
 						 <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
@@ -54,7 +51,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		</div>
 	</div>
 	<!---->
-		<%@ include file="./partials/footer.jsp" %>
+	<%@ include file="./partials/footer.jsp"%>
 	<!---->
 	<!--scrolling js-->
 	<script src="../resources/js/jquery.nicescroll.js"></script>

@@ -2,6 +2,8 @@ package com.finance.tracker.model;
 
 import java.util.Date;
 
+import com.finance.tracker.exception.PasswordException;
+
 
 public interface IUser {
 
@@ -37,6 +39,6 @@ public interface IUser {
 	
 	void setStartDate(Date date);
 	
-	void setPassword(String password);
+	void setPassword(String password) throws PasswordException;
 	
 }

@@ -24,7 +24,7 @@ public class LogInServlet extends HttpServlet {
 		if (request.getSession(false) != null) {
 			request.getSession().invalidate();
 		}
-		request.getRequestDispatcher("./LogIn.jsp").forward(request, response);
+		request.getRequestDispatcher("./jsp/LogIn.jsp").forward(request, response);
 	}
 
 	@Override
@@ -36,17 +36,23 @@ public class LogInServlet extends HttpServlet {
 
 		if (new LogInDAO().validate(username, password)) {
 			HttpSession session = request.getSession();
+			session.setMaxInactiveInterval(-1);
 			UserDAO userDao = new UserDAO();
 			int userId = userDao.getUserId(username);
 			session.setAttribute("userId", userId);
 			IUser user = userDao.getUser(userId);
+			System.out.println("!!!!!"+user.getFirstName());
 			session.setAttribute("currentUser", user);
 			session.setAttribute("userName", user.getFirstName());
-			request.getRequestDispatcher("./home.jsp").forward(request, response);
+			session.setAttribute("lastName", user.getLastName());
+			session.setAttribute("email", user.getEmail());
+			session.setAttribute("password", user.getPassword());
+			session.setAttribute("currency", user.getCurrency());
+			session.setAttribute("startDate", user.getJointedDate());
+			request.getRequestDispatcher("./jsp/Profile.jsp").forward(request, response);
 		} else {
 			request.setAttribute("wrongUser", "Incorrect email or password!");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("../jsp/LogIn.jsp");
-			dispatcher.forward(request, response);
+			request.getRequestDispatcher("./jsp/LogIn.jsp").forward(request, response);
 		}
 
 	}

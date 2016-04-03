@@ -1,8 +1,6 @@
 package com.finance.tracker.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -42,8 +40,18 @@ public class User implements IUser {
 		super();
 	}
 
+	public User(String firstName, String lastName, String password, String email) throws PasswordException {
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.isAdmin = false;
+		this.currency = Currency.BGN;
+		this.jointedDate = new Date();
+	}
+
 	public User(String firstName, String lastName, String email, String password, Currency currency, boolean isAdmin,
-			Date date) {
+			Date date) throws PasswordException {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -54,7 +62,7 @@ public class User implements IUser {
 	}
 
 	public User(int id, String firstName, String lastName, String email, String password, Currency currency,
-			boolean isAdmin, Date date) {
+			boolean isAdmin, Date date) throws PasswordException {
 		this(firstName, lastName, email, password, currency, isAdmin, date);
 		this.setUserId(id);
 	}
@@ -139,15 +147,11 @@ public class User implements IUser {
 	}
 
 	@Override
-	public void setPassword(String password) {
+	public void setPassword(String password) throws PasswordException {
 		if (isPasswordSecured(password)) {
 			this.password = password;
 		} else {
-			try {
-				throw new PasswordException("Password must contain a small letter, a capital letter and a figure!");
-			} catch (PasswordException e) {
-				e.getMessage();
-			}
+			throw new PasswordException("Password must contain a small letter, a capital letter and a figure!");
 		}
 
 	}
