@@ -9,15 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.IUserDAO;
-import com.finance.tracker.model.dao.RegisterDAO;
 import com.finance.tracker.model.dao.UserDAO;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/LogIn.jsp");
+		dispatcher.forward(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -30,30 +36,31 @@ public class RegisterServlet extends HttpServlet {
 
 		if (password.equals(password2)) {
 
-			IUser user = new User();
-			user.setEmail(email);
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setPassword(password);
+			IUser user=null;
+			try {
+				user = new User(firstName, lastName, password, email);
+			} catch (PasswordException e) {
+				request.setAttribute("passwordError", e.getMessage());
+			}
 
 			IUserDAO userDAO = new UserDAO();
 
 			if (userDAO.isUserExisting(email)) {
 				request.setAttribute("emailError", "This email is already taken!");
-				RequestDispatcher dispatcher = request.getRequestDispatcher(".../jsp/Register.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/Register.jsp");
 				dispatcher.forward(request, response);
 
-			} else {
-				if (!new RegisterDAO().passwordValidation(password, password2)) {
-					request.setAttribute("passwordMissmatch", "Passwords are different!");
-					RequestDispatcher dispatcher = request.getRequestDispatcher("../jsp/Register.jsp");
-					dispatcher.forward(request, response);
-				} else {
-					userDAO.createUser(user);
-					request.getRequestDispatcher("./HOME").forward(request, response);
-				}
 			}
+			if (!password.equals(password2)) {
+				request.setAttribute("passwordMissmatch", "Passwords are different!");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/Register.jsp");
+				dispatcher.forward(request, response);
+			}
+			userDAO.createUser(user);
+			request.getRequestDispatcher("./jsp/LogIn.jsp").forward(request, response);
 
 		}
+
 	}
+
 }

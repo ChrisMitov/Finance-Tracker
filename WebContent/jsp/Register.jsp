@@ -18,52 +18,55 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<h1>Finance Tracker</h1>
 		<div class="login-bottom">
 			<h2>Register</h2>
-			<c:if test="${not empty sessionScope.userId}">
-				<p>${sessionScope.userId}</p>
-			</c:if>
-			<form mtheod="post" action="../RegisterServlet"></form>
-			<div class="col-md-6">
-				<div class="login-mail">
-					<input type="text" placeholder="First name" name="firstName">
-					<i class="fa fa-child"></i>
-				</div>
-				<div class="login-mail">
-					<input type="text" placeholder="Last name" name="lastName">
-					<i class="fa fa-child"></i>
-				</div>
-				<div class="login-mail">
-					<input type="text" placeholder="Email" name="email"> <i
-						class="fa fa-envelope"></i>
-				</div>
-				<div class="login-mail">
-					<input type="password" placeholder="Password" name="password">
-					<i class="fa fa-lock"></i>
-				</div>
-				<div class="login-mail">
-					<input type="password" placeholder="Repeated password"
-						name="password2"> <i class="fa fa-lock"></i>
-				</div>
-				<!-- <a class="news-letter" href="#">
+			<form method="post" action="../RegisterServlet">
+				<div class="col-md-6">
+					<div class="login-mail">
+						<input type="text" placeholder="First name" name="firstName"
+							required> <i class="fa fa-child"></i>
+					</div>
+					<div class="login-mail">
+						<input type="text" placeholder="Last name" name="lastName"
+							required> <i class="fa fa-child"></i>
+					</div>
+					<div class="login-mail">
+						<input type="text" pattern="[^ @]*@[^ @]*" title="John.Smith@example.com"
+							placeholder="Email" name="email" required required> <i
+							class="fa fa-envelope"></i>
+
+					</div>
+					<div class="login-mail">
+						<input type="password" placeholder="Password" name="password"
+							required> <i class="fa fa-lock"></i>
+					</div>
+					<div class="login-mail">
+						<input type="password" placeholder="Repeat password"
+							name="password2" required> <i class="fa fa-lock"></i>
+					</div>
+					<!-- <a class="news-letter" href="#">
 						 <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>I agree with the terms</label>
 					   </a> -->
-				</form>
-			</div>
+				</div>
 
-			<div class="col-md-6 login-do">
-				<label class="hvr-shutter-in-horizontal login-sub"> <input
-					type="submit" value="Submit">
-				</label>
-				<p>Already register</p>
-				<a href="LogIn.jsp" class="hvr-shutter-in-horizontal">Login</a>
-			</div>
-			<c:if test="${not empty emailError}">
-				<p style="color: red">
-					<c:out value="${emailError}"></c:out>
-			</c:if>
-			<c:if test="${not empty passwordMissmatch}">
-				<p style="color: red">
-					<c:out value="${passwordMissmatch}"></c:out>
-			</c:if>
+				<div class="col-md-6 login-do">
+					<label class="hvr-shutter-in-horizontal login-sub"> <input
+						type="submit" value="Submit" id='validate'>
+					</label>
+					<p>Already register</p>
+					<a href="LogIn.jsp" class="hvr-shutter-in-horizontal">Login</a>
+				</div>
+				<c:if test="${not empty emailError}">
+					<p style="color: red">
+						<c:out value="${emailError}"></c:out>
+				</c:if>
+				<c:if test="${not empty passwordMissmatch}">
+					<p style="color: red">
+						<c:out value="${passwordMissmatch}"></c:out>
+				</c:if>
+				<c:if test="${not empty passwordError}">
+					<p style="color: red">
+						<c:out value="${passwordError}"></c:out>
+				</c:if>
+			</form>
 			<div class="clearfix"></div>
 		</div>
 	</div>

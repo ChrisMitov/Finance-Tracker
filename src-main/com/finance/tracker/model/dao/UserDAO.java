@@ -1,10 +1,11 @@
 package com.finance.tracker.model.dao;
 
 import java.util.Collection;
-
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
@@ -147,5 +148,36 @@ public class UserDAO implements IUserDAO {
 		return (getUserByMail(email).getUserId());
 	}
 	
+	public String getLastNameById(int id){
+		IUser user = getUser(id);
+		return user.getLastName();
+		
+	}
+	
+	public String getPasswordById(int id){
+		IUser user = getUser(id);
+		return user.getPassword();
+		
+	}
+	public String getEmailById(int id){
+		IUser user = getUser(id);
+		return user.getEmail();
+		
+	}
+	
+	public Date getDateByID(int id){
+		IUser user = getUser(id);
+		return user.getJointedDate();
+	}
+	
+	public Currency getCurrencyById(int id){
+		IUser user = getUser(id);
+		return user.getCurrency();
+	}
+
+	public String getFirstNameById(int id) {
+		IUser user = getUser(id);
+		return user.getFirstName();
+	}
 	
 }
