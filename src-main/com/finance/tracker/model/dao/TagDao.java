@@ -64,6 +64,22 @@ public class TagDao implements ITagDao {
 			}
 		}
 	}
+	
+	@Override
+	public void removeTag(int id) {
+		try {
+			new Validation().validateNegativeNumber(id);
+			manager.getTransaction().begin();
+			manager.remove(foundById(id));
+			manager.getTransaction().commit();
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
 
 	@Override
 	public Tag foundTagByName(String name) {

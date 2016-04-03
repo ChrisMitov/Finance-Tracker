@@ -13,6 +13,8 @@ public interface ITagDao {
 	void updateTag(Tag tag);
 
 	void removeTag(Tag tag);
+	
+	void removeTag(int id);
 
 	Tag foundTagByName(String name);
 

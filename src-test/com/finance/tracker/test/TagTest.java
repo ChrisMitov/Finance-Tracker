@@ -5,16 +5,22 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Category;
+import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ICategory;
+import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.Tag;
+import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.ICategoryDao;
 import com.finance.tracker.model.dao.ITagDao;
+import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.TagDao;
+import com.finance.tracker.model.dao.UserDAO;
 
 public class TagTest {
 	private static final int NUMBER_OF_ADDED_TAGS = 5;
@@ -23,10 +29,13 @@ public class TagTest {
 	private static final String CATEGORY_TEST_NAME = "Airplane";
 	ITagDao dao = new TagDao();
 	ICategoryDao catDao = new CategoryDao();
+	IUserDAO userDao = new UserDAO();
 	@Test
 	public void addTag()  {
 		try {
-			ICategory cat = makeCategory();
+			IUser user = createUser();
+			userDao.createUser(user);
+			ICategory cat = makeCategory((User) user);
 			int id = catDao.addCategory(cat);
 			Tag tag = makeTag(TAG_TEST_NAME, id);
 			int tagId = dao.addTag(tag);
@@ -35,6 +44,7 @@ public class TagTest {
 			assertEquals(tag.getCategory(), newTag.getCategory());
 			dao.removeTag(tag);
 			catDao.removeCategory(cat);
+			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
@@ -43,7 +53,9 @@ public class TagTest {
 	@Test
 	public void updateTag(){
 		try {
-			ICategory cat = makeCategory();
+			IUser user = createUser();
+			userDao.createUser(user);
+			ICategory cat = makeCategory((User) user);
 			int id = catDao.addCategory(cat);
 			Tag tag = makeTag(TAG_TEST_NAME, id);
 			int tagId = dao.addTag(tag);
@@ -55,6 +67,7 @@ public class TagTest {
 			assertEquals(newTag.getCategory(), tag.getCategory());
 			dao.removeTag(newTag);
 			catDao.removeCategory(cat);
+			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +77,9 @@ public class TagTest {
 	@Test
 	public void getAllTagsByCategory(){
 		try {
-			ICategory cat = makeCategory();
+			IUser user = createUser();
+			userDao.createUser(user);
+			ICategory cat = makeCategory((User) user);
 			int id = catDao.addCategory(cat);
 			List<Tag> tags = new ArrayList<Tag>();
 			for (int i = 0; i < NUMBER_OF_ADDED_TAGS; i++) {
@@ -78,13 +93,14 @@ public class TagTest {
 				dao.removeTag(tag);
 			}
 			catDao.removeCategory(cat);
+			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private ICategory makeCategory() throws FinanceTrackerException {
-		ICategory cat = new Category(CATEGORY_TEST_NAME);
+	private ICategory makeCategory(User user) throws FinanceTrackerException {
+		ICategory cat = new Category(CATEGORY_TEST_NAME,user);
 		return cat;
 	}
 
@@ -93,5 +109,10 @@ public class TagTest {
 		tag.setName(name);
 		tag.setCategory(catDao.foundById(id));
 		return tag;
+	}
+	
+	private IUser createUser(){
+		IUser user = new User("Chiko", "Alvarez", "chiko@gmail.com", "ahajA22", Currency.BGN, false, new Date());
+		return user;
 	}
 }
