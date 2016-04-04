@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.Currency;
@@ -68,6 +69,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -102,6 +106,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -126,6 +133,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -144,6 +154,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -158,7 +171,7 @@ public class BudgetTest {
 		return budget;
 	}
 
-	private IUser makeNewUser() {
+	private IUser makeNewUser() throws PasswordException {
 		IUser user = new User();
 		user.setFirstName(USER_NAME);
 		user.setLastName(USER_LASTNAME);

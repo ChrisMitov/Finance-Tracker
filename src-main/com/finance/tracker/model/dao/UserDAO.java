@@ -8,6 +8,7 @@ import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.Income;
 import com.finance.tracker.model.User;
 import com.finance.tracker.validation.Validation;
 
@@ -124,53 +125,50 @@ public class UserDAO implements IUserDAO {
 		} catch (FinanceTrackerException e1) {
 			e1.printStackTrace();
 		}
-		Query query = manager.createQuery("Select a " + "from Account a " + "where a.user_id:=id", IAccount.class);
-		try {
-			return (Collection<IAccount>) query.getResultList();
-		} catch (NoResultException e) {
-			return null;
+		Query query = manager.createQuery("from Account a where a.owner=:user", IAccount.class)
+				.setParameter("user", getUser(id));
+		Collection<IAccount> accounts = query.getResultList();
+		return accounts;
+	}
+
+	public boolean isUserExisting(String email) {
+		IUser user = getUserByMail(email);
+		if (user != null) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}
-	
-	public boolean isUserExisting(String email){
-		IUser user= getUserByMail(email);
-		if(user!=null){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
-	}
-	
-	public int getUserId(String email){
+
+	public int getUserId(String email) {
 		return (getUserByMail(email).getUserId());
 	}
-	
-	public String getLastNameById(int id){
+
+	public String getLastNameById(int id) {
 		IUser user = getUser(id);
 		return user.getLastName();
-		
+
 	}
-	
-	public String getPasswordById(int id){
+
+	public String getPasswordById(int id) {
 		IUser user = getUser(id);
 		return user.getPassword();
-		
+
 	}
-	public String getEmailById(int id){
+
+	public String getEmailById(int id) {
 		IUser user = getUser(id);
 		return user.getEmail();
-		
+
 	}
-	
-	public Date getDateByID(int id){
+
+	public Date getDateByID(int id) {
 		IUser user = getUser(id);
 		return user.getJointedDate();
 	}
-	
-	public Currency getCurrencyById(int id){
+
+	public Currency getCurrencyById(int id) {
 		IUser user = getUser(id);
 		return user.getCurrency();
 	}
@@ -179,5 +177,5 @@ public class UserDAO implements IUserDAO {
 		IUser user = getUser(id);
 		return user.getFirstName();
 	}
-	
+
 }

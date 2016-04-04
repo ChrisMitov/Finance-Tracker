@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Category;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ICategory;
@@ -47,6 +48,9 @@ public class TagTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -69,6 +73,9 @@ public class TagTest {
 			catDao.removeCategory(cat);
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -96,6 +103,9 @@ public class TagTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -111,7 +121,7 @@ public class TagTest {
 		return tag;
 	}
 	
-	private IUser createUser(){
+	private IUser createUser() throws PasswordException{
 		IUser user = new User("Chiko", "Alvarez", "chiko@gmail.com", "ahajA22", Currency.BGN, false, new Date());
 		return user;
 	}

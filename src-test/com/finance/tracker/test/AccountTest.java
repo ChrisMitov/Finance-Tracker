@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IAccount;
@@ -24,7 +25,7 @@ public class AccountTest {
 	IUserDAO userDao = new UserDAO();
 
 	@Test
-	public void createAccount() throws FinanceTrackerException {
+	public void createAccount() throws FinanceTrackerException, PasswordException {
 		IUser user = new User("Sasa", "sasko", "19w@abv.bg", "iiI12l", Currency.BGN, false, new Date());
 		userDao.createUser(user);
 		IAccount acc = new Account("Free Time", 200, (User) user);

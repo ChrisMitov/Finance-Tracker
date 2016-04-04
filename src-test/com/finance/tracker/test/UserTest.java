@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import org.junit.Test;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.Currency;
@@ -23,7 +24,7 @@ public class UserTest {
 	IUserDAO userDAO = new UserDAO();
 
 	@Test
-	public void createUser() {
+	public void createUser() throws PasswordException {
 		IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false,
 				new Date());
 		// int id = userDAO.createUser(user);
@@ -70,7 +71,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void userFullSolution() {
+	public void userFullSolution() throws PasswordException {
 		IUser user = new User("Haralampii", "Stoyanov", "haho2@abv.bg", "Azsumvelik1", Currency.BGN, false, new Date());
 		userDAO.createUser(user);
 		IBudget budju = new Budget();
@@ -98,7 +99,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void checkForExistingUser() {
+	public void checkForExistingUser() throws PasswordException {
 		IUser user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
 		if (userDAO.isUserExisting(user.getEmail())) {
 			System.out.println("YES!");

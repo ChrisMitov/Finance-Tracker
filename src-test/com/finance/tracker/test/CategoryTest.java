@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Category;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ICategory;
@@ -23,15 +24,20 @@ public class CategoryTest {
 
 	@Test
 	public void addCategory() {
-		IUserDAO userDao = new UserDAO();
-		IUser user = makeUser();
-		userDao.createUser(user);
-		ICategory cat = createCategory(user);
-		int id = categoryDao.addCategory(cat);
-		ICategory category = categoryDao.foundById(id);
-		assertEquals(cat.getName(), category.getName());
-		categoryDao.removeCategory(cat);
-		userDao.deleteUser(user);
+		try {
+			IUserDAO userDao = new UserDAO();
+			IUser user = makeUser();
+			userDao.createUser(user);
+			ICategory cat = createCategory(user);
+			int id = categoryDao.addCategory(cat);
+			ICategory category = categoryDao.foundById(id);
+			assertEquals(cat.getName(), category.getName());
+			categoryDao.removeCategory(cat);
+			userDao.deleteUser(user);
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -51,6 +57,8 @@ public class CategoryTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -63,7 +71,6 @@ public class CategoryTest {
 		assertNotNull(categories);
 	}
 
-
 	private ICategory createCategory(IUser user) {
 		ICategory cat = new Category();
 		try {
@@ -75,7 +82,7 @@ public class CategoryTest {
 		return cat;
 	}
 
-	private IUser makeUser(){
+	private IUser makeUser() throws PasswordException {
 		IUser user = new User();
 		user.setFirstName("Luis");
 		user.setLastName("Suarez");

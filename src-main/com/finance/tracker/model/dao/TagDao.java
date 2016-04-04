@@ -99,6 +99,7 @@ public class TagDao implements ITagDao {
 
 	@Override
 	public Collection<Tag> getAllTagsByCategory(ICategory category) {
+		
 		@SuppressWarnings("unchecked")
 		Collection<Tag> list = manager.createQuery("Select t FROM Tag t WHERE t.category = :id ")
 				.setParameter("id", category).getResultList();

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.view.model.FinanceOperationModel;
 
 public interface IFinanceOperation {
 
@@ -46,5 +47,7 @@ public interface IFinanceOperation {
 	void setAccount(Account account) throws FinanceTrackerException;
 
 	Collection<Tag> getAllTags() throws FinanceTrackerException;
+	
+	FinanceOperationModel getViewModelFinanceOperation(int sum, String name);
 
 }

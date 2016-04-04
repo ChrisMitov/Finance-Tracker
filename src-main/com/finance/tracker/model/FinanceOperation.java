@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
+import com.finance.tracker.view.model.FinanceOperationModel;
 
 @Entity
 @Table(name = "finance_operation")
@@ -60,17 +61,23 @@ public class FinanceOperation implements IFinanceOperation {
 	}
 
 	public FinanceOperation(int id, int sum, Date date, String description, String photoAddress, Category category,
-			RepeatType repeatType, FinanceOperationType operationType) throws FinanceTrackerException {
-		this();
+			RepeatType repeatType, FinanceOperationType operationType, Account account) throws FinanceTrackerException {
+		this(sum, date, description, photoAddress, category, repeatType, operationType, account);
 		setId(id);
+
+	}
+
+	public FinanceOperation(int sum, Date date, String description, String photoAddress, Category category,
+			RepeatType repeatType, FinanceOperationType incomes, Account account) throws FinanceTrackerException {
+		this();
 		setSum(sum);
 		setDate(date);
 		setDescription(description);
 		setPhotoAddress(photoAddress);
 		setCategory(category);
 		setRepeatType(repeatType);
-		setOperationType(operationType);
-//		setAccount(account);
+		setOperationType(incomes);
+		setAccount(account);
 	}
 
 	@Override
@@ -235,6 +242,10 @@ public class FinanceOperation implements IFinanceOperation {
 		return true;
 	}
 
+	public FinanceOperationModel getViewModelFinanceOperation(int sum, String name){
+		return new FinanceOperationModel(sum, name);
+	}
+	
 	@Override
 	public Account getAccount() {
 		return account;
