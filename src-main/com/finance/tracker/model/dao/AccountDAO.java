@@ -37,17 +37,30 @@ public class AccountDAO implements IAccountDAO {
 	public void deleteAccount(IAccount account) {
 		try {
 			new Validation().validateNotNullObject(account);
-		} catch (FinanceTrackerException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			new Validation().validateNotNullObject(account);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
 		try {
 			manager.getTransaction().begin();
 			manager.remove(account);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
+	
+	@Override
+	public void deleteAccount(int id) {
+		try {
+			new Validation().validateNegativeNumber(id);;
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(getAccount(id));
 			manager.getTransaction().commit();
 		} finally {
 			if (manager.getTransaction().isActive()) {
@@ -63,19 +76,7 @@ public class AccountDAO implements IAccountDAO {
 		} catch (FinanceTrackerException e1) {
 			e1.printStackTrace();
 		}
-		try {
-			manager.getTransaction().begin();
-			Account account = manager.find(Account.class, id);
-			manager.getTransaction().commit();
-			return account;
-		} catch (RuntimeException e) {
-			if (manager.getTransaction().isActive()) {
-				manager.getTransaction().rollback();
-				throw e;
-			}
-		}
-		return null;
-
+		return manager.find(Account.class, id);
 	}
 
 	@Override

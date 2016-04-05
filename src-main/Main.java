@@ -15,8 +15,8 @@ import com.finance.tracker.model.dao.UserDAO;
 public class Main {
 	public static void main(String[] args) {
 		try {
-			IFinanceOperation fo = new FinanceOperation(200, new Date(2016, 04, 03), "So lucky", "",
-					new CategoryDao().foundById(202), RepeatType.NO_REPEAT, FinanceOperationType.EXPENCES, (Account) new AccountDAO().getAccount(701));
+			IFinanceOperation fo = new FinanceOperation(100, new Date(2016, 03, 03), "More money", "",
+					new CategoryDao().foundById(352), RepeatType.NO_REPEAT, FinanceOperationType.EXPENCES, (Account) new AccountDAO().getAccount(701));
 			new FinanceOperationDao().addFinanceOperation(fo);
 			
 		} catch (FinanceTrackerException e) {
