@@ -1,4 +1,4 @@
-package com.finance.tracker.controller;
+ package com.finance.tracker.controller;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

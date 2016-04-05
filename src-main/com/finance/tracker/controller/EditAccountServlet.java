@@ -12,9 +12,7 @@ import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.dao.AccountDAO;
 
-/**
- * Servlet implementation class EditAccountServlet
- */
+
 @WebServlet("/editAccount")
 public class EditAccountServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
