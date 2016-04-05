@@ -3,6 +3,7 @@ package com.finance.tracker.test;
 import org.junit.Test;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Category;
 import com.finance.tracker.model.Currency;
@@ -40,7 +41,7 @@ public class FinanceOperationTest {
 	IUserDAO userDao = new UserDAO();
 	
 	@Test
-	public void addFinanceOperation() throws FinanceTrackerException {
+	public void addFinanceOperation() throws FinanceTrackerException, PasswordException {
 		
 		ICategory cat = makeCategory();
 		categoryDao.addCategory(cat);
@@ -125,7 +126,7 @@ public class FinanceOperationTest {
 		return account;
 	}
 	
-	private IUser makeUser(){
+	private IUser makeUser() throws PasswordException{
 		IUser user = new User();
 		user.setFirstName("Luis");
 		user.setLastName("Suarez");

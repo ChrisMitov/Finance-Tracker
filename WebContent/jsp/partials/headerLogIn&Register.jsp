@@ -11,15 +11,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 
 </script>
-<link href="../resources/css/bootstrap.min.css" rel='stylesheet'
+<link href="resources/css/bootstrap.min.css" rel='stylesheet'
 	type='text/css' />
 <!-- Custom Theme files -->
-<link href="../resources/css/style.css" rel='stylesheet' type='text/css' />
-<link href="../resources/css/font-awesome.css" rel='stylesheet'
+<link href="resources/css/style.css" rel='stylesheet' type='text/css' />
+<link href="resources/css/font-awesome.css" rel='stylesheet'
 	type='text/css' />
-<script src="../resources/js/jquery.min.js">
+<script src="resources/js/jquery.min.js">
 	
 </script>
-<script src="../resources/js/bootstrap.min.js">
+<script src="resources/js/bootstrap.min.js">
 	
 </script>

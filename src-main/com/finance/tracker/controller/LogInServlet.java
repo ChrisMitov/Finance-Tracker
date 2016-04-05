@@ -1,6 +1,9 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +17,7 @@ import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.dao.LogInDAO;
 import com.finance.tracker.model.dao.UserDAO;
 
-@WebServlet("/LogInServlet")
+@WebServlet("/login")
 public class LogInServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -30,18 +33,24 @@ public class LogInServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		UserDAO userDao = new UserDAO();
+		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+//		String hashedPassowrd = null;
+//		 try {
+//			 hashedPassowrd = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+//		    } catch (NoSuchAlgorithmException e) {
+//		        e.printStackTrace();
+//		    }
 
 		if (new LogInDAO().validate(username, password)) {
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(-1);
-			UserDAO userDao = new UserDAO();
 			int userId = userDao.getUserId(username);
 			session.setAttribute("userId", userId);
 			IUser user = userDao.getUser(userId);
-			System.out.println("!!!!!"+user.getFirstName());
 			session.setAttribute("currentUser", user);
 			session.setAttribute("userName", user.getFirstName());
 			session.setAttribute("lastName", user.getLastName());

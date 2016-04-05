@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import org.junit.Test;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.Currency;
@@ -23,7 +24,7 @@ public class UserTest {
 	IUserDAO userDAO = new UserDAO();
 
 	@Test
-	public void createUser() {
+	public void createUser() throws PasswordException {
 		IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false,
 				new Date());
 		// int id = userDAO.createUser(user);
@@ -36,7 +37,7 @@ public class UserTest {
 	public void findUser() {
 		IUser userToFind = userDAO.getUser(151);
 		System.out.println(userToFind.getFirstName() + " " + userToFind.getLastName());
-		assertNotNull(userDAO);
+		assertNotNull(userToFind);
 	}
 
 	@Test
@@ -50,14 +51,14 @@ public class UserTest {
 		User userToUpdate = userDAO.getUser(151);
 		userToUpdate.setFirstName("Pecan");
 		userDAO.updateUser(userToUpdate);
-		assertNotNull(userDAO);
+		assertNotNull(userToUpdate);
 	}
 
 	@Test
 	public void getUserByMail() {
 		IUser userWithEmail = userDAO.getUserByMail("haho@abv.bg");
 		System.out.println(userWithEmail.getFirstName() + " " + userWithEmail.getLastName());
-		assertNotNull(userDAO);
+		assertNotNull(userWithEmail);
 	}
 
 	@Test
@@ -66,11 +67,11 @@ public class UserTest {
 		for (IUser u : allUsers) {
 			System.out.println(u.getFirstName() + " " + u.getLastName());
 		}
-		assertNotNull("userDAO");
+		assertNotNull(allUsers);
 	}
 
 	@Test
-	public void userFullSolution() {
+	public void userFullSolution() throws PasswordException {
 		IUser user = new User("Haralampii", "Stoyanov", "haho2@abv.bg", "Azsumvelik1", Currency.BGN, false, new Date());
 		userDAO.createUser(user);
 		IBudget budju = new Budget();
@@ -99,7 +100,12 @@ public class UserTest {
 
 	@Test
 	public void checkForExistingUser() {
-		IUser user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
+		IUser user=null;
+		try {
+			user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
+		} catch (PasswordException e) {
+			e.printStackTrace();
+		}
 		if (userDAO.isUserExisting(user.getEmail())) {
 			System.out.println("YES!");
 		} else {

@@ -1,5 +1,6 @@
 import java.util.Date;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Category;
 import com.finance.tracker.model.Currency;
@@ -24,7 +25,7 @@ import com.finance.tracker.model.dao.UserDAO;
 
 public class Amain {
 
-	public static void main(String[] args) throws FinanceTrackerException {
+	public static void main(String[] args) throws FinanceTrackerException, PasswordException {
 		IFinanceOperationDao financeDao = new FinanceOperationDao();
 		IUserDAO userDao = new UserDAO();
 		IUser user = new User("Pesho", "FFF", "fff2@abv.bg", "i9W",Currency.BGN, false, new Date(2016, 1, 1));

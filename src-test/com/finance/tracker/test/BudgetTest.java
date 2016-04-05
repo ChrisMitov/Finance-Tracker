@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.Currency;
@@ -46,7 +47,7 @@ public class BudgetTest {
 	IAccountDAO accountDao = new AccountDAO();
 
 	@Test
-	public void addBudget() {
+	public void addBudget() throws PasswordException {
 		try {
 			IUser user = makeNewUser();
 			IAccount account = makeNewAccount((User) user);
@@ -72,7 +73,7 @@ public class BudgetTest {
 	}
 
 	@Test
-	public void updateBudget() {
+	public void updateBudget() throws PasswordException {
 
 		try {
 			IUser user = makeNewUser();
@@ -106,7 +107,7 @@ public class BudgetTest {
 	}
 
 	@Test
-	public void getAllBudgetsPerUser() {
+	public void getAllBudgetsPerUser() throws PasswordException {
 		try {
 			User user = new User();
 			user.setFirstName(NEW_USER_FIRST_NAME);
@@ -130,7 +131,7 @@ public class BudgetTest {
 	}
 
 	@Test
-	public void getAllBudgets() {
+	public void getAllBudgets() throws PasswordException {
 		try {
 			IUser user = makeNewUser();
 			userDao.createUser(user);
@@ -158,7 +159,7 @@ public class BudgetTest {
 		return budget;
 	}
 
-	private IUser makeNewUser() {
+	private IUser makeNewUser() throws PasswordException {
 		IUser user = new User();
 		user.setFirstName(USER_NAME);
 		user.setLastName(USER_LASTNAME);

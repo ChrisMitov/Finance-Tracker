@@ -11,7 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Edit profile</title>
+<title>Finance tracker - Edit profile</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
@@ -19,29 +19,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 
+
+
+
+
 </script>
-<link href="../resources/css/bootstrap.min.css" rel='stylesheet'
+<link href="resources/css/bootstrap.min.css" rel='stylesheet'
 	type='text/css' />
 <!--<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />-->
 <!-- Custom Theme files -->
-<link href="../resources/css/style.css" rel='stylesheet' type='text/css' />
-<link href="../resources/css/font-awesome.css" rel="stylesheet">
-<script src="../resources/js/jquery.min.js">
+<link href="resources/css/style.css" rel='stylesheet' type='text/css' />
+<link href="resources/css/font-awesome.css" rel="stylesheet">
+<script src="resources/js/jquery.min.js">
 	
 </script>
-<script src="../resources/js/bootstrap.min.js">
+<script src="resources/js/bootstrap.min.js">
 	
 </script>
 
 <!-- Mainly scripts -->
-<script src="../resources/js/jquery.metisMenu.js"></script>
-<script src="../resources/js/jquery.slimscroll.min.js"></script>
+<script src="resources/js/jquery.metisMenu.js"></script>
+<script src="resources/js/jquery.slimscroll.min.js"></script>
 <!-- Custom and plugin javascript -->
-<link href="../resources/css/custom.css" rel="stylesheet">
-<script src="../resources/js/custom.js"></script>
-<script src="../resources/js/screenfull.js"></script>
+<link href="resources/css/custom.css" rel="stylesheet">
+<script src="resources/js/custom.js"></script>
+<script src="resources/js/screenfull.js"></script>
 <script>
 	$(function() {
 		$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
@@ -79,12 +87,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h3>
 						<i class="fa fa-magic"></i>Edit your profile
 					</h3>
-					<form method="post" action="../EditProfile">
+					<form method="post" action="./editprofile">
 						<div class="profile-bottom-top">
 
 							<div class="col-md-8 profile-text">
-								<h5>${userName}</h5>
-								<h5>${lastName}</h5>
+								<h5>${userName}${lastName}</h5>
 
 								<table>
 									<tr>
@@ -123,7 +130,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option value="blanck"></option>
 												<option value="BGN">BGN</option>
 												<option value="EUR">EUR</option>
-												<option value="UDS">UDS</option>
+												<option value="USD">USD</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td>Financial month starts on</td>
+										<td>:</td>
+										<td>${currency}</td>
+										<td><select name="newCurrency">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+												<option value="13">13</option>
+												<option value="14">14</option>
+												<option value="15">15</option>
+												<option value="16">16</option>
+												<option value="17">17</option>
+												<option value="18">18</option>
+												<option value="19">19</option>
+												<option value="20">20</option>
+												<option value="21">21</option>
+												<option value="22">22</option>
+												<option value="23">23</option>
+												<option value="24">24</option>
+												<option value="25">25</option>
+												<option value="26">26</option>
+												<option value="27">27</option>
+												<option value="28">28</option>
+												<option value="29">29</option>
+												<option value="30">30</option>
+												<option value="31">31</option>
 										</select></td>
 									</tr>
 									<tr>

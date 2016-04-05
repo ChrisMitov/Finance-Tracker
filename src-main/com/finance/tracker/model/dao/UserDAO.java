@@ -1,5 +1,7 @@
 package com.finance.tracker.model.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -165,9 +167,13 @@ public class UserDAO implements IUserDAO {
 		
 	}
 	
-	public Date getDateByID(int id){
+	public String getDateByID(int id){
 		IUser user = getUser(id);
-		return user.getJointedDate();
+		Date date = user.getJointedDate();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		String data = df.format(date);
+		System.out.println(data);
+		return data;
 	}
 	
 	public Currency getCurrencyById(int id){

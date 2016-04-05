@@ -16,18 +16,20 @@ import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
 
-@WebServlet("/EditProfile")
-public class EditProfile extends HttpServlet {
+@WebServlet("/editprofile")
+public class EditProfile extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	// getting all data for current user if needed to be changed
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		if (session.getAttribute("userId") == null) {
-			response.sendRedirect("../jsp/LogIn.jsp");
+		
+		if (!super.isAuthenticated(request)) {
+			response.sendRedirect("./login");
 			return;
 		}
+		
+		HttpSession session = request.getSession();
 		int id = (int) session.getAttribute("userId");
 		IUserDAO user = new UserDAO();
 		session.setAttribute("currentUser", user);
@@ -37,26 +39,29 @@ public class EditProfile extends HttpServlet {
 		session.setAttribute("password", user.getPasswordById(id));
 		session.setAttribute("currency", user.getCurrencyById(id));
 		session.setAttribute("startDate", user.getDateByID(id));
-		RequestDispatcher rd = request.getRequestDispatcher("./jsp/EditProfile.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("./jsp/Profile.jsp");
 		rd.forward(request, response);
 	}
 
 	// update user in database
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		if (!super.isAuthenticated(request)) {
+			response.sendRedirect("./login");
+			return;
+		}
 		IUserDAO user = new UserDAO();
 		IUser userToUpdate = validateUpdates(request);
 		user.updateUser(userToUpdate);
 		doGet(request, response);
-
 	}
 
 	// checks what information the user has changed
 	private IUser validateUpdates(HttpServletRequest request) {
 		String firstName = request.getParameter("newFirstName");
-		System.out.println("FIRST NAME " + firstName);
 		String lastName = request.getParameter("newLastName");
-		String password = request.getParameter("newPpassword");
+		String password = request.getParameter("newPassword");
 		String email = request.getParameter("newEemail");
 		String currency = request.getParameter("newCurrency");
 
@@ -79,7 +84,7 @@ public class EditProfile extends HttpServlet {
 				request.setAttribute("passwordError", e.getMessage());
 			}
 		}
-		if (!(session.getAttribute("currency").equals("blanck"))) {
+		if (!(currency.equals("blanck"))) {
 			Currency newCurrency = Currency.valueOf(currency);
 			userToUpdate.setCurrency(newCurrency);
 		}
