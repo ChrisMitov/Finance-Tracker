@@ -10,6 +10,8 @@ public interface IAccountDAO {
 	int createAccount(IAccount account);
 
 	void deleteAccount(IAccount account);
+	
+	void deleteAccount(int id);
 
 	IAccount getAccount(int id);
 

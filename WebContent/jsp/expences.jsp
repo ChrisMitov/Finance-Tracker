@@ -31,7 +31,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 </script>
-<jsp:include page="./partials/pieHeader.jsp"></jsp:include>
+<jsp:include page="./partials/pieHeader.jsp" />
 <link href="resources/css/bootstrap.min.css" rel='stylesheet'
 	type='text/css' />
 <!-- Custom Theme files -->
@@ -100,9 +100,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
 	<script type="text/javascript"> 
-var dataChart = null;
-
-	// ajax call
 	$.get("./showExpences").success(function(data) {
 		var chart = AmCharts.makeChart("chartdiv", {
 		    "type": "pie",
