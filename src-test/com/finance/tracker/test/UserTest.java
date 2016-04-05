@@ -24,9 +24,13 @@ public class UserTest {
 	IUserDAO userDAO = new UserDAO();
 
 	@Test
-	public void createUser() throws PasswordException {
-		IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false,
-				new Date());
+	public void createUser() {
+		try {
+			IUser user = new User("Stanio", "Hakera", "peshoto_hakercheto1@abv.bg", "AaA123", Currency.BGN, false,
+					new Date());
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 		// int id = userDAO.createUser(user);
 		// IUser newUser = userDAO.getUser(id);
 		// assertEquals(user.getFirstName(), newUser.getFirstName());
@@ -71,8 +75,13 @@ public class UserTest {
 	}
 
 	@Test
-	public void userFullSolution() throws PasswordException {
-		IUser user = new User("Haralampii", "Stoyanov", "haho2@abv.bg", "Azsumvelik1", Currency.BGN, false, new Date());
+	public void userFullSolution() {
+		IUser user = null;
+		try {
+			user = new User("Haralampii", "Stoyanov", "haho2@abv.bg", "Azsumvelik1", Currency.BGN, false, new Date());
+		} catch (FinanceTrackerException e1) {
+			e1.printStackTrace();
+		}
 		userDAO.createUser(user);
 		IBudget budju = new Budget();
 		try {
@@ -99,8 +108,13 @@ public class UserTest {
 	}
 
 	@Test
-	public void checkForExistingUser() throws PasswordException {
-		IUser user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
+	public void checkForExistingUser() {
+		IUser user = null;
+		try {
+			user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 		if (userDAO.isUserExisting(user.getEmail())) {
 			System.out.println("YES!");
 		} else {

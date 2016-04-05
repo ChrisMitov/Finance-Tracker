@@ -58,7 +58,7 @@ public class User implements IUser {
 	}
 
 	public User(String firstName, String lastName, String email, String password, Currency currency, boolean isAdmin,
-			Date date) throws PasswordException {
+			Date date) throws FinanceTrackerException {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -69,7 +69,7 @@ public class User implements IUser {
 	}
 
 	public User(int id, String firstName, String lastName, String email, String password, Currency currency,
-			boolean isAdmin, Date date) throws PasswordException {
+			boolean isAdmin, Date date) throws FinanceTrackerException {
 		this(firstName, lastName, email, password, currency, isAdmin, date);
 		this.setUserId(id);
 	}
@@ -154,13 +154,9 @@ public class User implements IUser {
 	}
 
 	@Override
-	public void setPassword(String password) throws PasswordException {
-		if (isPasswordSecured(password)) {
-			this.password = password;
-		} else {
-			throw new PasswordException("Password must contain a small letter, a capital letter and a figure!");
-		}
-
+	public void setPassword(String password) throws FinanceTrackerException{
+			new Validation().validateString(password);
+			this.password=password;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -178,30 +174,6 @@ public class User implements IUser {
 	@Override
 	public Date getJointedDate() {
 		return jointedDate;
-	}
-
-	private boolean isPasswordSecured(String password) {
-		if (password != null && password.length() > 0) {
-			boolean figure = false;
-			boolean capitalLetter = false;
-			boolean smallLetter = false;
-			for (int index = 0; index < password.length(); index++) {
-				char letter = password.charAt(index);
-				if (letter >= '0' && letter <= '9') {
-					figure = true;
-				}
-				if (letter >= 'a' && letter <= 'z') {
-					smallLetter = true;
-				}
-				if (letter >= 'A' && letter <= 'Z') {
-					capitalLetter = true;
-				}
-			}
-			if (figure && capitalLetter & smallLetter) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
