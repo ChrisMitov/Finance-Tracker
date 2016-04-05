@@ -69,6 +69,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -103,6 +106,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -127,6 +133,9 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -144,6 +153,9 @@ public class BudgetTest {
 			accountDao.deleteAccount(account);
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		} catch (PasswordException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

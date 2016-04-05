@@ -99,13 +99,8 @@ public class UserTest {
 	}
 
 	@Test
-	public void checkForExistingUser() {
-		IUser user=null;
-		try {
-			user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
-		} catch (PasswordException e) {
-			e.printStackTrace();
-		}
+	public void checkForExistingUser() throws PasswordException {
+		IUser user = new User("Malina", "Petkova", "malinka@abv.bg", "Aa1Aa1Aa1A", Currency.EUR, false, new Date());
 		if (userDAO.isUserExisting(user.getEmail())) {
 			System.out.println("YES!");
 		} else {

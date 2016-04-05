@@ -43,10 +43,10 @@ public class FinanceOperationTest {
 	@Test
 	public void addFinanceOperation() throws FinanceTrackerException, PasswordException {
 		
-		ICategory cat = makeCategory();
-		categoryDao.addCategory(cat);
 		IUser user = makeUser();
 		userDao.createUser(user);
+		ICategory cat = makeCategory(user);
+		categoryDao.addCategory(cat);
 		IAccount account = makeAccount(user);
 		accountDao.createAccount(account);
 		IFinanceOperation finance = new FinanceOperation();
@@ -74,9 +74,9 @@ public class FinanceOperationTest {
 //		assertEquals(tagove.size(), financeOperation.getAllTags().size());
 		foDao.removeFinanceOperation(finance);
 		accountDao.deleteAccount(account);
-		userDao.deleteUser(user);
 		tags.removeTag(tag);
 		categoryDao.removeCategory(cat);
+		userDao.deleteUser(user);
 	}
 
 	@Test
@@ -113,8 +113,8 @@ public class FinanceOperationTest {
 		assertNotNull(income);
 	}
 	
-	private ICategory makeCategory() throws FinanceTrackerException {
-		ICategory cat = new Category(CATEGORY_TEST_NAME);
+	private ICategory makeCategory(IUser user) throws FinanceTrackerException {
+		ICategory cat = new Category(CATEGORY_TEST_NAME, (User) user);
 		return cat;
 	}
 	

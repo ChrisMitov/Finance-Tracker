@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ExpenseServlet
  */
-@WebServlet("/ExpenseServlet")
+@WebServlet("/expences")
 public class ExpenseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -23,7 +23,8 @@ public class ExpenseServlet extends HttpServlet {
 //			response.sendRedirect("./");
 //			return;
 //		}
-		// To Do...
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/expences.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

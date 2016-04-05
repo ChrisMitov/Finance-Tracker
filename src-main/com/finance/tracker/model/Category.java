@@ -1,61 +1,39 @@
 package com.finance.tracker.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
 
 @Entity
 public class Category implements ICategory {
-	private static final String TAG_CONTAINS_ERROR = "This tag is not in out collection of stacks";
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(unique = true)
 	private String name;
-
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	public Category() {
 	}
 
-	public Category(String name) throws FinanceTrackerException {
+	public Category(String name,User user) throws FinanceTrackerException {
 		this();
 		setName(name);
+		setUser(user);
 	}
 
-	public Category(int id, String name) throws FinanceTrackerException {
-		this(name);
+	public Category(int id, String name, User user) throws FinanceTrackerException {
+		this(name,user);
 		setId(id);
 	}
-
-//	@Override
-//	public void addTag(Tag tag) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(tag);
-//		synchronized (tags) {
-//			tags.add(tag);
-//		}
-//	}
-//
-//	@Override
-//	public void removeTag(Tag tag) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(tag);
-//		if (!tags.contains(tag)) {
-//			throw new FinanceTrackerException(TAG_CONTAINS_ERROR);
-//		}
-//		synchronized (tags) {
-//			tags.remove(tag);
-//		}
-//	}
 
 	@Override
 	public int getId() {
@@ -77,6 +55,15 @@ public class Category implements ICategory {
 	public void setName(String name) throws FinanceTrackerException {
 		new Validation().validateString(name);
 		this.name = name;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) throws FinanceTrackerException {
+		new Validation().validateNotNullObject(user);
+		this.user = user;
 	}
 
 	@Override

@@ -8,10 +8,15 @@ public class Income extends FinanceOperation {
 
 	public Income() {
 	}
+	
+	public Income(int sum, Date date, String description, String photoAddress, Category category,
+			RepeatType repeatType, Account account) throws FinanceTrackerException {
+		super(sum, date, description, photoAddress, category, repeatType, FinanceOperationType.INCOMES, account);
+	}
 
 	public Income(int id, int sum, Date date, String description, String photoAddress, Category category,
-			RepeatType repeatType) throws FinanceTrackerException {
-		super(id, sum, date, description, photoAddress, category, repeatType, FinanceOperationType.INCOMES);
+			RepeatType repeatType, Account account) throws FinanceTrackerException {
+		super(id, sum, date, description, photoAddress, category, repeatType, FinanceOperationType.INCOMES, account);
 	}
 
 }

@@ -4,11 +4,15 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Category;
+import com.finance.tracker.model.FinanceOperationType;
 import com.finance.tracker.model.ICategory;
+import com.finance.tracker.model.Income;
+import com.finance.tracker.model.User;
 import com.finance.tracker.validation.Validation;
 
 public class CategoryDao implements ICategoryDao {
@@ -69,6 +73,20 @@ public class CategoryDao implements ICategoryDao {
 			}
 		}
 	}
+	
+	@Override
+	public void removeCategory(int id) {
+		try {
+			manager.getTransaction().begin();
+			
+			manager.remove(foundById(id));
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
 
 	@Override
 	public ICategory foundCategoryByName(String name) {
@@ -93,4 +111,12 @@ public class CategoryDao implements ICategoryDao {
 		return listOfAllCategories;
 	}
 
+	public Collection<Category> getAllCategoriesByUser(User user){
+		Query query = manager.createQuery(
+				"From Category c where c.user = :user_id ");
+		query.setParameter("user_id", user);
+		@SuppressWarnings("unchecked")
+		Collection<Category> categories = query.getResultList();
+		return categories;
+	}
 }
