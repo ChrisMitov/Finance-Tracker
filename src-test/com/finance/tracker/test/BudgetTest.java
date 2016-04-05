@@ -47,7 +47,7 @@ public class BudgetTest {
 	IAccountDAO accountDao = new AccountDAO();
 
 	@Test
-	public void addBudget() throws PasswordException {
+	public void addBudget() {
 		try {
 			IUser user = makeNewUser();
 			IAccount account = makeNewAccount((User) user);
@@ -69,10 +69,7 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} catch (PasswordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	@Test
@@ -106,14 +103,11 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} catch (PasswordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	@Test
-	public void getAllBudgetsPerUser() throws PasswordException {
+	public void getAllBudgetsPerUser() {
 		try {
 			User user = new User();
 			user.setFirstName(NEW_USER_FIRST_NAME);
@@ -133,14 +127,11 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} catch (PasswordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	@Test
-	public void getAllBudgets() throws PasswordException {
+	public void getAllBudgets()  {
 		try {
 			IUser user = makeNewUser();
 			userDao.createUser(user);
@@ -154,10 +145,7 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} catch (PasswordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	private IBudget makeNewBudget(User user, Account account) throws FinanceTrackerException {
@@ -171,14 +159,18 @@ public class BudgetTest {
 		return budget;
 	}
 
-	private IUser makeNewUser() throws PasswordException {
+	private IUser makeNewUser() {
 		IUser user = new User();
 		user.setFirstName(USER_NAME);
 		user.setLastName(USER_LASTNAME);
 		user.setEmail(USER_EMAIL);
 		user.setCurrency(Currency.BGN);
 		user.setIsAdmin(false);
-		user.setPassword(USER_PASSWORD);
+		try {
+			user.setPassword(USER_PASSWORD);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 		return user;
 	}
 

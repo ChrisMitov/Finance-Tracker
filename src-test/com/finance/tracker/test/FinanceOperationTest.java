@@ -126,12 +126,16 @@ public class FinanceOperationTest {
 		return account;
 	}
 	
-	private IUser makeUser() throws PasswordException{
+	private IUser makeUser() {
 		IUser user = new User();
 		user.setFirstName("Luis");
 		user.setLastName("Suarez");
 		user.setEmail("HAPPYaama@gmail.com");
-		user.setPassword("aqqqW9a");
+		try {
+			user.setPassword("aqqqW9a");
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 		user.setCurrency(Currency.BGN);
 		user.setIsAdmin(false);
 		return user;

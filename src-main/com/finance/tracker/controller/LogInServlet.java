@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.dao.LogInDAO;
 import com.finance.tracker.model.dao.UserDAO;
+import com.finance.tracker.validation.HashPassword;
 
 @WebServlet("/login")
 public class LogInServlet extends HttpServlet {
@@ -38,14 +39,10 @@ public class LogInServlet extends HttpServlet {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-//		String hashedPassowrd = null;
-//		 try {
-//			 hashedPassowrd = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-//		    } catch (NoSuchAlgorithmException e) {
-//		        e.printStackTrace();
-//		    }
+		String hashedPassowrd = new HashPassword().hashPassword(password);
+		 
 
-		if (new LogInDAO().validate(username, password)) {
+		if (new LogInDAO().validate(username, hashedPassowrd)) {
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(-1);
 			int userId = userDao.getUserId(username);

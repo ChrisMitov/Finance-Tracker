@@ -1,12 +1,12 @@
 package com.finance.tracker.test;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 import java.util.Collection;
 
 import com.finance.tracker.exception.FinanceTrackerException;
-import com.finance.tracker.exception.PasswordException;
 import com.finance.tracker.model.Category;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ICategory;
@@ -24,20 +24,17 @@ public class CategoryTest {
 
 	@Test
 	public void addCategory() {
-		try {
-			IUserDAO userDao = new UserDAO();
-			IUser user = makeUser();
-			userDao.createUser(user);
-			ICategory cat = createCategory(user);
-			int id = categoryDao.addCategory(cat);
-			ICategory category = categoryDao.foundById(id);
-			assertEquals(cat.getName(), category.getName());
-			categoryDao.removeCategory(cat);
-			userDao.deleteUser(user);
-		} catch (PasswordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		IUserDAO userDao = new UserDAO();
+		IUser user = makeUser();
+		userDao.createUser(user);
+		ICategory cat = createCategory(user);
+		int id = categoryDao.addCategory(cat);
+		ICategory category = categoryDao.foundById(id);
+		assertEquals(cat.getName(), category.getName());
+		categoryDao.removeCategory(cat);
+		userDao.deleteUser(user);
+
 	}
 
 	@Test
@@ -56,8 +53,6 @@ public class CategoryTest {
 			categoryDao.removeCategory(cat);
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
-			e.printStackTrace();
-		} catch (PasswordException e) {
 			e.printStackTrace();
 		}
 	}
@@ -82,12 +77,16 @@ public class CategoryTest {
 		return cat;
 	}
 
-	private IUser makeUser() throws PasswordException {
+	private IUser makeUser() {
 		IUser user = new User();
 		user.setFirstName("Luis");
 		user.setLastName("Suarez");
 		user.setEmail("Luiz@gmail.com");
-		user.setPassword("aqqqW9a");
+		try {
+			user.setPassword("aqqqW9a");
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 		user.setCurrency(Currency.BGN);
 		user.setIsAdmin(false);
 		return user;
