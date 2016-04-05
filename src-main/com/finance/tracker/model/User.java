@@ -1,6 +1,9 @@
 package com.finance.tracker.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.exception.PasswordException;
@@ -9,7 +12,10 @@ import com.finance.tracker.validation.Validation;
 @Entity
 @Table(name = "user")
 public class User implements IUser {
-
+	private static final String DEFAULT_ACCOUNT_NAME = "Cash";
+	private static final int DEFAULT_START_VALUE = 0;
+	private static final Currency DEFAULT_CURRENCY = Currency.BGN;
+	
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,20 +40,21 @@ public class User implements IUser {
 
 	// @OneToMany(mappedBy="user")
 	//// private Set<Budget> allBudgets = new HashSet<Budget>();
-	// @OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
-	// private List<Account> allAccounts = new ArrayList<Account>();
+	 @OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
+	 private List<Account> allAccounts = new ArrayList<Account>();
 	public User() {
 		super();
 	}
 
-	public User(String firstName, String lastName, String password, String email) throws PasswordException {
+	public User(String firstName, String lastName, String password, String email) throws PasswordException, FinanceTrackerException {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
 		this.setPassword(password);
 		this.isAdmin = false;
-		this.currency = Currency.BGN;
+		this.currency = DEFAULT_CURRENCY;
 		this.jointedDate = new Date();
+		allAccounts.add(new Account(DEFAULT_ACCOUNT_NAME, DEFAULT_START_VALUE, this));
 	}
 
 	public User(String firstName, String lastName, String email, String password, Currency currency, boolean isAdmin,

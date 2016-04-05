@@ -10,15 +10,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Log in</title>
-<%@ include file="./partials/headerLogIn&Register.jsp"%>
+<title>Finance Tracker - Log in</title>
+<%@ include file="partials/headerLogIn&Register.jsp"%>
 </head>
 <body>
 	<div class="login">
 		<h1>Finance Tracker</h1>
 		<div class="login-bottom">
 			<h2>Login</h2>
-			<form method="post" action="../LogInServlet">
+			<form method="post" action="./login">
 				<div class="col-md-6">
 					<div class="login-mail">
 						<input type="text" pattern="[^ @]*@[^ @]*" placeholder="Email"
@@ -39,7 +39,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						type="submit" value="Log in">
 					</label>
 					<p>Do not have an account?</p>
-					<a href="Register.jsp" class="hvr-shutter-in-horizontal">Sign
+					<a href="./register" class="hvr-shutter-in-horizontal">Sign
 						up</a>
 				</div>
 

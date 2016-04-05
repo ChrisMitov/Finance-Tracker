@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Log out</title>
+<title>Finance tracker - Log out</title>
 <%@ include file="./partials/headerLogIn&Register.jsp"%>
 </head>
 <body>
@@ -14,10 +14,10 @@
 		
 			<h2>You have logged out successfully!</h2>
 			<h2>Thank you for visiting!</h2>
-			<form method="get" action="../LogOut">
+			<form method="get" action="./logout">
 
 				<div class="col-md-6 login-do">
-					<a href="LogIn.jsp" class="hvr-shutter-in-horizontal">To log in
+					<a href="./login" class="hvr-shutter-in-horizontal">To log in
 						page</a>
 				</div>
 

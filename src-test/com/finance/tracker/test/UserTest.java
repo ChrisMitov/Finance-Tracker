@@ -37,7 +37,7 @@ public class UserTest {
 	public void findUser() {
 		IUser userToFind = userDAO.getUser(151);
 		System.out.println(userToFind.getFirstName() + " " + userToFind.getLastName());
-		assertNotNull(userDAO);
+		assertNotNull(userToFind);
 	}
 
 	@Test
@@ -51,14 +51,14 @@ public class UserTest {
 		User userToUpdate = userDAO.getUser(151);
 		userToUpdate.setFirstName("Pecan");
 		userDAO.updateUser(userToUpdate);
-		assertNotNull(userDAO);
+		assertNotNull(userToUpdate);
 	}
 
 	@Test
 	public void getUserByMail() {
 		IUser userWithEmail = userDAO.getUserByMail("haho@abv.bg");
 		System.out.println(userWithEmail.getFirstName() + " " + userWithEmail.getLastName());
-		assertNotNull(userDAO);
+		assertNotNull(userWithEmail);
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class UserTest {
 		for (IUser u : allUsers) {
 			System.out.println(u.getFirstName() + " " + u.getLastName());
 		}
-		assertNotNull("userDAO");
+		assertNotNull(allUsers);
 	}
 
 	@Test

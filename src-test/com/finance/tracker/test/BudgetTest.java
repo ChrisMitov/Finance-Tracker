@@ -47,7 +47,7 @@ public class BudgetTest {
 	IAccountDAO accountDao = new AccountDAO();
 
 	@Test
-	public void addBudget() {
+	public void addBudget() throws PasswordException {
 		try {
 			IUser user = makeNewUser();
 			IAccount account = makeNewAccount((User) user);
@@ -76,7 +76,7 @@ public class BudgetTest {
 	}
 
 	@Test
-	public void updateBudget() {
+	public void updateBudget() throws PasswordException {
 
 		try {
 			IUser user = makeNewUser();
@@ -113,7 +113,7 @@ public class BudgetTest {
 	}
 
 	@Test
-	public void getAllBudgetsPerUser() {
+	public void getAllBudgetsPerUser() throws PasswordException {
 		try {
 			User user = new User();
 			user.setFirstName(NEW_USER_FIRST_NAME);
@@ -140,7 +140,7 @@ public class BudgetTest {
 	}
 
 	@Test
-	public void getAllBudgets() {
+	public void getAllBudgets() throws PasswordException {
 		try {
 			IUser user = makeNewUser();
 			userDao.createUser(user);

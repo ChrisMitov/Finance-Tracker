@@ -29,21 +29,22 @@
 								overview</span> </a></li>
 
 					<li><a href="#" class=" hvr-bounce-to-right"><i
-							class="fa fa-minus-circle nav_icon"></i> <span class="nav-label">Expenses</span></a></li>
-					<li><a href="inbox.html" class=" hvr-bounce-to-right"><i
-							class="fa fa-plus-circle nav_icon"></i> <span class="nav-label">Incomes</span>
-					</a></li>
-
+							class="fa fa-usd nav_icon"></i> <span class="nav-label">Finance operations</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+                            <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-minus-circle nav_icon"></i>Expenses</a></li>
+                            <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-plus-circle nav_icon"></i>Incomes</a></li>
+                        </ul></li>
+					
 					<li><a href="gallery.html" class=" hvr-bounce-to-right"><i
 							class="fa fa-money nav_icon"></i> <span class="nav-label">Budget</span>
 					</a></li>
 					<li><a href="gallery.html" class=" hvr-bounce-to-right"><i
 							class="fa fa-file-pdf-o nav_icon"></i> <span class="nav-label">Report</span>
 					</a></li>
-					<li><a href="./Profile.jsp" class=" hvr-bounce-to-right"><i
+					<li><a href="./editprofile" class=" hvr-bounce-to-right"><i
 							class="fa fa-paint-brush nav_icon"></i> <span class="nav-label">Edit
 								Profile</span></a></li>
-					<li><a href="./LogOut.jsp" class=" hvr-bounce-to-right"><i
+					<li><a href="./logout" class=" hvr-bounce-to-right"><i
 							class="fa fa-key nav_icon"></i> <span class="nav-label">Log
 								out</span> </a></li>
 

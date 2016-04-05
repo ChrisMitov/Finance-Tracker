@@ -36,7 +36,7 @@ public interface IUserDAO {
 	
 	String getEmailById(int id);
 	
-	Date getDateByID(int id);
+	String getDateByID(int id);
 	
 	Currency getCurrencyById(int id);
 

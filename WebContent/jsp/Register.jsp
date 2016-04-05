@@ -10,7 +10,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Register</title>
+<title>Finance tracker - Register</title>
 <%@ include file="./partials/headerLogIn&Register.jsp"%>
 </head>
 <body>
@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<h1>Finance Tracker</h1>
 		<div class="login-bottom">
 			<h2>Register</h2>
-			<form method="post" action="../RegisterServlet">
+			<form method="post" action="./register">
 				<div class="col-md-6">
 					<div class="login-mail">
 						<input type="text" placeholder="First name" name="firstName"
@@ -52,7 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						type="submit" value="Submit" id='validate'>
 					</label>
 					<p>Already register</p>
-					<a href="LogIn.jsp" class="hvr-shutter-in-horizontal">Login</a>
+					<a href="./login" class="hvr-shutter-in-horizontal">Login</a>
 				</div>
 				<c:if test="${not empty emailError}">
 					<p style="color: red">
