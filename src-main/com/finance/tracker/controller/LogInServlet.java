@@ -18,7 +18,7 @@ import com.finance.tracker.model.dao.LogInDAO;
 import com.finance.tracker.model.dao.UserDAO;
 
 @WebServlet("/login")
-public class LogInServlet extends HttpServlet {
+public class LogInServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -51,6 +51,7 @@ public class LogInServlet extends HttpServlet {
 			int userId = userDao.getUserId(username);
 			session.setAttribute("userId", userId);
 			IUser user = userDao.getUser(userId);
+			session.setAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME, user);
 			session.setAttribute("currentUser", user);
 			session.setAttribute("userName", user.getFirstName());
 			session.setAttribute("lastName", user.getLastName());

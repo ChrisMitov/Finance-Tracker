@@ -14,7 +14,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 
 		<div class="drop-men">
-			<span class=" name-caret">Welcome, ${userName} !    </span>
+			<span class=" name-caret">Welcome, ${userName} ! </span>
 		</div>
 		<!-- /.navbar-collapse -->
 
@@ -29,12 +29,19 @@
 								overview</span> </a></li>
 
 					<li><a href="#" class=" hvr-bounce-to-right"><i
-							class="fa fa-usd nav_icon"></i> <span class="nav-label">Finance operations</span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-                            <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-minus-circle nav_icon"></i>Expenses</a></li>
-                            <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-plus-circle nav_icon"></i>Incomes</a></li>
-                        </ul></li>
-					
+							class="fa fa-usd nav_icon"></i> <span class="nav-label">Finance
+								operations</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="./expences" class=" hvr-bounce-to-right"><i
+									class="fa fa-minus-circle nav_icon"></i>Expenses</a></li>
+							<li><a href="signup.html" class=" hvr-bounce-to-right"><i
+									class="fa fa-plus-circle nav_icon"></i>Incomes</a></li>
+						</ul></li>
+					<li><a href="./account" class=" hvr-bounce-to-right"><i
+							class="fa fa-calendar nav_icon "></i><span class="nav-label">Account</span>
+					</a></li>
+					<li><a href="./category" class=" hvr-bounce-to-right"><i
+							class="fa fa-plus-circle nav_icon"></i>Category</a></li>
 					<li><a href="gallery.html" class=" hvr-bounce-to-right"><i
 							class="fa fa-money nav_icon"></i> <span class="nav-label">Budget</span>
 					</a></li>
@@ -53,4 +60,3 @@
 			</div>
 		</div>
 	</nav>
-

@@ -6,6 +6,7 @@
 <head>
 <title>Finance tracker - Accounts</title>
 <jsp:include page="partials/head.jsp" />
+<link href="resources/css/table.css" rel='stylesheet' type='text/css' />
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
@@ -34,7 +35,7 @@
 								<td colspan="4">${account.title}</td>
 								<td colspan="4">${account.sum}</td>
 								<td colspan="4">
-									<form method="POST" action="./account/edit">
+									<form action="./editAccount">
 										<input type="hidden" name="id" value="${account.id}" /> <input
 											type="submit" value="Edit" class="btn btn-s btn-info"
 											style="width: 75px; margin: 0 auto; display: block;" />
@@ -50,13 +51,20 @@
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="16">
+							<td colspan="8">
 								<form action="./addAccount">
 									<input type="submit" value="Add"
 										class="btn btn-lg btn-success warning_1"
-										style="width: 75px; margin: 0 auto; display: block;" />
+										style="width: 150px; margin: 0 auto; display: block;" />
 								</form>
 							</td>
+							<td colspan="8">
+							<form action="./transaction">
+									<input type="submit" value="Make transaction"
+										class="btn btn-lg btn-primary"
+										style="width: 150px; margin: 0 auto; display: block;" />
+								</form>
+								</td>
 						</tr>
 
 					</table>

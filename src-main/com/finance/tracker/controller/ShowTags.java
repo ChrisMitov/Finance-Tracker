@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,17 +14,17 @@ import com.finance.tracker.model.Tag;
 import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.TagDao;
 
-/**
- * Servlet implementation class ShowTags
- */
 @WebServlet("/tags")
-public class ShowTags extends HttpServlet {
+public class ShowTags extends BaseServlet {
 	private static final String CATEGORY_ID = "categoryId";
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// if is authorized...
+		if (!super.isAuthenticated(request)) {
+			response.sendRedirect("./login");
+			return;
+		}
 		HttpSession session = request.getSession();
 		int categoryId = (int) session.getAttribute(CATEGORY_ID);
 		new TagDao().getAllTagsByCategory(new CategoryDao().foundById(categoryId));
@@ -38,7 +37,10 @@ public class ShowTags extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// if is authorized...
+		if (!super.isAuthenticated(request)) {
+			response.sendRedirect("./login");
+			return;
+		}
 		int categoryId = Integer.parseInt(request.getParameter("id"));
 		HttpSession session = request.getSession();
 		session.setAttribute(CATEGORY_ID, categoryId);

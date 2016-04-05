@@ -6,6 +6,7 @@
 <head>
 <title>Finance tracker - Make Transaction</title>
 <jsp:include page="partials/head.jsp" />
+<link href="resources/css/select.css" rel='stylesheet' type='text/css' />
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
@@ -22,45 +23,43 @@
 			<!--//banner-->
 			<!--grid-->
 			<div class="grid-form">
-				<div class="grid-form1" style="overflow: hidden; height: 1%;">
-					<table class="one">
-						<tr>
-							<th colspan="4">Title</th>
-							<th colspan="4">Balance</th>
-							<th colspan="4"></th>
-							<th colspan="4"></th>
-						</tr>
-						<c:forEach var="account" items="${accounts}">
-							<tr>
-								<td colspan="4">${account.title}</td>
-								<td colspan="4">${account.sum}</td>
-								<td colspan="4">
-									<form method="POST" action="./account/edit">
-										<input type="hidden" name="id" value="${account.id}" /> <input
-											type="submit" value="Edit" class="btn btn-s btn-info"
-											style="width: 75px; margin: 0 auto; display: block;" />
-									</form>
-								</td>
-								<td colspan="4">
-									<form method="POST" action="./account/remove">
-										<input type="hidden" name="id" value="${account.id}" /> <input
-											type="submit" value="Remove" class="btn btn-s btn-danger"
-											style="width: 75px; margin: 0 auto; display: block;" />
-									</form>
-								</td>
-							</tr>
-						</c:forEach>
-						<tr>
-							<td colspan="16">
-								<form action="./addAccount">
-									<input type="submit" value="Add"
-										class="btn btn-lg btn-success warning_1"
-										style="width: 75px; margin: 0 auto; display: block;" />
-								</form>
-							</td>
-						</tr>
+				<div class="grid-form1"
+					style="overflow: hidden; height: 1%; position: relative;">
+					<h1 style="text-align: center; margin-left: -50px">Make a
+						transaction:</h1>
 
-					</table>
+					<br />
+					<form method="post" action="./transaction" class="demo">
+						<table>
+							<tr>
+								<th><label style="font-size: 28px">From account: </label></th>
+								<td><select class="option3" name="fromAccount">
+										<c:forEach var="account" items="${accounts}">
+											<option value="${account.id}">${account.title}</option>
+										</c:forEach>
+								</select>
+							</tr>
+							<tr>
+								<th><label style="font-size: 28px">To account: </label></th>
+								<td><select class="option4" name="toAccount">
+										<c:forEach var="account" items="${accounts}">
+											<option value="${account.id}">${account.title}</option>
+										</c:forEach>
+								</select></td>
+							</tr>
+							<tr>
+								<th><label style="font-size: 28px">How much: </label></th>
+								<td><input id="new_sum" name="sum" type="number"
+									class="form-control" placeholder="Balance" value=""
+									style="width: 100px; margin-left: 10px; "></td>
+							</tr>
+						</table>
+						<c:if test="${not empty wrongSum}">
+							<p style="color: red">${wrongSum}</p>
+						</c:if>
+						<br /> <input type="submit" value="Submit "
+							class="btn btn-lg btn-danger" style="margin-left: 215px;">
+					</form>
 				</div>
 			</div>
 		</div>
