@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ExpenseServlet
  */
-@WebServlet("/expences")
+@WebServlet("/expenses")
 public class ExpenseServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        

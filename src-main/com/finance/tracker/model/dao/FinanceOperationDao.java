@@ -30,7 +30,6 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 			e.printStackTrace();
 		}
 		Date date = operation.getDate();
-		date.setYear(date.getYear() - 1900);
 		if (operation.getDate().after(new Date())) {
 			addMany(operation);
 		} else {
@@ -125,7 +124,7 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 
 	private int addManyTimes(IFinanceOperation operation) {
 		if (operation.getRepeatType().equals(RepeatType.NO_REPEAT)) {
-			return 1;
+			return 0;
 		}
 		Date date = operation.getDate();
 //		date.setYear(date.getYear() - 1900);

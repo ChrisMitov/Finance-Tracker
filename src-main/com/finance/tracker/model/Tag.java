@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
+import com.finance.tracker.view.model.FinanceOperationModel;
+import com.finance.tracker.view.model.TagModel;
 
 @Entity
 public class Tag {
@@ -99,5 +101,9 @@ public class Tag {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public TagModel getViewModelTag(String name) {
+		return new TagModel(name);
 	}
 }

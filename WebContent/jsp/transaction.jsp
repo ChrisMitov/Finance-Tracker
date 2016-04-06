@@ -37,7 +37,7 @@
 										<c:forEach var="account" items="${accounts}">
 											<option value="${account.id}">${account.title}</option>
 										</c:forEach>
-								</select>
+								</select></td>
 							</tr>
 							<tr>
 								<th><label style="font-size: 28px">To account: </label></th>

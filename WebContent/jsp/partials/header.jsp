@@ -32,7 +32,7 @@
 							class="fa fa-usd nav_icon"></i> <span class="nav-label">Finance
 								operations</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="./expences" class=" hvr-bounce-to-right"><i
+							<li><a href="./expenses" class=" hvr-bounce-to-right"><i
 									class="fa fa-minus-circle nav_icon"></i>Expenses</a></li>
 							<li><a href="signup.html" class=" hvr-bounce-to-right"><i
 									class="fa fa-plus-circle nav_icon"></i>Incomes</a></li>

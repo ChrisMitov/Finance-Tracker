@@ -13,7 +13,10 @@ import javax.servlet.http.HttpSession;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.AccountDAO;
+<<<<<<< HEAD
 
+=======
+>>>>>>> b0b340bbc3a2f5b66d415c9e267580b8befa8243
 
 @WebServlet("/account")
 public class AccountServlet extends BaseServlet {
