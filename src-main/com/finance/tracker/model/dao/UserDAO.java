@@ -9,6 +9,7 @@ import javax.persistence.*;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IAccount;
+import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.Income;
 import com.finance.tracker.model.User;
@@ -182,6 +183,19 @@ public class UserDAO implements IUserDAO {
 	public String getFirstNameById(int id) {
 		IUser user = getUser(id);
 		return user.getFirstName();
+	}
+
+	@Override
+	public Collection<IBudget> getAllBudgetsByUser(int id) {
+		try {
+			new Validation().validateNegativeNumber(id);
+		} catch (FinanceTrackerException e1) {
+			e1.printStackTrace();
+		}
+		Query query = manager.createQuery("from Budget b where b.user=:user", IBudget.class)
+				.setParameter("user", getUser(id));
+		Collection<IBudget> budgets = query.getResultList();
+		return budgets;
 	}
 
 }

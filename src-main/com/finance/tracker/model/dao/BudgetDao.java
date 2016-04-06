@@ -1,7 +1,9 @@
 package com.finance.tracker.model.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
-
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +13,7 @@ import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.RepeatType;
 import com.finance.tracker.validation.Validation;
 
 public class BudgetDao implements IBudgetDao {
@@ -35,7 +38,7 @@ public class BudgetDao implements IBudgetDao {
 		}
 		return foundBudgetByTitle(budget.getTitle()).getId();
 	}
-	
+
 	@Override
 	public void updateBudget(IBudget budget) {
 		try {
@@ -58,16 +61,37 @@ public class BudgetDao implements IBudgetDao {
 	public void removeBudget(IBudget budget) {
 		try {
 			new Validation().validateNotNullObject(budget);
-		} catch (FinanceTrackerException e) {
-			e.printStackTrace();
+		} catch (FinanceTrackerException e1) {
+			e1.printStackTrace();
 		}
 		try {
 			manager.getTransaction().begin();
 			manager.remove(budget);
 			manager.getTransaction().commit();
-		} finally {
+		} catch (RuntimeException e) {
 			if (manager.getTransaction().isActive()) {
 				manager.getTransaction().rollback();
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public void removeBudgetById(int id) {
+		try {
+			new Validation().validateNegativeNumber(id);
+			;
+		} catch (FinanceTrackerException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.remove(foundById(id));
+			manager.getTransaction().commit();
+		} catch (RuntimeException e) {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+				throw e;
 			}
 		}
 	}
@@ -102,5 +126,38 @@ public class BudgetDao implements IBudgetDao {
 		@SuppressWarnings("unchecked")
 		Collection<Budget> listOfAllBudgets = manager.createQuery("SELECT b FROM Budget b").getResultList();
 		return listOfAllBudgets;
+	}
+
+	public String getTitleById(int id) {
+		IBudget budget = foundById(id);
+		return budget.getTitle();
+	}
+
+	public String getStartDateById(int id) {
+		IBudget budget = foundById(id);
+		Date date = budget.getStartDate();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		String data = df.format(date);
+		return data;
+	}
+
+	public String getEndDateById(int id) {
+		IBudget budget = foundById(id);
+		Date date = budget.getEndDate();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		String data = df.format(date);
+		return data;
+	}
+
+	public double getSumById(int id) {
+		IBudget budget = foundById(id);
+		double sum = budget.getTotalAmount();
+		return sum;
+	}
+
+	public RepeatType getTypeById(int id) {
+		IBudget budget = foundById(id);
+		RepeatType type = budget.getRepeatType();
+		return type;
 	}
 }

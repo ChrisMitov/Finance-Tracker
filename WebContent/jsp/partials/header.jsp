@@ -38,11 +38,11 @@
 									class="fa fa-plus-circle nav_icon"></i>Incomes</a></li>
 						</ul></li>
 					<li><a href="./account" class=" hvr-bounce-to-right"><i
-							class="fa fa-calendar nav_icon "></i><span class="nav-label">Account</span>
+							class="fa fa-bank nav_icon "></i><span class="nav-label">Account</span>
 					</a></li>
 					<li><a href="./category" class=" hvr-bounce-to-right"><i
-							class="fa fa-plus-circle nav_icon"></i>Category</a></li>
-					<li><a href="gallery.html" class=" hvr-bounce-to-right"><i
+							class="fa fa-calendar-plus-o nav_icon"></i>Category</a></li>
+					<li><a href="./budget" class=" hvr-bounce-to-right"><i
 							class="fa fa-money nav_icon"></i> <span class="nav-label">Budget</span>
 					</a></li>
 					<li><a href="gallery.html" class=" hvr-bounce-to-right"><i

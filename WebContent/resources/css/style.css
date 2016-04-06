@@ -1554,7 +1554,9 @@ label.control-label {
 	min-height:800px;
 	padding:1em;
 }
-.profile-bottom{
+
+
+.profile-bottom, .profile-bottom-empty{
 	width: 55%;
 	margin: 0em auto;
 	    background-color: #fff;

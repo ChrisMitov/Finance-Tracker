@@ -15,7 +15,7 @@ public class User implements IUser {
 	private static final String DEFAULT_ACCOUNT_NAME = "Cash";
 	private static final int DEFAULT_START_VALUE = 0;
 	private static final Currency DEFAULT_CURRENCY = Currency.BGN;
-	
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,15 +38,18 @@ public class User implements IUser {
 	@Column(name = "is_admin")
 	private boolean isAdmin;
 
-	// @OneToMany(mappedBy="user")
-	//// private Set<Budget> allBudgets = new HashSet<Budget>();
-	 @OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
-	 private List<Account> allAccounts = new ArrayList<Account>();
+	@OneToMany(mappedBy = "user")
+	private List<Budget> allBudgets = new ArrayList<Budget>();
+
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+	private List<Account> allAccounts = new ArrayList<Account>();
+
 	public User() {
 		super();
 	}
 
-	public User(String firstName, String lastName, String password, String email) throws PasswordException, FinanceTrackerException {
+	public User(String firstName, String lastName, String password, String email)
+			throws PasswordException, FinanceTrackerException {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -154,9 +157,9 @@ public class User implements IUser {
 	}
 
 	@Override
-	public void setPassword(String password) throws FinanceTrackerException{
-			new Validation().validateString(password);
-			this.password=password;
+	public void setPassword(String password) throws FinanceTrackerException {
+		new Validation().validateString(password);
+		this.password = password;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -186,6 +189,10 @@ public class User implements IUser {
 		this.jointedDate = date;
 
 	}
+	
+	public boolean isBudgetEmpty(){
+		return allBudgets.isEmpty();
+	}
 
 	// public void addAcount(Account newAccount) throws FinanceTrackerException
 	// {
@@ -210,15 +217,15 @@ public class User implements IUser {
 	// }
 	// }
 
-	// public void addBudget(Budget budget) throws FinanceTrackerException {
-	// if (budget != null) {
-	// synchronized (this.allBudgets) {
-	// this.allBudgets.add(budget);
-	// }
-	// } else {
-	// throw new FinanceTrackerException();
-	// }
-	// }
+	 public void addBudget(IBudget budget) throws FinanceTrackerException {
+	 if (budget != null) {
+	 synchronized (this.allBudgets) {
+	 this.allBudgets.add((Budget) budget);
+	 }
+	 } else {
+	 throw new FinanceTrackerException();
+	 }
+	 }
 	//
 	// public void removeBudget(Budget budget) throws FinanceTrackerException {
 	// if (budget != null && this.allBudgets.contains(budget)) {

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IAccount;
+import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
 
@@ -39,5 +40,7 @@ public interface IUserDAO {
 	String getDateByID(int id);
 	
 	Currency getCurrencyById(int id);
+	
+	Collection<IBudget> getAllBudgetsByUser(int id);
 
 }

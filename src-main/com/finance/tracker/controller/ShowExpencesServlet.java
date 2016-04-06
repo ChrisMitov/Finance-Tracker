@@ -29,7 +29,7 @@ public class ShowExpencesServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// if is autenticated
+		// if is authenticated
 		Collection<IAccount> accounts = new UserDAO().getAllAccounts(101);
 		Collection<Expense> expences = new ArrayList<Expense>();
 		for (IAccount account : accounts) {
