@@ -34,22 +34,20 @@ public class LogInServlet extends BaseServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		UserDAO userDao = new UserDAO();
-		
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String hashedPassowrd = new HashPassword().hashPassword(password);
-		 
 
 		if (new LogInDAO().validate(username, hashedPassowrd)) {
 			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(-1);
+			// session.setMaxInactiveInterval(-1);
 			int userId = userDao.getUserId(username);
 			session.setAttribute("userId", userId);
 			IUser user = userDao.getUser(userId);
 			session.setAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME, user);
-			session.setAttribute("currentUser", user);
 			session.setAttribute("userName", user.getFirstName());
 			session.setAttribute("lastName", user.getLastName());
 			session.setAttribute("email", user.getEmail());

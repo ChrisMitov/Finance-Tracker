@@ -12,64 +12,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <title>Finance tracker - Edit profile</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords"
-	content="Minimal Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript">
-	
-	
-	
-	
-	
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
-
-
-
-</script>
-<link href="resources/css/bootstrap.min.css" rel='stylesheet'
-	type='text/css' />
-<!--<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />-->
-<!-- Custom Theme files -->
-<link href="resources/css/style.css" rel='stylesheet' type='text/css' />
-<link href="resources/css/font-awesome.css" rel="stylesheet">
-<script src="resources/js/jquery.min.js">
-	
-</script>
-<script src="resources/js/bootstrap.min.js">
-	
-</script>
-
-<!-- Mainly scripts -->
-<script src="resources/js/jquery.metisMenu.js"></script>
-<script src="resources/js/jquery.slimscroll.min.js"></script>
-<!-- Custom and plugin javascript -->
-<link href="resources/css/custom.css" rel="stylesheet">
-<script src="resources/js/custom.js"></script>
-<script src="resources/js/screenfull.js"></script>
-<script>
-	$(function() {
-		$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
-
-		if (!screenfull.enabled) {
-			return false;
-		}
-
-		$('#toggle').click(function() {
-			screenfull.toggle($('#container')[0]);
-		});
-
-	});
-</script>
-
-
-
+<jsp:include page="partials/head.jsp" />
 </head>
 <body>
-	<%@ include file="./partials/header.jsp"%>
+	<jsp:include page="partials/header.jsp" />
 	<div id="page-wrapper" class="gray-bg dashbard-1">
 		<div class="content-main">
 
@@ -91,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="profile-bottom-top">
 
 							<div class="col-md-8 profile-text">
-								<h5>${userName}${lastName}</h5>
+								<h5>${userName}${" "}${lastName}</h5>
 
 								<table>
 									<tr>
@@ -133,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option value="USD">USD</option>
 										</select></td>
 									</tr>
-									<tr>
+									<!--   <tr>
 										<td>Financial month starts on</td>
 										<td>:</td>
 										<td>${currency}</td>
@@ -170,7 +116,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option value="30">30</option>
 												<option value="31">31</option>
 										</select></td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td>Joined on</td>
 										<td>:</td>

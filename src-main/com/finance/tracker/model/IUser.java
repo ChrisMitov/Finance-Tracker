@@ -42,4 +42,6 @@ public interface IUser {
 	
 	void setPassword(String password) throws FinanceTrackerException;
 	
+	boolean isBudgetEmpty();
+	
 }

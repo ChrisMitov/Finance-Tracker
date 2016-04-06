@@ -69,7 +69,7 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	@Test
@@ -127,11 +127,11 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	@Test
-	public void getAllBudgets()  {
+	public void getAllBudgets() {
 		try {
 			IUser user = makeNewUser();
 			userDao.createUser(user);
@@ -145,7 +145,15 @@ public class BudgetTest {
 			userDao.deleteUser(user);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
-		} 
+		}
+	}
+
+	@Test
+	public void getAllBudgetsByUser() {
+           Collection<IBudget> budgets = new UserDAO().getAllBudgetsByUser(3051);
+           for(IBudget b:budgets){
+        	   System.out.println(b.getTitle()+" "+b.getTotalAmount());
+           }
 	}
 
 	private IBudget makeNewBudget(User user, Account account) throws FinanceTrackerException {
@@ -181,4 +189,12 @@ public class BudgetTest {
 		account.setTitle(ACCOUNT_TITLE);
 		return account;
 	}
+	
+	@Test
+	public void deleteBudget(){
+		IBudget budget = new BudgetDao().foundById(3351);
+		new BudgetDao().removeBudget(budget);
+		assertNotNull(budget);
+	}
+
 }

@@ -10,16 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.finance.tracker.model.IAccount;
+import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.User;
-import com.finance.tracker.model.dao.AccountDAO;
-<<<<<<< HEAD
+import com.finance.tracker.model.dao.BudgetDao;
 
-=======
->>>>>>> b0b340bbc3a2f5b66d415c9e267580b8befa8243
-
-@WebServlet("/account")
-public class AccountServlet extends BaseServlet {
+@WebServlet("/budget")
+public class BudgetServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,10 +26,15 @@ public class AccountServlet extends BaseServlet {
 		}
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
-		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
-		request.setAttribute("accounts", accounts);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/account.jsp");
-		dispatcher.forward(request, response);
+		Collection<Budget> budgets = new BudgetDao().getAllBudgetsByUser(user);
+		request.setAttribute("budgets", budgets);
+		if(user.isBudgetEmpty()){
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/BlanckBudget.jsp");
+			dispatcher.forward(request, response);
+		}
+		else{
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/Budget.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
-
 }
