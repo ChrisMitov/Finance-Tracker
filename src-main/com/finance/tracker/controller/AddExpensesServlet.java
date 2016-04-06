@@ -33,7 +33,7 @@ import com.finance.tracker.model.dao.IFinanceOperationDao;
 import com.finance.tracker.model.dao.TagDao;
 
 
-@WebServlet("/addExpenses")
+@WebServlet("/addExpense")
 public class AddExpensesServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        

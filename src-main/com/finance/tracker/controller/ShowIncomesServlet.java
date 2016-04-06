@@ -15,17 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.finance.tracker.model.Account;
-import com.finance.tracker.model.Expense;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IFinanceOperation;
+import com.finance.tracker.model.Income;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.FinanceOperationDao;
 import com.finance.tracker.model.dao.UserDAO;
 import com.finance.tracker.view.model.FinanceOperationModel;
 import com.google.gson.Gson;
 
-@WebServlet("/showExpenses")
-public class ShowExpensesServlet extends BaseServlet {
+@WebServlet("/showIncome")
+public class ShowIncomesServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -40,18 +40,18 @@ public class ShowExpensesServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IAccount> accounts = new UserDAO().getAllAccounts(user.getUserId());
-		Collection<Expense> expenses = new ArrayList<Expense>();
+		Collection<Income> incomes = new ArrayList<Income>();
 		for (IAccount account : accounts) {
-			expenses.addAll(new FinanceOperationDao().getAllExpencesByAccount((Account) account));
+			incomes.addAll(new FinanceOperationDao().getAllIncomeByAccount((Account) account));
 		}
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		Collection<FinanceOperationModel> products = new HashSet<FinanceOperationModel>();
-		for (IFinanceOperation expense : expenses) {
-			if (map.containsKey(expense.getCategory().getName())) {
-				int number = map.get(expense.getCategory().getName());
-				map.replace(expense.getCategory().getName(), number + expense.getSum());
+		for (IFinanceOperation income : incomes) {
+			if (map.containsKey(income.getCategory().getName())) {
+				int number = map.get(income.getCategory().getName());
+				map.replace(income.getCategory().getName(), number + income.getSum());
 			} else {
-				map.put(expense.getCategory().getName(), expense.getSum());
+				map.put(income.getCategory().getName(), income.getSum());
 			}
 		}
 		for (Entry<String, Integer> entry : map.entrySet()) {

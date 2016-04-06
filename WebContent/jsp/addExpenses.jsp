@@ -17,7 +17,7 @@
 			<div class="banner">
 				<h2>
 					<a href="./">Home</a> <i class="fa fa-angle-right"></i> <a
-						href="./expense">Expense</a> <i class="fa fa-angle-right"></i><span>Add
+						href="./expenses">Expense</a> <i class="fa fa-angle-right"></i><span>Add
 						Expense</span>
 				</h2>
 			</div>
@@ -26,7 +26,7 @@
 			<div class="grid-form">
 				<div class="grid-form1">
 					<h3 id="forms-example" class="">Add expenses</h3>
-					<form name="expenses" action="./addExpenses" method="post"
+					<form name="expenses" action="./addExpense" method="post"
 						class="demo">
 						<table>
 							<tr>
@@ -54,7 +54,7 @@
 							<tr>
 								<th><label style="font-size: 28px" for="category">Choose
 										category: </label></th>
-								<td><select class="option4" name="category">
+								<td><select class="option4" id = "cat_id" name="category" onchange="refreshTags()">
 										<c:forEach var="category" items="${categories}">
 											<option value="${category.id}">${category.name}</option>
 										</c:forEach>
@@ -79,7 +79,7 @@
 							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:
 								</label></th>
-								<td><c:forEach var="tag" items="${tags}">
+								<td><div id="tags"></div><c:forEach var="tag" items="${tags}">
 										<span style="display: inline-block;"> <label
 											for="${tag.name}"
 											style="color: black; display: inline-block;">${tag.name}</label>
@@ -106,7 +106,25 @@
 	<!--scrolling js-->
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
-	<!--//scrolling js-->
+	<script type="text/javascript">
+	function refreshTags() {
+		var category = $("#cat_id").val();
+		
+		$.ajax({
+			   url: './products?id=' + category,
+			   type: 'GET',
+			   contentType:'application/json',
+			   success: function(data) {
+				   $("#tags").empty();
+					$.each(data, function(index, product) {			
+						$("<span style="display: inline-block;"> <label	for="${tag.name}" style="color: black; display: inline-block;">${tag.name}</label>	<input id="${tag.id}" name="tags" type="checkbox"							class="form-control" value="${tag.name}"></span>").appendTo("#tags").text(product.name);
+						$("<br>").appendTo("#tags");
+					});
+
+			   }
+		});
+
+	}</script>
 </body>
 </html>
 

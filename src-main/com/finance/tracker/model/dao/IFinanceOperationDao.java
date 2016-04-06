@@ -14,6 +14,8 @@ public interface IFinanceOperationDao {
 
 	void removeFinanceOperation(IFinanceOperation operation);
 
+	void removeFinanceOperation(int number);
+
 	FinanceOperation foundById(int id);
 
 	Collection<Expense> getAllExpencesByAccount(Account account);
