@@ -28,7 +28,7 @@ public class BudgetServlet extends BaseServlet {
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<Budget> budgets = new BudgetDao().getAllBudgetsByUser(user);
 		request.setAttribute("budgets", budgets);
-		if(user.isBudgetEmpty()){
+		if(budgets.isEmpty()){
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/BlanckBudget.jsp");
 			dispatcher.forward(request, response);
 		}

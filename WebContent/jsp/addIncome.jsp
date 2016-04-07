@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Finance tracker - Add Expense</title>
+<title>Finance tracker - Add income</title>
 <jsp:include page="partials/head.jsp" />
 <link href="resources/css/select.css" rel='stylesheet' type='text/css' />
 </head>
@@ -17,16 +17,16 @@
 			<div class="banner">
 				<h2>
 					<a href="./">Home</a> <i class="fa fa-angle-right"></i> <a
-						href="./expenses">Expense</a> <i class="fa fa-angle-right"></i><span>Add
-						Expense</span>
+						href="./incomes">Incomes</a> <i class="fa fa-angle-right"></i><span>Add
+						income</span>
 				</h2>
 			</div>
 			<!--//banner-->
 			<!--grid-->
 			<div class="grid-form">
 				<div class="grid-form1">
-					<h3 id="forms-example" class="">Add expenses</h3>
-					<form name="expenses" action="./addExpense" method="post"
+					<h3 id="forms-example" class="">Add income</h3>
+					<form name="expenses" action="./addIncome" method="post"
 						class="demo">
 						<table>
 							<tr>

@@ -25,7 +25,7 @@ import com.finance.tracker.view.model.FinanceOperationModel;
 import com.google.gson.Gson;
 
 @WebServlet("/showExpenses")
-public class ShowExpensesServlet extends BaseServlet {
+public class ShowExpensesServletRest extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override

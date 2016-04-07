@@ -93,6 +93,24 @@ public class FinanceOperationDao implements IFinanceOperationDao {
 	}
 
 	@Override
+	public void updateFinanceOperation(IFinanceOperation operation) {
+		try {
+			new Validation().validateNotNullObject(operation);
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
+		try {
+			manager.getTransaction().begin();
+			manager.merge(operation);
+			manager.getTransaction().commit();
+		} finally {
+			if (manager.getTransaction().isActive()) {
+				manager.getTransaction().rollback();
+			}
+		}
+	}
+	
+	@Override
 	public void removeFinanceOperation(IFinanceOperation operation) {
 		try {
 			new Validation().validateNotNullObject(operation);

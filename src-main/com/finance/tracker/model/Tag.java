@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
-import com.finance.tracker.view.model.FinanceOperationModel;
 import com.finance.tracker.view.model.TagModel;
 
 @Entity

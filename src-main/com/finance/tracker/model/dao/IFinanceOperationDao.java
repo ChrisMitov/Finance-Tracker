@@ -11,6 +11,8 @@ import com.finance.tracker.model.Income;
 public interface IFinanceOperationDao {
 
 	int addFinanceOperation(IFinanceOperation operation);
+	
+	void updateFinanceOperation(IFinanceOperation operation);
 
 	void removeFinanceOperation(IFinanceOperation operation);
 

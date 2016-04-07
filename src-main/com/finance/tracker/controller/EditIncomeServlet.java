@@ -27,8 +27,8 @@ import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.FinanceOperationDao;
 import com.finance.tracker.model.dao.TagDao;
 
-@WebServlet("/editExpense")
-public class EditExpenseServlet extends BaseServlet {
+@WebServlet("/editIncome")
+public class EditIncomeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,9 +52,9 @@ public class EditExpenseServlet extends BaseServlet {
 		request.setAttribute("tags", tags);
 		RepeatType[] repeats = RepeatType.values();
 		request.setAttribute("repeats", repeats);
-		request.setAttribute("expense", operation);
-		session.setAttribute("expenseId", id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/editExpense.jsp");
+		request.setAttribute("income", operation);
+		session.setAttribute("incomeId", id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/editIncome.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -65,7 +65,7 @@ public class EditExpenseServlet extends BaseServlet {
 			return;
 		}
 		HttpSession session = request.getSession();
-		int operationId = (int) session.getAttribute("expenseId");
+		int operationId = (int) session.getAttribute("incomeId");
 		int sum = Integer.parseInt(request.getParameter("sum"));
 		String description = request.getParameter("description");
 		int accountId = Integer.parseInt(request.getParameter("account"));
@@ -92,7 +92,7 @@ public class EditExpenseServlet extends BaseServlet {
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("./expenses");
+		response.sendRedirect("./incomes");
 	}
 
 }
