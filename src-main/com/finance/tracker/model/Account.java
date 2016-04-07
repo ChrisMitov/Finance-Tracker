@@ -19,7 +19,7 @@ import com.finance.tracker.validation.Validation;
 public class Account implements IAccount {
 	private static final String OPERATION_CONTAINS_ERROR = "This operation is not valid";
 	@Id
-	@Column
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(name = "title")

@@ -33,8 +33,8 @@ import com.finance.tracker.model.dao.IFinanceOperationDao;
 import com.finance.tracker.model.dao.TagDao;
 
 
-@WebServlet("/addExpense")
-public class AddExpensesServlet extends BaseServlet {
+@WebServlet("/addIncome")
+public class AddIncomesServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
   
@@ -57,7 +57,7 @@ public class AddExpensesServlet extends BaseServlet {
 		request.setAttribute("tags", tags);
 		RepeatType[] repeats = RepeatType.values();
 		request.setAttribute("repeats", repeats);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/addExpenses.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/addIncome.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -76,7 +76,7 @@ public class AddExpensesServlet extends BaseServlet {
 		String repeat = request.getParameter("repeat");
 		try {
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dat);
-			IFinanceOperation operation = new FinanceOperation( sum, date, description, "", new CategoryDao().foundById(catetogoryId),RepeatType.valueOf(repeat) , FinanceOperationType.EXPENCES, (Account) new AccountDAO().getAccount(accountId));
+			IFinanceOperation operation = new FinanceOperation( sum, date, description, "", new CategoryDao().foundById(catetogoryId),RepeatType.valueOf(repeat) , FinanceOperationType.INCOMES, (Account) new AccountDAO().getAccount(accountId));
 			for (String string : tags) {
 				operation.addTag(new TagDao().foundTagByName(string));
 			}
@@ -86,7 +86,7 @@ public class AddExpensesServlet extends BaseServlet {
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
- 		response.sendRedirect("./expenses");
+ 		response.sendRedirect("./incomes");
 	}
 
 }

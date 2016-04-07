@@ -6,13 +6,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Finance tracker - Expenses</title>
+<title>Finance tracker - Incomes</title>
 <jsp:include page="partials/head.jsp" />
 <jsp:include page="./partials/pieHeader.jsp" />
 <link href="resources/css/select.css" rel='stylesheet' type='text/css' />
 <link href="resources/css/table.css" rel='stylesheet' type='text/css' />
-<link href="resources/css/double_table.css" rel='stylesheet'
-	type='text/css' />
+<link href="resources/css/double_table.css" rel='stylesheet' type='text/css' />
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
@@ -22,7 +21,7 @@
 			<!--banner-->
 			<div class="banner">
 				<h2>
-					<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Expense</span>
+					<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Income</span>
 				</h2>
 			</div>
 			<!--//banner-->
@@ -38,10 +37,9 @@
 									<c:forEach var="account" items="${accounts}">
 										<option value="${account.id}">${account.title}</option>
 									</c:forEach>
-							</select> </span> <span
-								style="float: right; margin-right: 30px; margin-top: -15px;">
-								<form action="./addExpense">
-									<input type="submit" value="Add Expense"
+							</select> </span> <span style="float: right; margin-right: 30px; margin-top: -15px;">
+								<form action="./addIncome">
+									<input type="submit" value="Add Income"
 										class="btn btn-lg btn-success warning_1"
 										style="width: 150px; margin: 0 auto; display: block;" />
 								</form>
@@ -49,26 +47,26 @@
 							<div id="chartdiv"></div>
 						</div>
 						<div id="sidebar1">
-							<c:forEach var="expense" items="${ expenses}">
+							<c:forEach var="income" items="${incomes}">
 								<div
 									style="margin-top: 10px; border: 1px solid #888; background-color: #FFCC33; overflow: hidden; height: 1%;">
 									<span
 										style="font-weight: bold; float: left; margin-left: 20px;"><fmt:formatDate
-											value="${expense.date}" pattern="dd-MMM-yyyy" /></span> <span
+											value="${income.date}" pattern="dd-MMM-yyyy" /></span> <span
 										style="float: right; margin-right: 20px;">Sum:
-										${expense.sum} ${currency}</span> <span></span> <br /> <span
-										style="float: left; margin-left: 20px;">${expense.description}</span>
+										${income.sum} ${currency}</span> <span></span> <br /> <span
+										style="float: left; margin-left: 20px;">${income.description}</span>
 									<span style="float: right; margin-right: 20px;">Category:
-										${expense.category.name}</span> <br /> <span
+										${income.category.name}</span> <br /> <span
 										style="float: left; margin-left: 20px;">
-										<form action="./editExpense">
-											<input type="hidden" name="id" value="${expense.id}" /> <input
+										<form action="./editIncome">
+											<input type="hidden" name="id" value="${income.id}" /> <input
 												type="submit" value="Edit" class="btn btn-sm  btn-info"
 												style="margin-bottom: -20px;" />
 										</form>
 									</span> <span style="float: right; margin-right: 20px;">
-										<form method="POST" action="./removeExpense">
-											<input type="hidden" name="id" value="${expense.id}" /> <input
+										<form method="POST" action="./removeIncome">
+											<input type="hidden" name="id" value="${income.id}" /> <input
 												type="submit" value="Remove" class="btn btn-sm btn-danger"
 												style="margin-bottom: -20px;" />
 										</form>
@@ -94,7 +92,7 @@
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
 	<script type="text/javascript">
-		$.get("./showExpenses").success(
+		$.get("./showIncome").success(
 				function(data) {
 					var chart = AmCharts.makeChart("chartdiv", {
 						"type" : "pie",

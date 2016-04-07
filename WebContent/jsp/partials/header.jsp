@@ -34,7 +34,7 @@
 						<ul class="nav nav-second-level">
 							<li><a href="./expenses" class=" hvr-bounce-to-right"><i
 									class="fa fa-minus-circle nav_icon"></i>Expenses</a></li>
-							<li><a href="signup.html" class=" hvr-bounce-to-right"><i
+							<li><a href="./incomes" class=" hvr-bounce-to-right"><i
 									class="fa fa-plus-circle nav_icon"></i>Incomes</a></li>
 						</ul></li>
 					<li><a href="./account" class=" hvr-bounce-to-right"><i
@@ -45,7 +45,7 @@
 					<li><a href="./budget" class=" hvr-bounce-to-right"><i
 							class="fa fa-money nav_icon"></i> <span class="nav-label">Budget</span>
 					</a></li>
-					<li><a href="gallery.html" class=" hvr-bounce-to-right"><i
+					<li><a href="./report" class=" hvr-bounce-to-right"><i
 							class="fa fa-file-pdf-o nav_icon"></i> <span class="nav-label">Report</span>
 					</a></li>
 					<li><a href="./editprofile" class=" hvr-bounce-to-right"><i

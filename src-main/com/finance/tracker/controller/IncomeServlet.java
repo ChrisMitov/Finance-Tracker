@@ -9,23 +9,20 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.finance.tracker.model.Account;
-import com.finance.tracker.model.FinanceOperation;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IFinanceOperation;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.AccountDAO;
 import com.finance.tracker.model.dao.FinanceOperationDao;
 
-/**
- * Servlet implementation class ExpenseServlet
- */
-@WebServlet("/expenses")
-public class ExpenseServlet extends BaseServlet {
+@WebServlet("/incomes")
+public class IncomeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -38,21 +35,21 @@ public class ExpenseServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
-		Collection<IFinanceOperation> expenses = new ArrayList<>();
+		Collection<IFinanceOperation> incomes = new ArrayList<>();
 		for (IAccount account : accounts) {
-			expenses.addAll(new FinanceOperationDao().getAllExpencesByAccount((Account) account));
+			incomes.addAll(new FinanceOperationDao().getAllIncomeByAccount((Account) account));
 
 		}
-		if (expenses.isEmpty()) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/blankExpense.jsp");
+		if (incomes.isEmpty()) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/blankIncome.jsp");
 			dispatcher.forward(request, response);
 			return;
 		}
-		Collections.sort((List<IFinanceOperation>) expenses, (e1, e2) -> e1.getDate().getDay() - e2.getDate().getDay());
+		Collections.sort((List<IFinanceOperation>) incomes, (e1, e2) -> e1.getDate().getDay() - e2.getDate().getDay());
 		request.setAttribute("accounts", accounts);
 		request.setAttribute("currency", user.getCurrency());
-		request.setAttribute("expenses", expenses);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/expences.jsp");
+		request.setAttribute("incomes", incomes);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/incomes.jsp");
 		dispatcher.forward(request, response);
 	}
 
