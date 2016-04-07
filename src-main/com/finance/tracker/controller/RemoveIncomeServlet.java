@@ -31,7 +31,7 @@ public class RemoveIncomeServlet extends BaseServlet {
 		}
 		int incomeId = Integer.parseInt(request.getParameter("id"));
 		new FinanceOperationDao().removeFinanceOperation(incomeId);
-		response.sendRedirect("./expenses");
+		response.sendRedirect("./incomes");
 	}
 
 }

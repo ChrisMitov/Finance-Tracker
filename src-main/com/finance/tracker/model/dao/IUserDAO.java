@@ -28,21 +28,19 @@ public interface IUserDAO {
 	boolean isUserExisting(String email);
 
 	int getUserId(String email);
-	
+
 	String getFirstNameById(int id);
 
 	String getLastNameById(int id);
-	
+
 	String getPasswordById(int id);
-	
+
 	String getEmailById(int id);
-	
+
 	String getDateByID(int id);
-	
+
 	Currency getCurrencyById(int id);
-	
+
 	Collection<IBudget> getAllBudgetsByUser(int id);
-	
-	boolean isBudgetEmpty(int id);
 
 }

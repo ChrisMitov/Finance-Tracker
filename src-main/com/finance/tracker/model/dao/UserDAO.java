@@ -198,17 +198,4 @@ public class UserDAO implements IUserDAO {
 		return budgets;
 	}
 
-	@Override
-	public boolean isBudgetEmpty(int id) {
-		try {
-			new Validation().validateNegativeNumber(id);
-		} catch (FinanceTrackerException e1) {
-			e1.printStackTrace();
-		}
-		Query query = manager.createQuery("from Budget a where a.owner=:user", IAccount.class)
-				.setParameter("user", getUser(id));
-		Collection<IAccount> accounts = query.getResultList();
-		return accounts;
-	}
-
 }

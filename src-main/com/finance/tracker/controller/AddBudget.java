@@ -41,14 +41,13 @@ public class AddBudget extends BaseServlet {
 			return;
 		}
 		HttpSession session = request.getSession();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		String title = request.getParameter("title");
 		double sum = Double.parseDouble(request.getParameter("sum"));
 		Date date = DEFAULT_DATE;
+		String calendar = request.getParameter("start");
 		try {
-
-			date = formatter.parse(request.getParameter("start"));
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}

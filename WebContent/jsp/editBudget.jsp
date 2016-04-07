@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
 
 <!DOCTYPE HTML>
 <html>
@@ -27,7 +29,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+
+
+
 
 
 
@@ -107,26 +123,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 								<table>
 									<tr>
-										<td>Title:</td>
+										<td>Title</td>
 										<td>:</td>
 										<td>${budget.title}</td>
+										<td><input type="text" placeholder="Title"
+											name="newTitle" /></td>
 									</tr>
 									<tr>
-										<td>Sum:</td>
+										<td>Sum</td>
 										<td>:</td>
 										<td>${budget.totalAmount}</td>
 										<td><input type="text" placeholder="Sum" name="newSum" /></td>
 									</tr>
 									<tr>
-										<td>Start date:</td>
+										<td>Start date</td>
 										<td>:</td>
-										<td>${budget.startDate}</td>
+										<td><fmt:formatDate value="${budget.startDate}"
+												pattern="yyyy-MM-dd" var="myDate" /> ${myDate}</td>
 										<td><input type="date" placeholder="Start date"
 											name="newStart" /></td>
 									</tr>
 									<tr>
-										<td>Repeat type:</td>
+										<td>End date</td>
+										<td>:</td>
+										<td><fmt:formatDate value="${budget.endDate}" pattern="yyyy-MM-dd" var="myDate" />${myDate}</td>
+									</tr>
+									<tr>
+										<td>Repeat type</td>
+										<td>:</td>
 										<td>${budget.repeatType}</td>
+										<td><select name="newRepeat">
+												<option value="blanck"></option>
+												<option value="NO_REPEAT">NO_REPEAT</option>
+												<option value="DAILY">DAILY</option>
+												<option value="WEEKLY">WEEKLY</option>
+												<option value="MONTHLY">MONTHLY</option>
+												<option value="YEARLY">YEARLY</option>
+										</select></td>
 									</tr>
 								</table>
 

@@ -18,6 +18,7 @@ import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.RepeatType;
 import com.finance.tracker.model.dao.BudgetDao;
 import com.finance.tracker.model.dao.IBudgetDao;
 import com.finance.tracker.model.dao.IUserDAO;
@@ -37,6 +38,7 @@ public class EditBudget extends BaseServlet {
 		}
 		int id = Integer.parseInt(request.getParameter("budgetid"));
 		IBudget budget = new BudgetDao().foundById(id);
+		session.setAttribute("budgetId", id);
 		session.setAttribute("budget", budget);
 		RequestDispatcher rd = request.getRequestDispatcher("./jsp/editBudget.jsp");
 		rd.forward(request, response);
@@ -56,28 +58,40 @@ public class EditBudget extends BaseServlet {
 
 	private IBudget validateUpdates(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		int id = (int) session.getAttribute("budgetId");
 		String sum = request.getParameter("newSum");
 		String date = request.getParameter("newStart");
-		System.out.println(date+" !!!");
+		String title = (String) request.getParameter("newTitle");
+		String type = (String) request.getParameter("newRepeat");
 		IBudget budget = (IBudget) request.getSession().getAttribute("budget");
 		if (sum != null && sum.length() > 0 && !sum.equals("")) {
 			double newSum = Double.parseDouble(sum);
 			budget.setTotalAmount(newSum);
 		}
-		if (date != null && date.length()>0) {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
-			Date startDate = null;
+
+		if (!(date.equals("")) && date != null && date.length() > 0) {
 			try {
-				startDate = formatter.parse(date);
+				Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				budget.setStartDate(startDate);
 			} catch (ParseException e) {
 				e.printStackTrace();
-			}
-			try {
-				budget.setStartDate(startDate);
 			} catch (FinanceTrackerException e) {
 				e.printStackTrace();
 			}
+		} else if (title != null && title.length() > 0 && !title.equals("")) {
+			try {
+				budget.setTitle(title);
+			} catch (FinanceTrackerException e) {
+				e.printStackTrace();
+			}
+		} else if (!(type.equals("blanck"))) {
+			RepeatType newType = RepeatType.valueOf(type);
+			System.out.println(newType+"!!");
+			budget.setRepeatType(newType);
 		}
+
+		budget.setId(id);
 		return budget;
 	}
 }
