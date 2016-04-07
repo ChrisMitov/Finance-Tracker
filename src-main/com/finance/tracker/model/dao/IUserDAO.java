@@ -42,5 +42,7 @@ public interface IUserDAO {
 	Currency getCurrencyById(int id);
 	
 	Collection<IBudget> getAllBudgetsByUser(int id);
+	
+	boolean isBudgetEmpty(int id);
 
 }

@@ -64,11 +64,11 @@ public class EditBudget extends BaseServlet {
 			double newSum = Double.parseDouble(sum);
 			budget.setTotalAmount(newSum);
 		}
-		if (date != null) {
+		if (date != null && date.length()>0) {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
 			Date startDate = null;
 			try {
-				startDate = formatter.parse(request.getParameter("newStart"));
+				startDate = formatter.parse(date);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -78,7 +78,6 @@ public class EditBudget extends BaseServlet {
 				e.printStackTrace();
 			}
 		}
-
 		return budget;
 	}
 }
