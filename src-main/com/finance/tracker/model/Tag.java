@@ -2,6 +2,7 @@ package com.finance.tracker.model;
 
 import java.util.Set;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,12 @@ import javax.persistence.ManyToOne;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.validation.Validation;
+<<<<<<< HEAD
+import com.finance.tracker.view.model.FinanceOperationModel;
+//import com.finance.tracker.view.model.TagModel;
+=======
 import com.finance.tracker.view.model.TagModel;
+>>>>>>> 4325278be5609cda953a56ce87fe6370fdafdaaa
 
 @Entity
 public class Tag {
@@ -102,7 +108,7 @@ public class Tag {
 		return true;
 	}
 
-	public TagModel getViewModelTag(String name) {
-		return new TagModel(name);
-	}
+//	public TagModel getViewModelTag(String name) {
+//		return new TagModel(name);
+//	}
 }
