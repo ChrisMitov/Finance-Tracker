@@ -1,6 +1,10 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,12 +36,8 @@ public class EditBudget extends BaseServlet {
 			return;
 		}
 		int id = Integer.parseInt(request.getParameter("budgetid"));
-		IBudgetDao budget = new BudgetDao();
-		session.setAttribute("title", budget.getTitleById(id));
-		session.setAttribute("sum", budget.getSumById(id));
-		session.setAttribute("start", budget.getStartDateById(id));
-		session.setAttribute("end", budget.getEndDateById(id));
-		session.setAttribute("type", budget.getTypeById(id));
+		IBudget budget = new BudgetDao().foundById(id);
+		session.setAttribute("budget", budget);
 		RequestDispatcher rd = request.getRequestDispatcher("./jsp/editBudget.jsp");
 		rd.forward(request, response);
 	}
@@ -51,20 +51,32 @@ public class EditBudget extends BaseServlet {
 		IBudgetDao budget = new BudgetDao();
 		IBudget budgetToUpdate = validateUpdates(request, response);
 		budget.updateBudget(budgetToUpdate);
-		;
-		doGet(request, response);
+		response.sendRedirect("./budget");
 	}
 
 	private IBudget validateUpdates(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String sum = request.getParameter("newSum");
-		int id = Integer.parseInt(request.getParameter("budgetid"));
-		System.out.println(id+"!!!!!!!!!!!!!!!!!");
-		IBudget budget = new BudgetDao().foundById(id);
-
-		if (sum != null) {
+		String date = request.getParameter("newStart");
+		System.out.println(date+" !!!");
+		IBudget budget = (IBudget) request.getSession().getAttribute("budget");
+		if (sum != null && sum.length() > 0 && !sum.equals("")) {
 			double newSum = Double.parseDouble(sum);
 			budget.setTotalAmount(newSum);
+		}
+		if (date != null) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
+			Date startDate = null;
+			try {
+				startDate = formatter.parse(request.getParameter("newStart"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			try {
+				budget.setStartDate(startDate);
+			} catch (FinanceTrackerException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return budget;

@@ -109,24 +109,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<tr>
 										<td>Title:</td>
 										<td>:</td>
-										<td>${title}</td>
+										<td>${budget.title}</td>
 									</tr>
 									<tr>
 										<td>Sum:</td>
 										<td>:</td>
-										<td>${sum}</td>
+										<td>${budget.totalAmount}</td>
 										<td><input type="text" placeholder="Sum" name="newSum" /></td>
 									</tr>
 									<tr>
 										<td>Start date:</td>
 										<td>:</td>
-										<td>${start}</td>
+										<td>${budget.startDate}</td>
 										<td><input type="date" placeholder="Start date"
 											name="newStart" /></td>
 									</tr>
 									<tr>
 										<td>Repeat type:</td>
-										<td>${type}</td>
+										<td>${budget.repeatType}</td>
 									</tr>
 								</table>
 
