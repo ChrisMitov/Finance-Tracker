@@ -9,7 +9,6 @@ body {
 	background-size: cover;
 }
 
-
 @font-face {
 	font-family: 'FontAwesome';
 	src: url('../fonts/fontawesome-webfont.eot?v=4.5.0');
@@ -143,10 +142,26 @@ body {
 
 
 
+
+
+
+
+
+
+
+
 :
 
 
+
+
+
+
  
+
+
+
+
 
 
 rotate
@@ -154,8 +169,24 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
 (359
 deg
+
+
+
+
+
+
+
+
 
 
 );
@@ -164,10 +195,26 @@ transform
 
 
 
+
+
+
+
+
+
+
+
 :
 
 
+
+
+
+
  
+
+
+
+
 
 
 rotate
@@ -175,8 +222,24 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
 (359
 deg
+
+
+
+
+
+
+
+
 
 
 );
@@ -195,10 +258,26 @@ keyframes fa-spin { 0% {
 
 
 
+
+
+
+
+
+
+
+
 :
 
 
+
+
+
+
  
+
+
+
+
 
 
 rotate
@@ -206,8 +285,24 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
 (359
 deg
+
+
+
+
+
+
+
+
 
 
 );
@@ -216,10 +311,26 @@ transform
 
 
 
+
+
+
+
+
+
+
+
 :
 
 
+
+
+
+
  
+
+
+
+
 
 
 rotate
@@ -227,8 +338,24 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
 (359
 deg
+
+
+
+
+
+
+
+
 
 
 );

@@ -13,6 +13,13 @@
 <link href="resources/css/double_table.css" rel='stylesheet'
 	type='text/css' />
 <link href="resources/css/budget.css" rel='stylesheet' type='text/css' />
+<style type="text/css">
+#chartdiv {
+	width: 100%;
+	height: 435px;
+	font-size: 11px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
@@ -31,9 +38,35 @@
 				<div class="grid-form1"
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
+						<div id="content1">
+							<div id="chartdiv"></div>
+							<div class="container-fluid">
+								<div class="row text-center" style="overflow: hidden;">
+									<div class="col-sm-3"
+										style="float: none !important; display: inline-block;">
+										<label class="text-left">Angle:</label> <input
+											class="chart-input" data-property="angle" type="range"
+											min="0" max="60" value="30" step="1" />
+									</div>
+
+									<div class="col-sm-3"
+										style="float: none !important; display: inline-block;">
+										<label class="text-left">Depth:</label> <input
+											class="chart-input" data-property="depth3D" type="range"
+											min="1" max="25" value="10" step="1" />
+									</div>
+									<div class="col-sm-3"
+										style="float: none !important; display: inline-block;">
+										<label class="text-left">Inner-Radius:</label> <input
+											class="chart-input" data-property="innerRadius" type="range"
+											min="0" max="80" value="0" step="1" />
+									</div>
+								</div>
+							</div>
+						</div>
 						<div id="sidebar1">
 							<c:forEach var="entity" items="${sums}">
-								
+
 								<div class="panel panel-success">
 									<div class="panel-heading">Title: ${ entity.key.title}</div>
 
@@ -43,19 +76,19 @@
 											style="float: right; margin-right: 20px;">Sum:
 											${entity.key.totalAmount} ${currency}</span> <span></span> <br /> <span
 											style="float: right; margin-right: 20px;">Type: ${ entity.key.repeatType}</span>
-										<br /> <br/><span
+										<br /> <br /> <span
 											style="font-weight: bold; position: relative; left: 20%;">Money
 											per day: ${ entity.value} ${currency}</span> <br /> <span
 											style="float: left; margin-left: 100px;">
 											<form action="./editBudget">
-												<input type="hidden" name="id" value="${entity.key.id}" /> <input
-													type="submit" value="Edit" class="btn btn-success"
+												<input type="hidden" name="id" value="${entity.key.id}" />
+												<input type="submit" value="Edit" class="btn btn-success"
 													style="margin-bottom: -10px;" />
 											</form>
 										</span> <span class="button">
 											<form method="POST" action="./removeBudget">
-												<input type="hidden" name="id" value="${entity.key.id}" /> <input
-													type="submit" value="Remove" class="btn btn-danger"
+												<input type="hidden" name="id" value="${entity.key.id}" />
+												<input type="submit" value="Remove" class="btn btn-danger"
 													style="margin-bottom: -20px;" />
 											</form>
 										</span>

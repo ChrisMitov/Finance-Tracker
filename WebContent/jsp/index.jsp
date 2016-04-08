@@ -12,10 +12,10 @@
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <style type="text/css">
 #chartdiv {
-	width		: 100%;
-	height		: 435px;
-	font-size	: 12px;
-}	
+	width: 100%;
+	height: 435px;
+	font-size: 12px;
+}
 </style>
 </head>
 <body>
@@ -33,18 +33,17 @@
 			<!--grid-->
 			<div class="grid-form">
 				<div class="grid-form1" style="overflow: hidden; height: 1%;">
-				<form name="" action="./overviewPeriod" method="get" class="demo">
-						<span style="float: left;"> <label> Choose period:<c:out
-									value="${month}"></c:out>
+					<form name="" action="./overviewPeriod" method="get" class="demo">
+						<span style="float: left;"> <label> Choose period:
 						</label> <select class="option3" name="month">
 								<c:forEach var="i" begin="1" end="12">
 									<c:choose>
-										<c:when test="${ month != i } ">
-											<option value="<c:out value = "${i}" />"><c:out
+										<c:when test="${ month == i }">
+											<option value="<c:out value = "${i}" />" selected><c:out
 													value="${i}" /></option>
 										</c:when>
 										<c:otherwise>
-											<option selected value="<c:out value = "${i}" />"><c:out
+											<option value="<c:out value = "${i}" />"><c:out
 													value="${i}" /></option>
 										</c:otherwise>
 									</c:choose>
@@ -52,13 +51,12 @@
 						</select> <select class="option3" name="year">
 								<c:forEach var="i" begin="${year-5}" end="${year+5}">
 									<c:choose>
-										<c:when test="${ year != i } ">
-											<option value="<c:out value = "${i}" />"><c:out
+										<c:when test="${ year == i }">
+											<option value="<c:out value = "${i}" />" selected><c:out
 													value="${i}" /></option>
 										</c:when>
 										<c:otherwise>
-
-											<option value="<c:out value = "${i}" />" selected><c:out
+											<option value="<c:out value = "${i}" />"><c:out
 													value="${i}" /></option>
 										</c:otherwise>
 									</c:choose>
@@ -67,7 +65,7 @@
 								value="Change" class="btn btn-sm btn-danger warning_1"
 								style="margin: 0 auto; margin-left: 10px; display: block;" /></span> <br />
 							<br />
-						</span> 
+						</span>
 					</form>
 					<br /> <span></span> <br /> <br /> <br />
 					<div id="chartdiv"></div>
@@ -105,61 +103,71 @@
 	<script src="resources/js/scripts.js"></script>
 	<!--//scrolling js-->
 	<script type="text/javascript">
-		$.get("./overviewRest").success(
-				function(data) {
-					var chart = AmCharts.makeChart("chartdiv", {
-					    "theme": "light",
-					    "type": "serial",
-					    "dataProvider": data,
-					    "valueAxes": [{
-					        "stackType": "3d",
-					        "unit": "",
-					        "position": "left",
-					        "title": "Sum per day",
-					    }],
-					    "startDuration": 1,
-					    "graphs": [{
-					        "balloonText": "Daily income on [[category]]: <b>[[value]]</b>",
-					        "fillAlphas": 0.9,
-					        "lineAlpha": 0.2,
-					        "title": "income",
-					        "type": "column",
-					        "valueField": "incomeNumber"
-					    }, {
-					        "balloonText": "Daily expense on [[category]]: <b>[[value]]</b>",
-					        "fillAlphas": 0.9,
-					        "lineAlpha": 0.2,
-					        "title": "expense",
-					        "type": "column",
-					        "valueField": "expenseNumber"
-					    }],
-					    "plotAreaFillAlphas": 0.1,
-					    "depth3D": 60,
-					    "angle": 30,
-					    "categoryField": "name",
-					    "categoryAxis": {
-					        "gridPosition": "start"
-					    },
-					    "export": {
-					    	"enabled": true
-					     }
-					});
-					jQuery('.chart-input').off().on('input change',function() {
-						var property	= jQuery(this).data('property');
-						var target		= chart;
-						chart.startDuration = 0;
+		$
+				.get("./overviewRest")
+				.success(
+						function(data) {
+							var chart = AmCharts
+									.makeChart(
+											"chartdiv",
+											{
+												"theme" : "light",
+												"type" : "serial",
+												"dataProvider" : data,
+												"valueAxes" : [ {
+													"stackType" : "3d",
+													"unit" : "",
+													"position" : "left",
+													"title" : "Sum per day",
+												} ],
+												"startDuration" : 1,
+												"graphs" : [
+														{
+															"balloonText" : "Daily income on [[category]]: <b>[[value]]</b>",
+															"fillAlphas" : 0.9,
+															"lineAlpha" : 0.2,
+															"title" : "income",
+															"type" : "column",
+															"valueField" : "incomeNumber"
+														},
+														{
+															"balloonText" : "Daily expense on [[category]]: <b>[[value]]</b>",
+															"fillAlphas" : 0.9,
+															"lineAlpha" : 0.2,
+															"title" : "expense",
+															"type" : "column",
+															"valueField" : "expenseNumber"
+														} ],
+												"plotAreaFillAlphas" : 0.1,
+												"depth3D" : 60,
+												"angle" : 30,
+												"categoryField" : "name",
+												"categoryAxis" : {
+													"gridPosition" : "start"
+												},
+												"export" : {
+													"enabled" : true
+												}
+											});
+							jQuery('.chart-input').off().on(
+									'input change',
+									function() {
+										var property = jQuery(this).data(
+												'property');
+										var target = chart;
+										chart.startDuration = 0;
 
-						if ( property == 'topRadius') {
-							target = chart.graphs[0];
-					      	if ( this.value == 0 ) {
-					          this.value = undefined;
-					      	}
-						}
+										if (property == 'topRadius') {
+											target = chart.graphs[0];
+											if (this.value == 0) {
+												this.value = undefined;
+											}
+										}
 
-						target[property] = this.value;
-						chart.validateNow();
-					});	
-				})
+										target[property] = this.value;
+										chart.validateNow();
+									});
+						})
 	</script>
 </body>
 </html>
