@@ -1,7 +1,10 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
 import com.finance.tracker.validation.HashPassword;
@@ -30,13 +34,15 @@ public class EditProfile extends BaseServlet {
 			return;
 		}
 		int id = (int) session.getAttribute("userId");
-		IUserDAO user = new UserDAO();
-		session.setAttribute("userName", user.getFirstNameById(id));
-		session.setAttribute("lastName", user.getLastNameById(id));
-		session.setAttribute("email", user.getEmailById(id));
-		session.setAttribute("password", user.getPasswordById(id));
-		session.setAttribute("currency", user.getCurrencyById(id));
-		session.setAttribute("startDate", user.getDateByID(id));		
+		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		IUserDAO Dao = new UserDAO();
+		session.setAttribute("user", user);
+		session.setAttribute("userName", Dao.getFirstNameById(id));
+		session.setAttribute("lastName", Dao.getLastNameById(id));
+		session.setAttribute("email", Dao.getEmailById(id));
+		session.setAttribute("password", Dao.getPasswordById(id));
+		session.setAttribute("currency", Dao.getCurrencyById(id));
+		session.setAttribute("startDate", Dao.getDateByID(id));
 		RequestDispatcher rd = request.getRequestDispatcher("./jsp/Profile.jsp");
 		rd.forward(request, response);
 	}

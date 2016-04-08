@@ -1,5 +1,6 @@
 package com.finance.tracker.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.Collection;
@@ -39,7 +40,7 @@ public class Budget implements IBudget {
 	private String title;
 	@Column(name = "sum")
 	private double totalAmount;
-	// private double sumPerDay;
+//	private double sumPerDay;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
 	private Date startDate;
@@ -75,7 +76,7 @@ public class Budget implements IBudget {
 		this.setRepeatType(repeatType);
 		this.setTotalAmount(totalAmount);
 		this.setTitle(title);
-		// this.sumPerDay = totalAmount / LocalDate.now().getMonthValue();
+//		sumPerDay = totalAmount / LocalDate.now().getMonthValue();
 		setStartDate(startDate);
 		generateEndDate(repeatType);
 		setUser(user);
@@ -216,5 +217,9 @@ public class Budget implements IBudget {
 			endDate = new Date(startDate.getTime() + PLUS_ONE_YEAR);
 		}
 	}
+	
+//	public double getSumPerDay(){
+//		return this.sumPerDay;
+//	}
 
 }

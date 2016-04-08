@@ -36,7 +36,7 @@ public class EditBudget extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		int id = Integer.parseInt(request.getParameter("budgetid"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		IBudget budget = new BudgetDao().foundById(id);
 		session.setAttribute("budgetId", id);
 		session.setAttribute("budget", budget);

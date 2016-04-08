@@ -40,27 +40,54 @@ public class AddBudget extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
-		String title = request.getParameter("title");
-		double sum = Double.parseDouble(request.getParameter("sum"));
-		Date date = DEFAULT_DATE;
-		String calendar = request.getParameter("start");
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
+		if (validateAdd(request, response)) {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+			String title = request.getParameter("title");
+			double sum = Double.parseDouble(request.getParameter("sum"));
+			Date date = DEFAULT_DATE;
+			String calendar = request.getParameter("start");
+			String type = request.getParameter("repeat");
+			try {
+				date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
+				IBudget budget = new Budget(title, sum, date, RepeatType.valueOf(type), user);
+				new BudgetDao().addBudget(budget);
+				user.addBudget(budget);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			} catch (FinanceTrackerException e) {
+				e.printStackTrace();
+			}
+
+			response.sendRedirect("./budget");
 		}
-		String type = request.getParameter("repeat");
-		try {
-			IBudget budget = new Budget(title, sum, date, RepeatType.valueOf(type), user);
-			new BudgetDao().addBudget(budget);
-			user.addBudget(budget);
-		} catch (FinanceTrackerException e) {
-			e.printStackTrace();
+		else{
+			request.setAttribute("emptyField", "All fields are obligatory!");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
+			dispatcher.forward(request, response);
 		}
 
-		response.sendRedirect("./budget");
+	}
+
+	private boolean validateAdd(HttpServletRequest request, HttpServletResponse response) {
+		String title = request.getParameter("title");
+		String sum = request.getParameter("sum");
+		String calendar = request.getParameter("start");
+		String type = request.getParameter("repeat");
+		if (title == null || title.equals("")) {
+			return false;
+		}
+		if (sum == null || sum.equals("")) {
+			return false;
+		}
+		if (calendar == null || calendar.equals("")) {
+			return false;
+		}
+		if (type.equals("") || type == null) {
+			return false;
+		} else {
+			return true;
+		}
 
 	}
 

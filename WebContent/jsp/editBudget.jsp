@@ -167,7 +167,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="clearfix"></div>
 						</div>
 						<div class="profile-btn">
-							<input type="submit" value="Edit budget" class="btn bg-red" />
+							<input type="submit" value="Edit budget" class="btn btn-primary" />
 							<div class="clearfix"></div>
 						</div>
 					</form>
