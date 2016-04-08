@@ -24,7 +24,7 @@
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
 
-					<li><a href="index.html" class=" hvr-bounce-to-right"><i
+					<li><a href="./" class=" hvr-bounce-to-right"><i
 							class="fa fa-calendar nav_icon "></i><span class="nav-label">Monthly
 								overview</span> </a></li>
 

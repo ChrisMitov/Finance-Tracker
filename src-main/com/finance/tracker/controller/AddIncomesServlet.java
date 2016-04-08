@@ -17,8 +17,6 @@ import javax.servlet.http.HttpSession;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Category;
-import com.finance.tracker.model.Currency;
-import com.finance.tracker.model.Expense;
 import com.finance.tracker.model.FinanceOperation;
 import com.finance.tracker.model.FinanceOperationType;
 import com.finance.tracker.model.IAccount;
@@ -29,7 +27,6 @@ import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.AccountDAO;
 import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.FinanceOperationDao;
-import com.finance.tracker.model.dao.IFinanceOperationDao;
 import com.finance.tracker.model.dao.TagDao;
 
 

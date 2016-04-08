@@ -32,13 +32,34 @@
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
 						<div id="content1" class="demo">
-							<span style="float: left"><label>Choose account to
-									display: </label> <select class="option3" name="fromAccount">
-									<option value="blank">All accounts</option>
-									<c:forEach var="account" items="${accounts}">
-										<option value="${account.id}">${account.title}</option>
-									</c:forEach>
-							</select> </span> <span
+							<form name="" action="./period" method="get" class="demo">
+
+								<span style="float: left;"> <label> Choose
+										period:<c:out value="${month}"></c:out>
+								</label> <select class="option3" name="month">
+										<c:forEach var="i" begin="1" end="12">
+										<fmt:parseNumber var="mon" type="number" value="${month}" />
+											<option value="<c:out value = "${i}" />"
+												selected=${i == sesionScope.month ? 'selected' : ''}><c:out
+													value="${i}" /></option>
+										</c:forEach>
+								</select> <select class="option3" name="year">
+										<c:forEach var="i" begin="${year-5}" end="${year+5}">
+											<option value="<c:out value = "${i}" />"><c:out
+													value="${i}" /></option>
+										</c:forEach>
+								</select> <span style="float: right"><input type="submit"
+										value="Change" class="btn btn-sm btn-danger warning_1"
+										style="margin: 0 auto; margin-left: 10px; display: block;" /></span>
+								</span> <span style="float: left"><label>Choose account
+										to display: </label> <select class="option3" name="fromAccount">
+										<option value="0">All accounts</option>
+										<c:forEach var="account" items="${accounts}">
+											<option value="${account.id}">${account.title}</option>
+										</c:forEach>
+								</select> </span>
+							</form>
+							<span
 								style="float: right; margin-right: 30px; margin-top: -15px;">
 								<form action="./addExpense">
 									<input type="submit" value="Add Expense"
