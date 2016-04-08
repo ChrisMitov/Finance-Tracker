@@ -54,7 +54,8 @@
 							<tr>
 								<th><label style="font-size: 28px" for="category">Choose
 										category: </label></th>
-								<td><select class="option4" id = "cat_id" name="category" onchange="refreshTags()">
+								<td><select class="option4" id="cat_id" name="category"
+									onchange="refreshTags()">
 										<c:forEach var="category" items="${categories}">
 											<option value="${category.id}">${category.name}</option>
 										</c:forEach>
@@ -79,7 +80,8 @@
 							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:
 								</label></th>
-								<td><div id="tags"></div><c:forEach var="tag" items="${tags}">
+								<td><div id="tags"></div> <c:forEach var="tag"
+										items="${tags}">
 										<span style="display: inline-block;"> <label
 											for="${tag.name}"
 											style="color: black; display: inline-block;">${tag.name}</label>
@@ -107,24 +109,29 @@
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
 	<script type="text/javascript">
-	function refreshTags() {
-		var category = $("#cat_id").val();
-		
-		$.ajax({
-			   url: './expense?id=' + category,
-			   type: 'GET',
-			   contentType:'application/json',
-			   success: function(data) {
-				   $("#tags").empty();
-					$.each(data, function(index, tag) {			
-						$("<span style="display: inline-block;"> <label	for="${tag.name}" style="color: black; display: inline-block;">${tag.name}</label>	<input id="${tag.id}" name="tags" type="checkbox"							class="form-control" value="${tag.name}"></span>").appendTo("#tags").text(product.name);
-						$("<br>").appendTo("#tags");
+		function refreshTags() {
+			var category = $("#cat_id").val();
+	<%--
+			$
+					.ajax({
+						url : './showTags?catId=' + category,
+						type : 'GET',
+						contentType : 'application/json',
+						success : function(data) {
+							$("#tags").empty();
+							$.each(
+											data,
+											function(index, tag) {
+												$("#tags").html(
+														"<span style='display: inline-block;'> <label	for='tag.name' style='color: black; display: inline-block;'>tag.name</label>	
+														<input id='tag.id' name="tags" type="checkbox"	class="form-control" value='tag.name'></span>");
+											});
+
+						}
 					});
 
-			   }
-		});
-
-	}</script>
+		}--%>
+	</script>
 </body>
 </html>
 

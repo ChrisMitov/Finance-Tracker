@@ -1,14 +1,10 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -54,7 +50,15 @@ public class LogInServlet extends BaseServlet {
 			session.setAttribute("password", user.getPassword());
 			session.setAttribute("currency", user.getCurrency());
 			session.setAttribute("startDate", user.getJointedDate());
+<<<<<<< HEAD
 			request.getRequestDispatcher("./jsp/Budget.jsp").forward(request, response);
+=======
+			Calendar calendar = Calendar.getInstance();
+			session.setAttribute("month", calendar.get(Calendar.MONTH) + 1);
+			session.setAttribute("year", calendar.get(Calendar.YEAR));
+			session.setAttribute("accountIdExpense", 0);
+			response.sendRedirect("./");
+>>>>>>> 9f1b2b40f39dc261a3d47ff7ab3657b1a30d051b
 		} else {
 			request.setAttribute("wrongUser", "Incorrect email or password!");
 			request.getRequestDispatcher("./jsp/LogIn.jsp").forward(request, response);
