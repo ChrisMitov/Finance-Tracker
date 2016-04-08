@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.IBudget;
@@ -19,11 +20,15 @@ import com.finance.tracker.model.RepeatType;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.BudgetDao;
 
-@WebServlet("/addBudget")
-public class AddBudget extends BaseServlet {
+@WebServlet("/repeatBudget")
+public class AddBudgetRepeat extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Date DEFAULT_DATE = new Date();
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
@@ -34,6 +39,10 @@ public class AddBudget extends BaseServlet {
 		dispatcher.forward(request, response);
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
@@ -45,12 +54,16 @@ public class AddBudget extends BaseServlet {
 			User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 			String title = request.getParameter("title");
 			double sum = Double.parseDouble(request.getParameter("sum"));
-			Date date = DEFAULT_DATE;
-			String calendar = request.getParameter("start");
+			Date startDate = DEFAULT_DATE;
+			Date endDate = DEFAULT_DATE;
+			String start = request.getParameter("start");
+			String end = request.getParameter("end");
 			String type = request.getParameter("repeat");
 			try {
-				date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
-				IBudget budget = new Budget(title, sum, date, RepeatType.valueOf(type), user);
+				startDate = new SimpleDateFormat("yyyy-MM-dd").parse(start);
+				endDate = new SimpleDateFormat("yyyy-MM-dd").parse(end);
+				IBudget budget = new Budget(title, sum, startDate, RepeatType.valueOf(type), user);
+				budget.setEndDate(endDate);
 				new BudgetDao().addBudget(budget);
 				user.addBudget(budget);
 			} catch (ParseException e1) {
@@ -58,26 +71,19 @@ public class AddBudget extends BaseServlet {
 			} catch (FinanceTrackerException e) {
 				e.printStackTrace();
 			}
-			if(checkType(type)){
-				RequestDispatcher dispatcher = request.getRequestDispatcher("./repeatBudget");
-				dispatcher.forward(request, response);
-			}
-			else{
 			response.sendRedirect("./budget");
-			}
-		}
-		else{
+		} else {
 			request.setAttribute("emptyField", "All fields are obligatory!");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
 			dispatcher.forward(request, response);
 		}
-
 	}
 
 	private boolean validateAdd(HttpServletRequest request, HttpServletResponse response) {
 		String title = request.getParameter("title");
 		String sum = request.getParameter("sum");
-		String calendar = request.getParameter("start");
+		String start = request.getParameter("start");
+		String end = request.getParameter("end");
 		String type = request.getParameter("repeat");
 		if (title == null || title.equals("")) {
 			return false;
@@ -85,7 +91,10 @@ public class AddBudget extends BaseServlet {
 		if (sum == null || sum.equals("")) {
 			return false;
 		}
-		if (calendar == null || calendar.equals("")) {
+		if (start == null || start.equals("")) {
+			return false;
+		}
+		if (end == null || end.equals("")) {
 			return false;
 		}
 		if (type.equals("") || type == null) {
@@ -94,12 +103,5 @@ public class AddBudget extends BaseServlet {
 			return true;
 		}
 
-	}
-
-	private boolean checkType(String type){
-		if(type.equals("NO_REPEAT")){
-			return true;
-		}
-		return false;
 	}
 }

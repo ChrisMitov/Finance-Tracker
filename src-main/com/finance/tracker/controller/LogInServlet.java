@@ -54,7 +54,7 @@ public class LogInServlet extends BaseServlet {
 			session.setAttribute("password", user.getPassword());
 			session.setAttribute("currency", user.getCurrency());
 			session.setAttribute("startDate", user.getJointedDate());
-			request.getRequestDispatcher("./jsp/Profile.jsp").forward(request, response);
+			request.getRequestDispatcher("./jsp/Budget.jsp").forward(request, response);
 		} else {
 			request.setAttribute("wrongUser", "Incorrect email or password!");
 			request.getRequestDispatcher("./jsp/LogIn.jsp").forward(request, response);
