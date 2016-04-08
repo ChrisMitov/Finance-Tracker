@@ -22,33 +22,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!--banner-->
 			<div class="banner">
 				<h2>
-					<a href="index.html">Home</a> <i class="fa fa-heart-o"></i> <span>Budget</span>
+					<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Budget</span>
 				</h2>
 			</div>
 			<!--//banner-->
-			<!--gallery-->
-			<div class=" profile">
-
-				<div class="profile-bottom-empty">
+			<!--grid-->
+			<div class="grid-form">
+				<div class="grid-form1"
+					style="width: 1200px; overflow: hidden; height: 1%; display: table-cell; text-align: center; vertical-align: middle;">
 					<h3>
 						<i class="fa fa-frown-o"></i>${" "}There are no budgets here yet.
 						<br />
 					</h3>
-					<form method="get" action="./addBudget">
-						<br /> <br /> <img src="resources/images/empty.png" align="middle">
-						<div class="clearfix"></div>
-
-						<div class="profile-btn">
-							<input type="submit" value="Add budget" class="btn bg-red" />
-							<div class="clearfix"></div>
-						</div>
+					<img src="resources/images/empty.png">
+					<form action="./addBudget">
+						<input type="submit" value="Add budget"
+							class="btn btn-lg btn-success warning_1"
+							style="width: 200px; margin: 0 auto; display: block;" />
 					</form>
-				</div>
-			</div>
 
-			<%@ include file="./partials/footer.jsp"%>
+					<div id="chartdiv"></div>
+				</div>
+
+			</div>
 		</div>
-		<div class="clearfix"></div>
+	</div>
+	<%@ include file="./partials/footer.jsp"%>
+	</div>
+	<div class="clearfix"></div>
 	</div>
 
 	<!---->

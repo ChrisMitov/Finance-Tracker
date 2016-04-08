@@ -137,7 +137,7 @@
 							"enabled" : true
 						}
 					});
-				});
+						});
 	</script>
 </body>
 </html>

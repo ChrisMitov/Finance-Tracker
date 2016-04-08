@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+
+.panel-body {
+	background: #ffffec;
+}
+
+.button {
+	float: right;
+	margin-right: 100px;
+}
+
+.button1 {
+	float: left;
+	margin-left: 20px;
+}

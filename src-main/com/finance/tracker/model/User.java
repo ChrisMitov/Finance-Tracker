@@ -190,10 +190,7 @@ public class User implements IUser {
 
 	}
 	
-	public boolean isBudgetEmpty(){
-		return allBudgets.isEmpty();
-	}
-
+	
 	// public void addAcount(Account newAccount) throws FinanceTrackerException
 	// {
 	// if (newAccount != null) {
