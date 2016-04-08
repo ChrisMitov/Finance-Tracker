@@ -187,10 +187,8 @@ public class User implements IUser {
 			e.printStackTrace();
 		}
 		this.jointedDate = date;
-
 	}
-	
-	
+
 	// public void addAcount(Account newAccount) throws FinanceTrackerException
 	// {
 	// if (newAccount != null) {
@@ -214,15 +212,15 @@ public class User implements IUser {
 	// }
 	// }
 
-	 public void addBudget(IBudget budget) throws FinanceTrackerException {
-	 if (budget != null) {
-	 synchronized (this.allBudgets) {
-	 this.allBudgets.add((Budget) budget);
-	 }
-	 } else {
-	 throw new FinanceTrackerException();
-	 }
-	 }
+	public void addBudget(IBudget budget) throws FinanceTrackerException {
+		if (budget != null) {
+			synchronized (this.allBudgets) {
+				this.allBudgets.add((Budget) budget);
+			}
+		} else {
+			throw new FinanceTrackerException();
+		}
+	}
 	//
 	// public void removeBudget(Budget budget) throws FinanceTrackerException {
 	// if (budget != null && this.allBudgets.contains(budget)) {

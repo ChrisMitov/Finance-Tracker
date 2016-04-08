@@ -50,6 +50,9 @@ public class LogInServlet extends BaseServlet {
 			session.setAttribute("password", user.getPassword());
 			session.setAttribute("currency", user.getCurrency());
 			session.setAttribute("startDate", user.getJointedDate());
+
+			request.getRequestDispatcher("./jsp/Budget.jsp").forward(request, response);
+
 			Calendar calendar = Calendar.getInstance();
 			session.setAttribute("month", calendar.get(Calendar.MONTH) + 1);
 			session.setAttribute("year", calendar.get(Calendar.YEAR));

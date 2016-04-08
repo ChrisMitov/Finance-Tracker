@@ -13,7 +13,8 @@
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<!-- Collect the nav links, forms, and other content for toggling -->
 
-		<div class="drop-men">
+		<div class="drop-men" style="background-image: url("../images/7.jpg");
+	background-size: cover;">
 			<span class=" name-caret">Welcome, ${userName} ! </span>
 		</div>
 		<!-- /.navbar-collapse -->
