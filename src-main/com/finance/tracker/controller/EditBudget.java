@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -16,9 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
+import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.RepeatType;
+import com.finance.tracker.model.User;
+import com.finance.tracker.model.dao.AccountDAO;
 import com.finance.tracker.model.dao.BudgetDao;
 import com.finance.tracker.model.dao.IBudgetDao;
 import com.finance.tracker.model.dao.IUserDAO;
@@ -40,6 +44,9 @@ public class EditBudget extends BaseServlet {
 		IBudget budget = new BudgetDao().foundById(id);
 		session.setAttribute("budgetId", id);
 		session.setAttribute("budget", budget);
+		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
+		request.setAttribute("accounts", accounts);
 		RequestDispatcher rd = request.getRequestDispatcher("./jsp/editBudget.jsp");
 		rd.forward(request, response);
 	}
@@ -87,7 +94,7 @@ public class EditBudget extends BaseServlet {
 			}
 		} else if (!(type.equals("blanck"))) {
 			RepeatType newType = RepeatType.valueOf(type);
-			System.out.println(newType+"!!");
+			System.out.println(newType + "!!");
 			budget.setRepeatType(newType);
 		}
 

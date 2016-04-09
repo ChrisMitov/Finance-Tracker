@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 
 <div id="wrapper">
@@ -14,7 +16,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 
 		<div class="drop-men" style="background-image: url("../images/7.jpg");
-	background-size: cover;">
+	background-size:cover;">
 			<span class=" name-caret">Welcome, ${userName} ! </span>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -59,5 +61,10 @@
 
 				</ul>
 			</div>
+			<br />
+			<div>
+				<jsp:include page="showRates.jsp" />
+			</div>
+
 		</div>
 	</nav>

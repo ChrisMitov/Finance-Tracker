@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
+import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.RepeatType;
@@ -160,4 +162,14 @@ public class BudgetDao implements IBudgetDao {
 		RepeatType type = budget.getRepeatType();
 		return type;
 	}
+
+	public void addAccounts(IBudget budget, Collection<IAccount> accounts) throws FinanceTrackerException {
+		for (IAccount a : accounts) {
+			budget.addAccount((Account) a);
+		}
+		addBudget(budget);
+	}
+	
+
+
 }

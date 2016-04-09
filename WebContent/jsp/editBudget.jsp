@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; utf-8"
 	pageEncoding="utf-8"%>
+
+<%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:useBean id="now" class="java.util.Date" />
 
@@ -36,7 +38,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 
 
 
@@ -146,7 +152,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<tr>
 										<td>End date</td>
 										<td>:</td>
-										<td><fmt:formatDate value="${budget.endDate}" pattern="yyyy-MM-dd" var="myDate" />${myDate}</td>
+										<td><fmt:formatDate value="${budget.endDate}"
+												pattern="yyyy-MM-dd" var="myDate" />${myDate}</td>
 									</tr>
 									<tr>
 										<td>Repeat type</td>
@@ -160,6 +167,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option value="MONTHLY">MONTHLY</option>
 												<option value="YEARLY">YEARLY</option>
 										</select></td>
+									</tr>
+									<tr>
+										<td>Choose account:</td>
+										<td><div class="account">
+												<c:forEach var="account" items="${accounts}">
+													<input type="checkbox" name="selected"
+														value="${account.id}">${account.title}<br>
+												</c:forEach>
+											</div></td>
 									</tr>
 								</table>
 
