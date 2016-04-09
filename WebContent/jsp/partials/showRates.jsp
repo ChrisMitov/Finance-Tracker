@@ -5,7 +5,7 @@
 
 
 <div class="panel panel-danger">
-	<form method="get" action="./exchangeRates">
+	<form method="get" action="./login">
 		<div class="panel-heading">
 			<h4>Exchange rates</h4>
 		</div>
