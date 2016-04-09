@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Expense;
+import com.finance.tracker.model.FinanceOperationType;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IFinanceOperation;
 import com.finance.tracker.model.Income;
@@ -60,7 +63,26 @@ public class ReportServlet extends BaseServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
+		if (!super.isAuthenticated(request)) {
+			response.sendRedirect("./login");
+			return;
+		}
+		Calendar calendar = Calendar.getInstance();
+		HttpSession session = request.getSession();
+		int month = calendar.get(Calendar.MONTH) + 1;
+		int year = calendar.get(Calendar.YEAR);
+		if (session.getAttribute("month") != null) {
+			month = (int) session.getAttribute("month");
+		}
+		if (session.getAttribute("year") != null) {
+			year = (int) session.getAttribute("year");
+		}
+		FinanceOperationType[] types = FinanceOperationType.values();
+		request.setAttribute("month", month);
+		request.setAttribute("year", year);
+		request.setAttribute("types", types);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/report.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -70,7 +92,11 @@ public class ReportServlet extends BaseServlet {
 			return;
 		}
 		HttpSession session = request.getSession();
+		Calendar calendar = Calendar.getInstance();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		int month = Integer.parseInt(request.getParameter("month"));
+		int year = Integer.parseInt(request.getParameter("year"));
+		String type = request.getParameter("reportType");
 		response.setContentType("application/pdf");
 		Document doc = new Document();
 		Font bfBold24 = new Font(FontFamily.TIMES_ROMAN, SIZE_OF_HEADER, Font.BOLD, new BaseColor(0, 0, 0));
@@ -100,19 +126,27 @@ public class ReportServlet extends BaseServlet {
 			Collection<Expense> expenseAccount = new ArrayList<Expense>();
 			Collection<Income> incomesAccount = new ArrayList<Income>();
 			addFinanceOperations(accounts, expenseAccount, incomesAccount);
+
 			Collection<IFinanceOperation> expenses = new ArrayList<IFinanceOperation>();
-			expenses.addAll(expenseAccount);
-			Collections.sort((List<IFinanceOperation>) expenses, (e1, e2) -> e1.getDate().compareTo(e2.getDate()));
+			addFinanceOperationByPeriod(calendar, month, year, expenseAccount, expenses);
+
 			Collection<IFinanceOperation> incomes = new ArrayList<IFinanceOperation>();
-			incomes.addAll(incomesAccount);
-			Collections.sort((List<IFinanceOperation>) incomes, (e1, e2) -> e1.getDate().compareTo(e2.getDate()));
-			doc.add(new Paragraph("Incomes: \n", bfBold18));
-			createTable(doc, incomes, dateFormat, bfBold12, bf12);
-			doc.add(new Paragraph("Expenses: \n", bfBold18));
-			createTable(doc, expenses, dateFormat, bfBold12, bf12);
+			addIncomesByPeriod(calendar, month, year, incomesAccount, incomes);
+			if (type.equals("0")) {
+				doc.add(new Paragraph("Incomes: \n", bfBold18));
+				createTable(doc, incomes, dateFormat, bfBold12, bf12);
+				doc.add(new Paragraph("Expenses: \n", bfBold18));
+				createTable(doc, expenses, dateFormat, bfBold12, bf12);
+			} else if (type.equals("EXPENCES")) {
+				doc.add(new Paragraph("Expenses: \n", bfBold18));
+				createTable(doc, expenses, dateFormat, bfBold12, bf12);
+			} else {
+				doc.add(new Paragraph("Incomes: \n", bfBold18));
+				createTable(doc, incomes, dateFormat, bfBold12, bf12);
+			}
 			String path = PATH_OF_IMAGE;
 			String absoluteDiskPath = getServletContext().getRealPath(path);
-			Image image = Image.getInstance(absoluteDiskPath);;
+			Image image = Image.getInstance(absoluteDiskPath);
 			image.setAbsolutePosition(ABSOLUTE_X, ABSOLUTE_Y);
 			doc.add(image);
 			doc.close();
@@ -167,9 +201,31 @@ public class ReportServlet extends BaseServlet {
 	private void addFinanceOperations(Collection<IAccount> accounts, Collection<Expense> expenseAccount,
 			Collection<Income> incomesAccount) {
 		for (IAccount iAccount : accounts) {
-			
+
 			expenseAccount.addAll(new FinanceOperationDao().getAllExpencesByAccount((Account) iAccount));
 			incomesAccount.addAll(new FinanceOperationDao().getAllIncomeByAccount((Account) iAccount));
 		}
+	}
+
+	private void addFinanceOperationByPeriod(Calendar calendar, int month, int year, Collection<Expense> expenseAccount,
+			Collection<IFinanceOperation> expenses) {
+		for (IFinanceOperation expense : expenseAccount) {
+			calendar.setTime(expense.getDate());
+			if (calendar.get(Calendar.MONTH) + 1 == month && calendar.get(Calendar.YEAR) == year) {
+				expenses.add(expense);
+			}
+		}
+		Collections.sort((List<IFinanceOperation>) expenses, (e1, e2) -> e1.getDate().compareTo(e2.getDate()));
+	}
+
+	private void addIncomesByPeriod(Calendar calendar, int month, int year, Collection<Income> incomeAccount,
+			Collection<IFinanceOperation> incomes) {
+		for (IFinanceOperation income : incomeAccount) {
+			calendar.setTime(income.getDate());
+			if (calendar.get(Calendar.MONTH) + 1 == month && calendar.get(Calendar.YEAR) == year) {
+				incomes.add(income);
+			}
+		}
+		Collections.sort((List<IFinanceOperation>) incomes, (e1, e2) -> e1.getDate().compareTo(e2.getDate()));
 	}
 }

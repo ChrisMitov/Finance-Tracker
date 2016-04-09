@@ -22,7 +22,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!--banner-->
 			<div class="banner">
 				<h2>
-					<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Budget</span>
+					<a href="./">Home</a> <i class="fa fa-angle-right"></i> <span>Budget</span>
 				</h2>
 			</div>
 			<!--//banner-->
