@@ -33,7 +33,10 @@
 						<c:forEach var="account" items="${accounts}">
 							<tr>
 								<td colspan="4">${account.title}</td>
-								<td colspan="4">${account.sum}</td>
+								<td colspan="4">${account.sum} <c:if
+										test="${account.sum < 0}">
+										<p style="color: red; font-size: 12px;">Negative balance</p>
+									</c:if></td>
 								<td colspan="4">
 									<form action="./editAccount">
 										<input type="hidden" name="id" value="${account.id}" /> <input
@@ -59,12 +62,12 @@
 								</form>
 							</td>
 							<td colspan="8">
-							<form action="./transaction">
+								<form action="./transaction">
 									<input type="submit" value="Make transaction"
 										class="btn btn-lg btn-primary"
 										style="width: 150px; margin: 0 auto; display: block;" />
 								</form>
-								</td>
+							</td>
 						</tr>
 
 					</table>

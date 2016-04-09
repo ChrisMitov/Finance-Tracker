@@ -120,7 +120,6 @@ public class Account implements IAccount {
 
 	@Override
 	public void setSum(int sum) throws FinanceTrackerException {
-		new Validation().validateNegativeNumber(sum);
 		this.sum = sum;
 	}
 	

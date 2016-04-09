@@ -37,7 +37,7 @@ public class BudgetTest {
 	private static final int BUDGET_SUM = 2000;
 	private static final String BUDGET_TITLE = "Spestoven";
 	private static final String USER_PASSWORD = "918jajA";
-	private static final String USER_EMAIL = "aaa2@gmail.com";
+	private static final String USER_EMAIL = "aa2@gmail.com";
 	private static final String USER_LASTNAME = "Petkov";
 	private static final String USER_NAME = "Gosho";
 	private static final String UPDATE_TITLE = "Mesechen";
@@ -87,7 +87,7 @@ public class BudgetTest {
 			budget.setTitle(UPDATE_TITLE);
 			budget.setTotalAmount(UPDATE_SUM);
 			budget.addAcount((Account) account);
-			budget.setRepeatType(RepeatType.MONTHLY);
+			budget.setRepeatType(RepeatType.NO_REPEAT);
 			budget.setStartDate(new Date());
 			dao.updateBudget(budget);
 			IBudget newBudget = dao.foundById(id);
@@ -160,7 +160,7 @@ public class BudgetTest {
 		IBudget budget = new Budget();
 		budget.setTitle(BUDGET_TITLE);
 		budget.setStartDate(new Date());
-		budget.setRepeatType(RepeatType.MONTHLY);
+		budget.setRepeatType(RepeatType.NO_REPEAT);
 		budget.setTotalAmount(BUDGET_SUM);
 		budget.setUser((User) user);
 		budget.addAcount(account);
