@@ -13,6 +13,13 @@
 <link href="resources/css/double_table.css" rel='stylesheet'
 	type='text/css' />
 <link href="resources/css/budget.css" rel='stylesheet' type='text/css' />
+<style type="text/css">
+#chartdiv {
+	width: 100%;
+	height: 435px;
+	font-size: 11px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
@@ -31,6 +38,7 @@
 				<div class="grid-form1"
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
+
 						<div id="content1" class="demo">
 							<form name="" action="./charts" method="get" class="demo">
 								<span style="float: left"><label>Choose format to
@@ -40,6 +48,9 @@
 										<option value="acc">By accounts</option>
 								</select> </span>
 							</form>
+
+						<div id="content1">
+
 							<div id="chartdiv"></div>
 							<div class="container-fluid">
 								<div class="row text-center" style="overflow: hidden;">

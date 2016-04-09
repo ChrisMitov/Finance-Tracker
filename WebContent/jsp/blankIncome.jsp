@@ -31,17 +31,16 @@
 				<div class="grid-form1"
 					style="width: 1200px; overflow: hidden; height: 1%; display: table-cell; text-align: center; vertical-align: middle;">
 					<form name="" action="./incomePeriod" method="get" class="demo">
-						<span style="float: left;"> <label> Choose period:<c:out
-									value="${month}"></c:out>
+						<span style="float: left;"> <label> Choose period:
 						</label> <select class="option3" name="month">
 								<c:forEach var="i" begin="1" end="12">
 									<c:choose>
-										<c:when test="${ month != i } ">
-											<option value="<c:out value = "${i}" />"><c:out
+										<c:when test="${ month == i }">
+											<option value="<c:out value = "${i}" />" selected><c:out
 													value="${i}" /></option>
 										</c:when>
 										<c:otherwise>
-											<option selected value="<c:out value = "${i}" />"><c:out
+											<option value="<c:out value = "${i}" />"><c:out
 													value="${i}" /></option>
 										</c:otherwise>
 									</c:choose>
@@ -49,13 +48,12 @@
 						</select> <select class="option3" name="year">
 								<c:forEach var="i" begin="${year-5}" end="${year+5}">
 									<c:choose>
-										<c:when test="${ year != i } ">
-											<option value="<c:out value = "${i}" />"><c:out
+										<c:when test="${ year == i }">
+											<option value="<c:out value = "${i}" />" selected><c:out
 													value="${i}" /></option>
 										</c:when>
 										<c:otherwise>
-
-											<option value="<c:out value = "${i}" />" selected><c:out
+											<option value="<c:out value = "${i}" />"><c:out
 													value="${i}" /></option>
 										</c:otherwise>
 									</c:choose>
@@ -72,10 +70,9 @@
 								</c:forEach>
 						</select> </span>
 					</form>
-					<br /> <span></span> <br /> <br /> <br />
-					<br />
-					<br /> <span style="font-size: 24px;">There's no incomes </span> <br />
-					<br /> <img src="resources/images/empty.png">
+					<br /> <span></span> <br /> <br /> <br /> <br /> <br /> <span
+						style="font-size: 24px;">There's no incomes </span> <br /> <br />
+					<img src="resources/images/empty.png">
 					<form action="./addIncome">
 						<input type="submit" value="Add Income"
 							class="btn btn-lg btn-success warning_1"
