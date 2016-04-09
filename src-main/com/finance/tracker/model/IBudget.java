@@ -7,7 +7,7 @@ import com.finance.tracker.exception.FinanceTrackerException;
 
 public interface IBudget {
 
-	void addAcount(Account newAccount) throws FinanceTrackerException;
+	void addAccount(Account newAccount) throws FinanceTrackerException;
 
 	void removeAccount(Account accountToDelete) throws FinanceTrackerException;
 
@@ -28,8 +28,6 @@ public interface IBudget {
 	RepeatType getRepeatType();
 
 	void setRepeatType(RepeatType repeatType);
-
-	void convertMoneyToNewCurrency(Currency newCurrency);
 
 	int getId();
 

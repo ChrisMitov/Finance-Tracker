@@ -55,7 +55,7 @@ public class Budget implements IBudget {
 	private User user;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "account_id"))
-	private List<Account> accounts;
+	private List<Account> accounts = new ArrayList<Account>();
 	// @ManyToMany(mappedBy="allBudgets")
 	// @ElementCollection
 	// private Set<Account> allAccounts = new HashSet<Account>();
@@ -88,10 +88,7 @@ public class Budget implements IBudget {
 		this.setId(id);
 	}
 
-	public void convertMoneyToNewCurrency(Currency newCurrency) {
-		this.totalAmount = new ExcangeRate().convertMoney(this.totalAmount, user.getCurrency(), newCurrency);
-	}
-
+	
 	@Override
 	public int getId() {
 		return id;
@@ -104,7 +101,7 @@ public class Budget implements IBudget {
 	}
 
 	@Override
-	public void addAcount(Account newAccount) throws FinanceTrackerException {
+	public void addAccount(Account newAccount) throws FinanceTrackerException {
 		if (newAccount != null) {
 			synchronized (this.accounts) {
 				this.accounts.add(newAccount);

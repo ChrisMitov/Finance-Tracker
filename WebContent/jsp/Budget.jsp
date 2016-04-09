@@ -38,7 +38,19 @@
 				<div class="grid-form1"
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
+
+						<div id="content1" class="demo">
+							<form name="" action="./charts" method="get" class="demo">
+								<span style="float: left"><label>Choose format to
+										display: </label> <select class="option3" name="display">
+										<option value="blanck"></option>
+										<option value="sum">By sums</option>
+										<option value="acc">By accounts</option>
+								</select> </span>
+							</form>
+
 						<div id="content1">
+
 							<div id="chartdiv"></div>
 							<div class="container-fluid">
 								<div class="row text-center" style="overflow: hidden;">

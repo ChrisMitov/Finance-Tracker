@@ -57,6 +57,14 @@
 												<option value="MONTHLY">YEARLY</option>
 										</select></td>
 									</tr>
+									<tr>
+										<td>Choose account:</td>
+										<td><div class="account">
+												<c:forEach var="account" items="${accounts}">
+													<input type="checkbox" name="selected" value="${account.id}"> ${account.title}<br>
+												</c:forEach>
+											</div></td>
+									</tr>
 								</table>
 
 							</div>

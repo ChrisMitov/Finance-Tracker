@@ -2,7 +2,9 @@ package com.finance.tracker.model;
 
 import javax.persistence.Column;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -36,7 +38,7 @@ public class Account implements IAccount {
 //	@ElementCollection
 //	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
 	@ManyToMany(mappedBy = "accounts")
-	private Set<Budget> allBudgets = new HashSet<Budget>();
+	private List<Budget> allBudgets = new ArrayList<Budget>();
 	public Account() {
 
 	}
