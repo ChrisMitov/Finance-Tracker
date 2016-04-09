@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
+import com.finance.tracker.model.ExchangeRate;
 import com.finance.tracker.model.ExchangeRateConventor;
+import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
+import com.finance.tracker.model.dao.BudgetDao;
+import com.finance.tracker.model.dao.CategoryDao;
+import com.finance.tracker.model.dao.CurrencyDAO;
 import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
 import com.finance.tracker.validation.HashPassword;
@@ -99,15 +106,27 @@ public class EditProfile extends BaseServlet {
 		} else if (!(currency.equals("blanck"))) {
 			Currency newCurrency = Currency.valueOf(currency);
 			userToUpdate.setCurrency(newCurrency);
-			ExchangeRateConventor rate = new ExchangeRateConventor(user, Currency.valueOf(currency));
 			try {
-				rate.covert();
+				changeAllBudgets(request, newCurrency);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 		}
 
 		return userToUpdate;
+	}
+
+	private void changeAllBudgets(HttpServletRequest request, Currency newCurrency) throws Exception {
+		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		Collection<IBudget> budgets = new UserDAO().getAllBudgetsByUser(user.getUserId());
+		for (Iterator<IBudget> it = budgets.iterator(); it.hasNext();) {
+			IBudget b = it.next();
+			int sum = (int) b.getTotalAmount();
+			int newSum = (int) new CurrencyDAO().convert(sum, newCurrency, user.getCurrency());
+			b.setTotalAmount(newSum);
+			new BudgetDao().updateBudget(b);
+		}
 	}
 
 }

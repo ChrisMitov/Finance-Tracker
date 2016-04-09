@@ -1,6 +1,5 @@
 package com.finance.tracker.model;
 
-import java.util.List;
 import java.util.Map;
 
 public class ExchangeRate {

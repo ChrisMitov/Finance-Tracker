@@ -41,11 +41,51 @@ public class CurrencyDAO {
 				ExchangeRate data = new ExchangeRate();
 				String name = currency.toString();
 				double rate = jsonObj.getAsJsonObject("rates").get(name).getAsDouble();
+				System.out.println(rate + "@@@");
 				data.setRate(rate);
 				data.setBase(source);
 				data.setToGet(currency);
 				System.out.println(jsonObj);
 				return data;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (reader != null)
+					reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		throw new Exception();
+	}
+
+	public double convert(int sum, Currency currency, Currency source) throws Exception {
+		String url = "http://api.fixer.io/latest?base=" + source + "&symbols=" + currency;
+		BufferedReader reader = null;
+		try {
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setRequestMethod("GET");
+
+			if (connection.getResponseCode() == HTTP_SUCCESS) {
+				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+				String line = reader.readLine();
+				StringBuilder builder = new StringBuilder();
+				while (line != null) {
+					builder.append(line);
+					line = reader.readLine();
+				}
+
+				Gson gson = new Gson();
+				JsonObject jsonObj = gson.fromJson(builder.toString(), JsonObject.class);
+				String name = currency.toString();
+				double rate = jsonObj.getAsJsonObject("rates").get(name).getAsDouble();
+				System.out.println(rate + "RATE");
+				return sum * rate;
 			}
 
 		} catch (IOException e) {

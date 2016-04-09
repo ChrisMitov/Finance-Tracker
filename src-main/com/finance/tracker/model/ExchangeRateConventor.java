@@ -14,21 +14,17 @@ public class ExchangeRateConventor {
 	private double rate;
 	private ExchangeRate toCalculate;
 
-	public ExchangeRateConventor(IUser user, Currency newCurrency) {
+	public ExchangeRateConventor(IUser user, Currency newCurrency) throws Exception {
 		this.user = user;
 		this.newCurrency = newCurrency;
+		toCalculate = new CurrencyDAO().getRate(newCurrency, user.getCurrency());
+		System.out.println(toCalculate.getRate()+"jdvd");
+		rate=toCalculate.getRate();
 	}
 
 	public void covert() throws Exception {
-		setRate();
 		changeAllAccounts();
 		changeAllBudgets();
-	}
-
-	private void setRate() throws Exception {
-		toCalculate = new CurrencyDAO().getRate(newCurrency, user.getCurrency());
-		rate = toCalculate.getRate();
-		System.out.println(rate+"!!!");
 	}
 
 	private void changeAllBudgets() {
@@ -49,6 +45,22 @@ public class ExchangeRateConventor {
 			int newSum = (int) (sum * rate);
 			b.setSum(newSum);
 		}
+	}
+
+	public double getRate() {
+		return rate;
+	}
+
+	public IUser getUser() {
+		return user;
+	}
+
+	public Currency getNewCurrency() {
+		return newCurrency;
+	}
+
+	public ExchangeRate getToCalculate() {
+		return toCalculate;
 	}
 
 }
