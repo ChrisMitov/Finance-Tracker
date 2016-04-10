@@ -73,9 +73,12 @@ public class AddBudget extends BaseServlet {
 				sum += new AccountDAO().getAccount(idAcc).getSum();
 			}
 			if (checkDates(date, date2)) {
+				Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
+				request.setAttribute("accounts", accounts);
 				request.setAttribute("dates", "Start date must be before end date!");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 
 			budget.setTotalAmount(sum);
@@ -102,7 +105,7 @@ public class AddBudget extends BaseServlet {
 
 	private boolean validateAdd(HttpServletRequest request, HttpServletResponse response) {
 		String title = request.getParameter("title");
-		String sum = request.getParameter("sum");
+//		String sum = request.getParameter("sum");
 		String calendar = request.getParameter("start");
 		// String type = request.getParameter("repeat");
 		String selects[] = request.getParameterValues("selected");
@@ -110,9 +113,9 @@ public class AddBudget extends BaseServlet {
 		if (title == null || title.equals("")) {
 			return false;
 		}
-		if (sum == null || sum.equals("")) {
-			return false;
-		}
+//		if (sum == null || sum.equals("")) {
+//			return false;
+//		}
 		if (calendar == null || calendar.equals("") && end == null || end.equals("")) {
 			return false;
 		}

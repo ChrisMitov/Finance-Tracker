@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page errorPage="Error.jsp" %>
+<%@page errorPage="Error.jsp"%>
 
 <!DOCTYPE HTML>
 <html>
@@ -28,7 +28,7 @@
 					<h3>
 						<i class="fa fa-archive">${" "}</i>Add budget
 					</h3>
-					<form method="post" action="./MyAddBudget">
+					<form method="post" action="./addBudget">
 						<div class="profile-bottom-top">
 
 							<div class="col-md-8 profile-text">
@@ -38,10 +38,11 @@
 										<td>Title:</td>
 										<td><input type="text" placeholder="Title" name="title" /></td>
 									</tr>
-									<tr>
+									<%-- <tr>
 										<td>Sum:</td>
 										<td><input type="text" placeholder="Sum" name="sum" /></td>
 									</tr>
+									--%>
 									<tr>
 										<td>Start date:</td>
 										<td><input type="date" placeholder="Start date"
