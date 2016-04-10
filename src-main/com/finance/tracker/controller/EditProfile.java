@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -67,14 +70,19 @@ public class EditProfile extends BaseServlet {
 		}
 
 		IUserDAO user = new UserDAO();
-		IUser userToUpdate = validateUpdates(request, response);
+		IUser userToUpdate = null;
+		try {
+			userToUpdate = validateUpdates(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		user.updateUser(userToUpdate);
 		doGet(request, response);
 	}
 
 	// checks what information the user has changed
 	private IUser validateUpdates(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws Exception {
 		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		String firstName = request.getParameter("newFirstName");
 		String lastName = request.getParameter("newLastName");
@@ -118,6 +126,12 @@ public class EditProfile extends BaseServlet {
 				e.printStackTrace();
 			}
 			userToUpdate.setCurrency(newCurrency);
+			ExchangeRate rate = new CurrencyDAO().getManyRates(getCurrencies(userToUpdate), userToUpdate.getCurrency());
+			System.out.println(rate);
+			Map<Currency, Double> rates = rate.getManyResults();
+			System.out.println(rates);
+			request.getSession().setAttribute("base", userToUpdate.getCurrency());
+			request.getSession().setAttribute("rates", rates);
 
 		}
 
@@ -135,7 +149,7 @@ public class EditProfile extends BaseServlet {
 			new BudgetDao().updateBudget(b);
 		}
 	}
-	
+
 	private void changeAllAccounts(HttpServletRequest request, Currency newCurrency) throws Exception {
 		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IAccount> accounts = new UserDAO().getAllAccounts(user.getUserId());
@@ -146,6 +160,21 @@ public class EditProfile extends BaseServlet {
 			b.setSum(newSum);
 			new AccountDAO().updateAccount(b);
 		}
+	}
+
+	private List<Currency> getCurrencies(IUser user) {
+		List<Currency> all = new ArrayList<Currency>();
+		all.add(Currency.BGN);
+		all.add(Currency.USD);
+		all.add(Currency.EUR);
+		List<Currency> toReturn = new ArrayList<>();
+		for (Currency c : all) {
+			if (!c.equals(user.getCurrency())) {
+				toReturn.add(c);
+			}
+		}
+		return toReturn;
+
 	}
 
 }

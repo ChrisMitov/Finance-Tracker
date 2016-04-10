@@ -221,6 +221,16 @@ public class User implements IUser {
 			throw new FinanceTrackerException();
 		}
 	}
+	
+	public void deleteBudget(IBudget budget) throws FinanceTrackerException {
+		if (budget != null) {
+			synchronized (this.allBudgets) {
+				this.allBudgets.remove((Budget) budget);
+			}
+		} else {
+			throw new FinanceTrackerException();
+		}
+	}
 	//
 	// public void removeBudget(Budget budget) throws FinanceTrackerException {
 	// if (budget != null && this.allBudgets.contains(budget)) {

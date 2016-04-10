@@ -9,7 +9,7 @@
 		<div class="panel-heading">
 			<h4>Exchange rates</h4>
 		</div>
-		<table>
+		<table class="rates">
 			<c:forEach var="entity" items="${rates}">
 				<tr class="danger">
 					<td class="danger">1${base}</td>

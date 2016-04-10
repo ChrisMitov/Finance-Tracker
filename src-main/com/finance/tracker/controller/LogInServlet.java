@@ -55,10 +55,8 @@ public class LogInServlet extends BaseServlet {
 			IUser user = userDao.getUser(userId);
 			
 			try {
-				List<Currency> toConvert = new ArrayList<Currency>();
-				toConvert.add(Currency.EUR);
-				toConvert.add(Currency.USD);
-				Currency base = Currency.BGN;
+				List<Currency> toConvert = getCurrencies(user);
+				Currency base = userCurrency(user);
 				ExchangeRate rate = new CurrencyDAO().getManyRates(toConvert, base);
 				Map<Currency, Double> rates = rate.getManyResults();
 				request.getSession().setAttribute("base", base);
@@ -85,7 +83,25 @@ public class LogInServlet extends BaseServlet {
 		}
 
 	}
+	
+	private Currency userCurrency(IUser user){
+		return user.getCurrency();
+	}
 
+	private List<Currency> getCurrencies(IUser user){
+		List<Currency> all = new ArrayList<Currency>();
+		all.add(Currency.BGN);
+		all.add(Currency.USD);
+		all.add(Currency.EUR);
+		List<Currency> toReturn = new ArrayList<>();
+		for(Currency c:all){
+			if(!c.equals(user.getCurrency())){
+				toReturn.add(c);
+			}
+		}
+		return toReturn;
+		
+	}
 
 
 }

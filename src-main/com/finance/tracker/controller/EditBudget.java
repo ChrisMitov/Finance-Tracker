@@ -50,9 +50,11 @@ public class EditBudget extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		IBudgetDao budget = new BudgetDao();
-		IBudget budgetToUpdate = validateUpdates(request, response);
-		budget.updateBudget(budgetToUpdate);
+		int id = Integer.parseInt(request.getParameter("id"));
+		IBudget budget = new BudgetDao().foundById(id);
+		budget = validateUpdates(request, response);
+		IBudgetDao dao = new BudgetDao();
+		dao.updateBudget(budget);
 		System.out.println("Datecorrectness: "+dateCorrectness);
 		if (dateCorrectness) {
 			response.sendRedirect("./budget");

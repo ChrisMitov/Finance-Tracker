@@ -28,7 +28,7 @@ import com.finance.tracker.validation.Validation;
 
 @Entity
 @Table(name = "budget")
-public class Budget implements IBudget {
+public class Budget implements IBudget, Comparable<Budget>{
 	private static final int PLUS_ONE_DAY = 1 * 24 * 60 * 60 * 100;
 	private static final int PLUS_ONE_WEEK = 7 * 24 * 60 * 60 * 100;
 	private static final int PLUS_ONE_MONTH = 30 * 24 * 60 * 60 * 100;
@@ -56,10 +56,7 @@ public class Budget implements IBudget {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "account_id"))
 	private List<Account> accounts = new ArrayList<Account>();
-	// @ManyToMany(mappedBy="allBudgets")
-	// @ElementCollection
-	// private Set<Account> allAccounts = new HashSet<Account>();
-
+	
 	public Budget() {
 		this.accounts = new ArrayList<>();
 	}
@@ -125,6 +122,14 @@ public class Budget implements IBudget {
 
 	public Collection<Account> getAllAccounts() {
 		return Collections.unmodifiableCollection(accounts);
+	}
+
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override
@@ -219,6 +224,12 @@ public class Budget implements IBudget {
 	public void deleteAllAccounts(){
 		this.accounts=new ArrayList<Account>();
 	}
+
+@Override
+public int compareTo(Budget o) {
+	return this.getTitle().compareTo(o.getTitle());
+}
+
 
 	
 	

@@ -41,4 +41,6 @@ public interface IUser {
 	
 	void setPassword(String password) throws FinanceTrackerException;
 	
+	void deleteBudget(IBudget budget) throws FinanceTrackerException;
+	
 }

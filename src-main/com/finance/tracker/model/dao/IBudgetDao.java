@@ -2,6 +2,7 @@ package com.finance.tracker.model.dao;
 
 import java.util.Collection;
 
+import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
@@ -34,6 +35,6 @@ public interface IBudgetDao {
 	RepeatType getTypeById(int id);
 
 	void removeBudgetById(int id);
-
 	
+		
 }

@@ -84,6 +84,11 @@
 											<br /> <br /> <span
 												style="font-weight: bold; position: relative; left: 25%;">Sum
 												per day: ${ entity.value} ${currency}</span> <br /> <span
+												style="font-weight: bold; position: relative; left: 25%;">Accounts
+												<c:forEach var="account" items="${entity.key.accounts}">
+												${account.title}
+												</c:forEach>
+											</span> <br /> <br /> <span
 												style="float: left; margin-left: 100px;">
 												<form action="./editBudget">
 													<input type="hidden" name="id" value="${entity.key.id}" />
