@@ -72,11 +72,11 @@ public class AddBudget extends BaseServlet {
 				budget.addAccount(a);
 				sum += new AccountDAO().getAccount(idAcc).getSum();
 			}
-			if (checkDates(date, date2)) {
-				request.setAttribute("dates", "Start date must be before end date!");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
-				dispatcher.forward(request, response);
-			}
+//			if (checkDates(date, date2)) {
+//				request.setAttribute("dates", "Start date must be before end date!");
+//				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
+//				dispatcher.forward(request, response);
+//			}
 
 			budget.setTotalAmount(sum);
 			new BudgetDao().addBudget(budget);
