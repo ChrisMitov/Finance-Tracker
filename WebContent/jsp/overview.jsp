@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; utf-8"
 	pageEncoding="utf-8"%>
+	<%@page errorPage="Error.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <html>

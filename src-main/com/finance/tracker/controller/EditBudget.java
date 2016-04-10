@@ -59,8 +59,12 @@ public class EditBudget extends BaseServlet {
 		System.out.println("Datecorrectness: " + dateCorrectness);
 		if (dateCorrectness) {
 			response.sendRedirect("./budget");
+			return;
 		} else {
+			User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+			Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
 			request.setAttribute("dates", "Start date must be before end date!");
+			request.setAttribute("accounts", accounts);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/editBudget.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -77,7 +81,7 @@ public class EditBudget extends BaseServlet {
 		// String type = (String) request.getParameter("newRepeat");
 		IBudget budget = (IBudget) request.getSession().getAttribute("budget");
 		String selects[] = request.getParameterValues("selected");
-		double sum = 0.0;
+		double sum =0.0;
 		if (!checkSelect(selects)) {
 			budget.deleteAllAccounts();
 			System.out.println("Accounts");

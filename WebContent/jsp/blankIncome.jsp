@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@page errorPage="Error.jsp" %>
 <jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE HTML>
 <html>

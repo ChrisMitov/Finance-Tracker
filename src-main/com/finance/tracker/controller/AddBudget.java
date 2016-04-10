@@ -37,6 +37,7 @@ public class AddBudget extends BaseServlet {
 			return;
 		}
 		HttpSession session = request.getSession();
+		
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
 		request.setAttribute("accounts", accounts);
@@ -50,48 +51,50 @@ public class AddBudget extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-//		if (validateAdd(request, response)) {
-			HttpSession session = request.getSession();
-			User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
-			String title = request.getParameter("title");
-			double sum = 0;
-			Date date = DEFAULT_DATE;
-			Date date2 = DEFAULT_DATE;
-			String calendar = request.getParameter("start");
-			String end = request.getParameter("end");
-			String selects[] = request.getParameterValues("selected");
-			try {
-				date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
-				date2 = new SimpleDateFormat("yyyy-MM-dd").parse(end);
-				IBudget budget = new Budget(title, sum, date, date2, user);
-				for (int select = 0; select < selects.length; select++) {
-					int id = Integer.parseInt(selects[select]);
-					Account a = (Account) new AccountDAO().getAccount(id);
-					budget.addAccount(a);
-					sum += new AccountDAO().getAccount(id).getSum();
-				}
-				if (checkDates(date, date2)) {
-					request.setAttribute("dates", "Start date must be before end date!");
-					RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
-					dispatcher.forward(request, response);
-				}
-				budget.setTotalAmount(sum);
-				new BudgetDao().addBudget(budget);
-
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			} catch (FinanceTrackerException e) {
-				e.printStackTrace();
+		// if (validateAdd(request, response)) {
+		HttpSession session = request.getSession();
+		
+		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		String title = request.getParameter("title");
+		double sum = 0;
+		Date date = DEFAULT_DATE;
+		Date date2 = DEFAULT_DATE;
+		String calendar = request.getParameter("start");
+		String end = request.getParameter("end");
+		String selects[] = request.getParameterValues("selected");
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
+			date2 = new SimpleDateFormat("yyyy-MM-dd").parse(end);
+			IBudget budget = new Budget(title, sum, date, date2, user);
+			for (int select = 0; select < selects.length; select++) {
+				int idAcc = Integer.parseInt(selects[select]);
+				Account a = (Account) new AccountDAO().getAccount(idAcc);
+				budget.addAccount(a);
+				sum += new AccountDAO().getAccount(idAcc).getSum();
 			}
+			if (checkDates(date, date2)) {
+				request.setAttribute("dates", "Start date must be before end date!");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
+				dispatcher.forward(request, response);
+			}
+			budget.setTotalAmount(sum);
+			new BudgetDao().addBudget(budget);
 
-			response.sendRedirect("./budget");
-//			return;
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		} catch (FinanceTrackerException e) {
+			e.printStackTrace();
+		}
 
-//		} else {
-//			request.setAttribute("emptyField", "All fields are obligatory!");
-//			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
-//			dispatcher.forward(request, response);
-//		}
+		response.sendRedirect("./budget");
+		// return;
+
+		// } else {
+		// request.setAttribute("emptyField", "All fields are obligatory!");
+		// RequestDispatcher dispatcher =
+		// request.getRequestDispatcher("./jsp/AddBudget.jsp");
+		// dispatcher.forward(request, response);
+		// }
 
 	}
 

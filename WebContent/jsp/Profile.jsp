@@ -3,6 +3,7 @@
 <%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:useBean id="now" class="java.util.Date" />
+<%@page errorPage="Error.jsp" %>
 
 <!--
 Author: W3layouts
