@@ -40,134 +40,127 @@
 					<div id="wrapper1">
 
 						<div id="content1" class="demo">
-							<form name="" action="./charts" method="get" class="demo">
-								<span style="float: left"><label>Choose format to
-										display: </label> <select class="option3" name="display">
-										<option value="blanck"></option>
-										<option value="sum">By sums</option>
-										<option value="acc">By accounts</option>
-								</select> </span>
-							</form>
+							<jsp:include page="partials/budgetChartHead.jsp" />
 
-						<div id="content1">
+							<div id="content1">
 
-							<div id="chartdiv"></div>
-							<div class="container-fluid">
-								<div class="row text-center" style="overflow: hidden;">
-									<div class="col-sm-3"
-										style="float: none !important; display: inline-block;">
-										<label class="text-left">Angle:</label> <input
-											class="chart-input" data-property="angle" type="range"
-											min="0" max="60" value="30" step="1" />
-									</div>
+								<div id="chartdiv"></div>
+								<div class="container-fluid">
+									<div class="row text-center" style="overflow: hidden;">
+										<div class="col-sm-3"
+											style="float: none !important; display: inline-block;">
+											<label class="text-left">Angle:</label> <input
+												class="chart-input" data-property="angle" type="range"
+												min="0" max="60" value="30" step="1" />
+										</div>
 
-									<div class="col-sm-3"
-										style="float: none !important; display: inline-block;">
-										<label class="text-left">Depth:</label> <input
-											class="chart-input" data-property="depth3D" type="range"
-											min="1" max="25" value="10" step="1" />
-									</div>
-									<div class="col-sm-3"
-										style="float: none !important; display: inline-block;">
-										<label class="text-left">Inner-Radius:</label> <input
-											class="chart-input" data-property="innerRadius" type="range"
-											min="0" max="80" value="0" step="1" />
+										<div class="col-sm-3"
+											style="float: none !important; display: inline-block;">
+											<label class="text-left">Depth:</label> <input
+												class="chart-input" data-property="depth3D" type="range"
+												min="1" max="25" value="10" step="1" />
+										</div>
+										<div class="col-sm-3"
+											style="float: none !important; display: inline-block;">
+											<label class="text-left">Inner-Radius:</label> <input
+												class="chart-input" data-property="innerRadius" type="range"
+												min="0" max="80" value="0" step="1" />
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div id="sidebar1">
-							<c:forEach var="entity" items="${sums}">
+							<div id="sidebar1">
+								<c:forEach var="entity" items="${sums}">
 
-								<div class="panel panel-success">
-									<div class="panel-heading">Title: ${ entity.key.title}</div>
+									<div class="panel panel-success">
+										<div class="panel-heading">Title: ${ entity.key.title}</div>
 
-									<div class="panel-body">
-										<span><fmt:formatDate value="${entity.key.startDate}"
-												pattern="dd-MMM-yyyy" /> </span> <span
-											style="float: right; margin-right: 20px;">Sum:
-											${entity.key.totalAmount} ${currency}</span> <span></span> <br /> <span
-											style="float: right; margin-right: 20px;">Type: ${ entity.key.repeatType}</span>
-										<br /> <br /> <span
-											style="font-weight: bold; position: relative; left: 20%;">Money
-											per day: ${ entity.value} ${currency}</span> <br /> <span
-											style="float: left; margin-left: 100px;">
-											<form action="./editBudget">
-												<input type="hidden" name="id" value="${entity.key.id}" />
-												<input type="submit" value="Edit" class="btn btn-success"
-													style="margin-bottom: -10px;" />
-											</form>
-										</span> <span class="button">
-											<form method="POST" action="./removeBudget">
-												<input type="hidden" name="id" value="${entity.key.id}" />
-												<input type="submit" value="Remove" class="btn btn-danger"
-													style="margin-bottom: -20px;" />
-											</form>
-										</span>
+										<div class="panel-body">
+											<span><fmt:formatDate value="${entity.key.startDate}"
+													pattern="dd-MMM-yyyy" /> </span><span
+												style="float: right; margin-right: 20px;">Total sum:
+												${entity.key.totalAmount} ${currency}</span><br /> <span><fmt:formatDate
+													value="${entity.key.endDate}" pattern="dd-MMM-yyyy" /> </span><span></span>
+											<br /> <br /> <span
+												style="font-weight: bold; position: relative; left: 25%;">Sum
+												per day: ${ entity.value} ${currency}</span> <br /> <span
+												style="float: left; margin-left: 100px;">
+												<form action="./editBudget">
+													<input type="hidden" name="id" value="${entity.key.id}" />
+													<input type="submit" value="Edit" class="btn btn-success"
+														style="margin-bottom: -10px;" />
+												</form>
+											</span> <span class="button">
+												<form method="POST" action="./removeBudget">
+													<input type="hidden" name="id" value="${entity.key.id}" />
+													<input type="submit" value="Remove" class="btn btn-danger"
+														style="margin-bottom: -20px;" />
+												</form>
+											</span>
+										</div>
 									</div>
-								</div>
-							</c:forEach>
-							<form action="./addBudget">
-								<input type="submit" value="Add new budget"
-									class="btn btn-lg btn-success warning_1"
-									style="width: 200px; margin: 0 auto; display: block;" />
-							</form>
-							<div id="cleared1"></div>
+								</c:forEach>
+								<form action="./addBudget">
+									<input type="submit" value="Add new budget"
+										class="btn btn-lg btn-success warning_1"
+										style="width: 200px; margin: 0 auto; display: block;" />
+								</form>
+								<div id="cleared1"></div>
+							</div>
 						</div>
 					</div>
 				</div>
+
+				<!--//grid-->
+				<!---->
+				<jsp:include page="partials/footer.jsp" />
 			</div>
-
-			<!--//grid-->
-			<!---->
-			<jsp:include page="partials/footer.jsp" />
+			<div class="clearfix"></div>
 		</div>
-		<div class="clearfix"></div>
-	</div>
 
-	<!---->
-	<!--scrolling js-->
-	<script src="resources/js/jquery.nicescroll.js"></script>
-	<script src="resources/js/scripts.js"></script>
-	<script type="text/javascript">
-		$
-				.get("./budgetChart")
-				.success(
-						function(data) {
-							var chart = AmCharts
-									.makeChart(
-											"chartdiv",
-											{
-												"type" : "pie",
-												"theme" : "light",
-												"dataProvider" : data,
-												"valueField" : "sum",
-												"titleField" : "title",
-												"outlineAlpha" : 0.4,
-												"depth3D" : 15,
-												"balloonText" : "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-												"angle" : 30,
-												"export" : {
-													"enabled" : true
-												}
-											});
-							jQuery('.chart-input').off().on(
-									'input change',
-									function() {
-										var property = jQuery(this).data(
-												'property');
-										var target = chart;
-										var value = Number(this.value);
-										chart.startDuration = 0;
+		<!---->
+		<!--scrolling js-->
+		<script src="resources/js/jquery.nicescroll.js"></script>
+		<script src="resources/js/scripts.js"></script>
+		<script type="text/javascript">
+			$
+					.get("./budgetChart")
+					.success(
+							function(data) {
+								var chart = AmCharts
+										.makeChart(
+												"chartdiv",
+												{
+													"type" : "pie",
+													"theme" : "light",
+													"dataProvider" : data,
+													"valueField" : "sum",
+													"titleField" : "title",
+													"outlineAlpha" : 0.4,
+													"depth3D" : 15,
+													"balloonText" : "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+													"angle" : 30,
+													"export" : {
+														"enabled" : true
+													}
+												});
+								jQuery('.chart-input').off().on(
+										'input change',
+										function() {
+											var property = jQuery(this).data(
+													'property');
+											var target = chart;
+											var value = Number(this.value);
+											chart.startDuration = 0;
 
-										if (property == 'innerRadius') {
-											value += "%";
-										}
+											if (property == 'innerRadius') {
+												value += "%";
+											}
 
-										target[property] = value;
-										chart.validateNow();
-									});
-						});
-	</script>
+											target[property] = value;
+											chart.validateNow();
+										});
+							});
+		</script>
 </body>
 </html>

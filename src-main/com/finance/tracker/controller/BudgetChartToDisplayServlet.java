@@ -21,13 +21,16 @@ public class BudgetChartToDisplayServlet extends BaseServlet {
 		}
 		HttpSession session = request.getSession();
 		String display = request.getParameter("display");
+		System.out.println(display+"!!!");
 		session.setAttribute("display", display);
 		if (display.equals("sum")) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./budgetChart");
-			dispatcher.forward(request, response);
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./budget-account");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/Budget.jsp");
 			dispatcher.forward(request, response);
 		}
+		if (display.equals("acc")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/BudgetOnAccount.jsp");
+			dispatcher.forward(request, response);
+		}
+		
 	}
 }

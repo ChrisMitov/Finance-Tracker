@@ -71,21 +71,22 @@ public class Budget implements IBudget {
 		this.setUser(user);
 	}
 
-	public Budget(String title, double totalAmount, Date startDate, RepeatType repeatType, User user)
+	public Budget(String title, double totalAmount, Date startDate,  User user)
 			throws FinanceTrackerException {
-		this.setRepeatType(repeatType);
+//		this.setRepeatType(repeatType);
 		this.setTotalAmount(totalAmount);
 		this.setTitle(title);
 //		sumPerDay = totalAmount / LocalDate.now().getMonthValue();
 		setStartDate(startDate);
-		generateEndDate(repeatType);
+//		generateEndDate(repeatType);
 		setUser(user);
 	}
 
-	public Budget(int id, String title, double totalAmount, Date startDate, Date endDate, RepeatType repeatType,
+	public Budget(String title, double totalAmount, Date startDate, Date endDate, 
 			User user) throws FinanceTrackerException {
-		this(title, totalAmount, startDate, repeatType, user);
-		this.setId(id);
+		this(title, totalAmount, startDate, user);
+		this.setEndDate(endDate);
+		this.setRepeatType(RepeatType.NO_REPEAT);
 	}
 
 	
@@ -197,23 +198,29 @@ public class Budget implements IBudget {
 		this.startDate = startDate;
 	}
 
-	private void generateEndDate(RepeatType type) {
-		if (type.equals(RepeatType.DAILY)) {
-			endDate = new Date(startDate.getTime() + PLUS_ONE_DAY);
-		}
-		if (type.equals(RepeatType.MONTHLY)) {
-			endDate = new Date(startDate.getTime() + PLUS_ONE_MONTH);
-		}
-		if (type.equals(RepeatType.NO_REPEAT)) {
-			// to be added
-		}
-		if (type.equals(RepeatType.WEEKLY)) {
-			endDate = new Date(startDate.getTime() + PLUS_ONE_WEEK);
-		}
-		if (type.equals(RepeatType.YEARLY)) {
-			endDate = new Date(startDate.getTime() + PLUS_ONE_YEAR);
-		}
+//	private void generateEndDate(RepeatType type) {
+//		if (type.equals(RepeatType.DAILY)) {
+//			endDate = new Date(startDate.getTime() + PLUS_ONE_DAY);
+//		}
+//		if (type.equals(RepeatType.MONTHLY)) {
+//			endDate = new Date(startDate.getTime() + PLUS_ONE_MONTH);
+//		}
+//		if (type.equals(RepeatType.NO_REPEAT)) {
+//			// to be added
+//		}
+//		if (type.equals(RepeatType.WEEKLY)) {
+//			endDate = new Date(startDate.getTime() + PLUS_ONE_WEEK);
+//		}
+//		if (type.equals(RepeatType.YEARLY)) {
+//			endDate = new Date(startDate.getTime() + PLUS_ONE_YEAR);
+//		}
+//	}
+	
+	public void deleteAllAccounts(){
+		this.accounts=new ArrayList<Account>();
 	}
+
+	
 	
 //	public double getSumPerDay(){
 //		return this.sumPerDay;

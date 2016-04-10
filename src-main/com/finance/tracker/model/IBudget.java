@@ -42,5 +42,7 @@ public interface IBudget {
 	User getUser();
 
 	void setUser(User user);
+	
+	void deleteAllAccounts();
 
 }

@@ -18,9 +18,11 @@ import com.finance.tracker.exception.FinanceTrackerException;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ExchangeRate;
 import com.finance.tracker.model.ExchangeRateConventor;
+import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.User;
+import com.finance.tracker.model.dao.AccountDAO;
 import com.finance.tracker.model.dao.BudgetDao;
 import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.CurrencyDAO;
@@ -85,11 +87,14 @@ public class EditProfile extends BaseServlet {
 
 		if (firstName != null && firstName.length() > 0) {
 			userToUpdate.setFirstName(firstName);
-		} else if (lastName != null && lastName.length() > 0) {
+		}
+		if (lastName != null && lastName.length() > 0) {
 			userToUpdate.setLastName(lastName);
-		} else if (email != null && email.length() > 0) {
+		}
+		if (email != null && email.length() > 0) {
 			userToUpdate.setEmail(email);
-		} else if (password != null && password.length() > 0) {
+		}
+		if (password != null && password.length() > 0) {
 			try {
 				if (new HashPassword().isPasswordSecured(password)) {
 					String hashedPassword = new HashPassword().hashPassword(password);
@@ -103,14 +108,16 @@ public class EditProfile extends BaseServlet {
 			} catch (FinanceTrackerException e) {
 				request.setAttribute("passwordError", e.getMessage());
 			}
-		} else if (!(currency.equals("blanck"))) {
+		}
+		if (!(currency.equals("blanck"))) {
 			Currency newCurrency = Currency.valueOf(currency);
-			userToUpdate.setCurrency(newCurrency);
 			try {
 				changeAllBudgets(request, newCurrency);
+				changeAllAccounts(request, newCurrency);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			userToUpdate.setCurrency(newCurrency);
 
 		}
 
@@ -126,6 +133,18 @@ public class EditProfile extends BaseServlet {
 			int newSum = (int) new CurrencyDAO().convert(sum, newCurrency, user.getCurrency());
 			b.setTotalAmount(newSum);
 			new BudgetDao().updateBudget(b);
+		}
+	}
+	
+	private void changeAllAccounts(HttpServletRequest request, Currency newCurrency) throws Exception {
+		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		Collection<IAccount> accounts = new UserDAO().getAllAccounts(user.getUserId());
+		for (Iterator<IAccount> it = accounts.iterator(); it.hasNext();) {
+			IAccount b = it.next();
+			int sum = (int) b.getSum();
+			int newSum = (int) new CurrencyDAO().convert(sum, newCurrency, user.getCurrency());
+			b.setSum(newSum);
+			new AccountDAO().updateAccount(b);
 		}
 	}
 
