@@ -31,7 +31,7 @@
 							<h4
 								style="position: absolute; vertical-align: middle; display: inline-block; margin-right: 50px; margin-left: -30px">${category.name}</h4>
 							<br />
-							<form method="POST" action="./categoryRemove">
+							<form method="get" action="./categoryRemove">
 								<input type="hidden" name="id" value="${category.id}" /> <input
 									type="submit" value="Remove" class="btn btn-xs btn-danger"
 									style="width: 75px; margin: 0 auto; display: block;" />

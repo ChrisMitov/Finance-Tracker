@@ -28,11 +28,10 @@ public class CategoryServlet extends BaseServlet {
 		}
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
-//		String operationsSession = request.getParameter("operationsCategory");
-//		System.out.println(operationsSession);
-//		if(operationsSession != null){
-//			request.setAttribute("operationsCategory", operationsSession);
-//		}
+		String operationsSession = request.getParameter("operationsCategory");
+		if(operationsSession != null){
+			request.setAttribute("operationsCategory", operationsSession);
+		}
 		Collection<Category> categories = new CategoryDao().getAllCategoriesByUser(user);
 		request.setAttribute("categories", categories);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/category.jsp");
@@ -54,7 +53,6 @@ public class CategoryServlet extends BaseServlet {
 			new CategoryDao().addCategory(category);
 
 		} catch (FinanceTrackerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		response.sendRedirect("./category");

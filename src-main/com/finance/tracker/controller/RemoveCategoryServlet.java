@@ -29,7 +29,7 @@ public class RemoveCategoryServlet extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		response.sendRedirect("./category");
+		doPost(request, response);
 	}
 
 	@Override
@@ -44,11 +44,10 @@ public class RemoveCategoryServlet extends BaseServlet {
 		Collection<IFinanceOperation> operations = new FinanceOperationDao()
 				.getAllFInanceOperationsByCategory(category);
 		if (!operations.isEmpty()) {
-//			request.setAttribute("operationsCategory", "First delete all finance operations");
-//			System.out.println("HERE");
-//			ServletContext servletContext = getServletContext();
-//			RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/category");
-//			requestDispatcher.forward(request, response);
+			request.setAttribute("operationsCategory", "First delete all finance operations");
+			ServletContext servletContext = getServletContext();
+			RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/category");
+			requestDispatcher.forward(request, response);
 			return;
 		}
 		Collection<Tag> tags = new TagDao().getAllTagsByCategory(category);

@@ -33,7 +33,7 @@
 						<c:forEach var="account" items="${accounts}">
 							<tr>
 								<td colspan="4">${account.title}</td>
-								<td colspan="4">${account.sum} <c:if
+								<td colspan="4">${account.sum}<c:if
 										test="${account.sum < 0}">
 										<p style="color: red; font-size: 12px;">Negative balance</p>
 									</c:if></td>
@@ -45,7 +45,7 @@
 									</form>
 								</td>
 								<td colspan="4">
-									<form method="POST" action="./account/remove">
+									<form method="get" action="./accountRemove">
 										<input type="hidden" name="id" value="${account.id}" /> <input
 											type="submit" value="Remove" class="btn btn-s btn-danger"
 											style="width: 75px; margin: 0 auto; display: block;" />
@@ -72,6 +72,12 @@
 
 					</table>
 				</div>
+				<c:if test="${operationsAccount != null}">
+					<script>
+						var message = "${operationsAccount}";
+						alert(message);
+					</script>
+				</c:if>
 			</div>
 		</div>
 

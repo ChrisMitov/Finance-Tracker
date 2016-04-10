@@ -34,10 +34,12 @@ public class AccountServlet extends BaseServlet {
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Calendar calendar = Calendar.getInstance();
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
-		System.err.println(day);
 		int month = calendar.get(Calendar.MONTH);
-		System.err.println(month);
 		int year = calendar.get(Calendar.YEAR);
+		String operationsAccount = request.getParameter("operationsAccount");
+		if(operationsAccount != null){
+			request.setAttribute("operationsAccount", operationsAccount);
+		}
 		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
 		for (IAccount account : accounts) {
 			int balance = account.getSum();
