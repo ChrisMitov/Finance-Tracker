@@ -47,7 +47,7 @@
 							<tr>
 								<th><label style="font-size: 28px" for="account">Choose
 										account: </label></th>
-								<td><select class="option3" name="account">
+								<td><select class="option3" name="account" style="margin-left: -2px;">
 										<c:forEach var="account" items="${accounts}">
 											<option value="${account.id}">${account.title}</option>
 										</c:forEach>
@@ -57,7 +57,7 @@
 								<th><label style="font-size: 28px" for="category">Choose
 										category: </label></th>
 								<td><select class="option4" id="cat_id" name="category"
-									onchange="refreshTags()">
+									onchange="refreshTags()" style="margin-left: -2px;">
 										<c:forEach var="category" items="${categories}">
 											<option value="${category.id}">${category.name}</option>
 										</c:forEach>
@@ -66,34 +66,23 @@
 							<tr>
 								<th><label style="font-size: 28px" for="date">Date:
 								</label></th>
-								<td>
-								<fmt:formatDate
-											value="${expense.date}" pattern="yyyy-MM-dd" var = "myDate"/>
-								<input id="date" name="date" type="date"
-									class="form-control" placeholder="YYYY-MM-DD"
-									value='${myDate}'
+								<td><fmt:formatDate value="${expense.date}"
+										pattern="yyyy-MM-dd" var="myDate" /> <input id="date"
+									name="date" type="date" class="form-control"
+									placeholder="YYYY-MM-DD" value='${myDate}'
 									style="width: 200px; color: black;"></td>
-							</tr>
-							<tr>
-								<th><label style="font-size: 28px" for="repeat">Repeat:
-								</label></th>
-								<td><select class="option3" name="repeat">
-										<c:forEach var="repeat" items="${repeats}">
-											<option value="${repeat}">${repeat}</option>
-										</c:forEach>
-								</select></td>
 							</tr>
 							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:
 								</label></th>
-								<td><div id="tags"></div>
-									<c:forEach var="tag" items="${tags}">
-										<span style="display: inline-block;"> <label
-											for="${tag.name}"
-											style="color: black; display: inline-block;">${tag.name}</label>
-											<input id="${tag.id}" name="tags" type="checkbox"
-											class="form-control" value="${tag.name}"></span>
-									</c:forEach></td>
+								<td><div id="tags">
+										<c:forEach var="tag" items="${tags}">
+											<input id="tagsCat" name="tags" type="checkbox"
+												value="${ tag.name}">
+											<input type="hidden" name="_tags" value="on">
+											<label for="tag${tag.name}">${tag.name}</label>
+										</c:forEach>
+									</div></td>
 							</tr>
 						</table>
 						<br /> <input type="submit" value="Submit "
@@ -102,19 +91,37 @@
 				</div>
 			</div>
 		</div>
-
-		<!--//grid-->
-		<!---->
-		<jsp:include page="partials/footer.jsp" />
 	</div>
+	<jsp:include page="partials/footer.jsp" />
 	<div class="clearfix"></div>
-	</div>
+	<script type="text/javascript">
+		function refreshTags() {
+			var category = $("#cat_id").val();
 
-	<!---->
-	<!--scrolling js-->
+			$
+					.ajax({
+						url : './showTags?catId=' + category,
+						type : 'GET',
+						dataType : "json",
+						success : function(data) {
+							$("#tags").empty();
+							$
+									.each(
+											data,
+											function(index, tag) {
+												var html = ' <input id="tagsCat" name="tags" type="checkbox" value="' + tag.name + '"> ';
+												html += ' <input type="hidden" name="_tags" value="on"> ';
+												html += ' <label for="tag' + tag.name + '">'
+														+ tag.name
+														+ '</label> ';
+												$("#tags").append(html);
+											});
+						}
+					});
+		}
+	</script>
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
-	<!--//scrolling js-->
 </body>
 </html>
 

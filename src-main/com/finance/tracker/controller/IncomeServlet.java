@@ -47,8 +47,8 @@ public class IncomeServlet extends BaseServlet {
 		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
 		Collection<IFinanceOperation> incomes = new ArrayList<>();
 		getIncomes(calendar, session, month, year, accounts, incomes);
-		request.setAttribute("month", month);
-		request.setAttribute("year", year);
+		session.setAttribute("month", month);
+		session.setAttribute("year", year);
 		request.setAttribute("accounts", accounts);
 		if (incomes.isEmpty()) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/blankIncome.jsp");

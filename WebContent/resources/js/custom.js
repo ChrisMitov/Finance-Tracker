@@ -34,3 +34,24 @@ $(function() {
         element.addClass('active');
     }
 });
+
+
+function refreshTags() {
+	var category = $("#cat_id").val();
+
+	$.ajax({
+				url : './showTags?catId=' + category,
+				type : 'GET',
+				dataType: "json",
+				success : function(data) {
+					$("#tags").empty();
+					$.each(data,function(index, tag) {
+										var html = ' <input id="tagsCat" name="tags" type="checkbox" value="' + tag.name + '"> ';
+										html += ' <input type="hidden" name="_tags" value="on"> ';
+										html += ' <label for="tag' + tag.name + '">'
+												+ tag.name + '</label> ';
+										$("#tags").append(html);
+									});
+				}
+			});
+}

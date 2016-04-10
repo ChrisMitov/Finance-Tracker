@@ -50,8 +50,8 @@ public class ExpenseServlet extends BaseServlet {
 		Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
 		Collection<IFinanceOperation> expenses = new LinkedList<IFinanceOperation>();
 		getExpenses(calendar, session, month, year, accounts, expenses);
-		request.setAttribute("month", month);
-		request.setAttribute("year", year);
+		session.setAttribute("month", month);
+		session.setAttribute("year", year);
 		request.setAttribute("accounts", accounts);
 		if (expenses.isEmpty()) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/blankExpense.jsp");

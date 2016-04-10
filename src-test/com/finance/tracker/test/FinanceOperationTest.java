@@ -53,8 +53,8 @@ public class FinanceOperationTest {
 		finance.setSum(1000);
 		finance.setCategory((Category) cat);
 		finance.setDescription("Vzeh si novo tv, da zamenq stariq bokluk");
-		finance.setDate(new Date(2016,1,28));
-		finance.setRepeatType(RepeatType.DAILY);
+		finance.setDate(new Date(2016,3,06));
+		finance.setRepeatType(RepeatType.NO_REPEAT);
 		finance.setOperationType(FinanceOperationType.EXPENCES);
 		finance.setAccount((Account) account);
 		TagDao tags = new TagDao();

@@ -18,6 +18,11 @@ import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
 
 public class CategoryTest {
+	private static final Currency USER_CURRENCY = Currency.BGN;
+	private static final String USER_PASSWORD = "aqqqW9a";
+	private static final String USER_EMAIL = "LuizSuarez@gmail.com";
+	private static final String USER_LAST_NAME = "Suarez";
+	private static final String USER_NAME = "Luis";
 	private static final String UPDATE_CATEGORY_NAME = "Boards";
 	private static final String CATEGORY_TEST_NAME = "Shops";
 	private ICategoryDao categoryDao = new CategoryDao();
@@ -79,15 +84,15 @@ public class CategoryTest {
 
 	private IUser makeUser() {
 		IUser user = new User();
-		user.setFirstName("Luis");
-		user.setLastName("Suarez");
-		user.setEmail("Luiz@gmail.com");
+		user.setFirstName(USER_NAME);
+		user.setLastName(USER_LAST_NAME);
+		user.setEmail(USER_EMAIL);
 		try {
-			user.setPassword("aqqqW9a");
+			user.setPassword(USER_PASSWORD);
 		} catch (FinanceTrackerException e) {
 			e.printStackTrace();
 		}
-		user.setCurrency(Currency.BGN);
+		user.setCurrency(USER_CURRENCY);
 		user.setIsAdmin(false);
 		return user;
 	}

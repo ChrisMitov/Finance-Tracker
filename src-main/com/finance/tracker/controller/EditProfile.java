@@ -1,6 +1,7 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +20,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ExchangeRate;
 import com.finance.tracker.model.ExchangeRateConventor;
+import com.finance.tracker.model.Expense;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
+import com.finance.tracker.model.IFinanceOperation;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.Income;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.AccountDAO;
 import com.finance.tracker.model.dao.BudgetDao;
 import com.finance.tracker.model.dao.CategoryDao;
 import com.finance.tracker.model.dao.CurrencyDAO;
+import com.finance.tracker.model.dao.FinanceOperationDao;
 import com.finance.tracker.model.dao.IUserDAO;
 import com.finance.tracker.model.dao.UserDAO;
 import com.finance.tracker.validation.HashPassword;
@@ -122,6 +129,7 @@ public class EditProfile extends BaseServlet {
 			try {
 				changeAllBudgets(request, newCurrency);
 				changeAllAccounts(request, newCurrency);
+				changeAllOperations(request, newCurrency);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -159,6 +167,24 @@ public class EditProfile extends BaseServlet {
 			int newSum = (int) new CurrencyDAO().convert(sum, newCurrency, user.getCurrency());
 			b.setSum(newSum);
 			new AccountDAO().updateAccount(b);
+		}
+	}
+	
+	private void changeAllOperations(HttpServletRequest request, Currency newCurrency) throws Exception {
+		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
+		Collection<IAccount> accounts = new UserDAO().getAllAccounts(user.getUserId());
+		Collection<IFinanceOperation> operations  = new LinkedList<IFinanceOperation>();
+		for (IAccount iAccount : accounts) {
+			Collection<Expense> expense = new FinanceOperationDao().getAllExpencesByAccount((Account) iAccount);
+			Collection<Income> incomes = new FinanceOperationDao().getAllIncomeByAccount((Account) iAccount);
+			operations.addAll(expense);
+			operations.addAll(incomes);
+		}
+		for (IFinanceOperation iFinanceOperation : operations) {
+			int sum = iFinanceOperation.getSum();
+			int newSum = (int) new CurrencyDAO().convert(sum, newCurrency, user.getCurrency());
+			iFinanceOperation.setSum(newSum);
+			new FinanceOperationDao().updateFinanceOperation(iFinanceOperation);
 		}
 	}
 

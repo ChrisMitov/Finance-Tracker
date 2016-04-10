@@ -15,8 +15,7 @@
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<!-- Collect the nav links, forms, and other content for toggling -->
 
-		<div class="drop-men" style="background-image: url("../images/7.jpg");
-	background-size:cover;">
+		<div class="drop-men">
 			<span class=" name-caret">Welcome, ${userName} ! </span>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -62,7 +61,7 @@
 				</ul>
 			</div>
 			<br />
-			<div>
+			<div id = "showRates">
 				<jsp:include page="showRates.jsp" />
 			</div>
 

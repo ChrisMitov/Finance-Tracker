@@ -1,0 +1,33 @@
+#showRates table {
+	font-family: "Lato", "sans-serif";
+} /* added custom font-family  */
+#showRates table.one {
+	margin-bottom: 3em;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+#showRates td { /* removed the border from the table data rows  */
+	text-align: center;
+	width: 10em;
+	padding: 1em;
+}
+
+#showRates th { /* removed the border from the table heading row  */
+	text-align: center;
+	padding: 1em;
+	background-color: #e8503a;
+	/* added a red background color to the heading cells  */
+	color: white;
+} /* added a white font color to the heading text */
+#showRates tr {
+	height: 1em;
+}
+
+#showRates table tr:nth-child(even) { /* added all even rows a #eee color  */
+	background-color: #eee;
+}
+
+#showRates table tr:nth-child(odd) { /* added all odd rows a #fff color  */
+	background-color: #CEE3F6;
+}

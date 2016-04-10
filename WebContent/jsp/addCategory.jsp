@@ -9,38 +9,56 @@
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
-		<div id="page-wrapper" class="gray-bg dashbard-1">
-			<div class="content-main">
+	<div id="page-wrapper" class="gray-bg dashbard-1">
+		<div class="content-main">
 
-				<!--banner-->
-				<div class="banner">
-					<h2>
-						<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Category</span>
-					</h2>
-				</div>
-				<!--//banner-->
-				<!--grid-->
-				<div class="grid-form">
-					<div class="grid-form1">
-						<h3 id="forms-example" class="">Add category</h3>
-						<form name="category" action="./category" method="post">
-						<div>
-							<label for="user_name">Name: </label> <input
-								id="category_name" name="name" type="text"  class="form-control"
-								placeholder="Category name" value="">
+			<!--banner-->
+			<div class="banner">
+				<h2>
+					<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Category</span>
+				</h2>
+			</div>
+			<!--//banner-->
+			<!--grid-->
+			<div class=" profile">
+
+				<div class="profile-bottom">
+					<h3>
+						<i class="fa fa-cogs">${" "}</i>Add Tags
+					</h3>
+					<form name="category" action="./category" method="post">
+						<div class="profile-bottom-top">
+
+							<div class="col-md-8 profile-text">
+								<table>
+									<tr>
+										<td>Name:</td>
+										<td><input id="category_name" name="name" type="text"
+											placeholder="Category name" value=""></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>
+								</table>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<br />
-						<input type = "submit" value ="Submit "class="btn btn-lg btn-danger" >
-						</form>
-					</div>
+						<div class="profile-btn">
+							<input type="submit" value="Submit "
+								class="btn btn-lg btn-danger">
+							<div class="clearfix"></div>
+						</div>
+					</form>
 				</div>
 			</div>
-
-			<!--//grid-->
-			<!---->
-			<jsp:include page="partials/footer.jsp" />
 		</div>
-		<div class="clearfix"></div>
+
+		<!--//grid-->
+		<!---->
+		<jsp:include page="partials/footer.jsp" />
+	</div>
+	<div class="clearfix"></div>
 	</div>
 
 	<!---->
@@ -51,4 +69,3 @@
 </body>
 </html>
 
-    
