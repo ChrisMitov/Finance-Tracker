@@ -88,6 +88,7 @@ public class AddBudget extends BaseServlet {
 			// dispatcher.forward(request, response);
 			// } else {
 			 response.sendRedirect("./budget");
+			 return;
 			// }
 		} else {
 			request.setAttribute("emptyField", "All fields are obligatory!");
