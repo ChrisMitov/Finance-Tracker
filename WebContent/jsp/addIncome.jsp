@@ -40,10 +40,10 @@
 								</label></th>
 								<td><input id="description" name="description" type="text"
 									class="form-control" placeholder="Description" value=""
-									style="width: 400px;"></td>
+									style="width: 400px; "></td>
 							</tr>
 							<tr>
-								<th><label style="font-size: 28px" for="account">Choose
+								<th><label style="font-size: 28px;" for="account">Choose
 										account: </label></th>
 								<td><select class="option3" name="account">
 										<c:forEach var="account" items="${accounts}">
@@ -67,15 +67,6 @@
 								<td><input id="date" name="date" type="date"
 									class="form-control" placeholder="YYYY-MM-DD" value=""
 									style="width: 200px;"></td>
-							</tr>
-							<tr>
-								<th><label style="font-size: 28px" for="repeat">Repeat:
-								</label></th>
-								<td><select class="option3" name="repeat">
-										<c:forEach var="repeat" items="${repeats}">
-											<option value="${repeat}">${repeat}</option>
-										</c:forEach>
-								</select></td>
 							</tr>
 							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:

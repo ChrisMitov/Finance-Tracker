@@ -78,6 +78,7 @@ public class LogInServlet extends BaseServlet {
 			session.setAttribute("month", calendar.get(Calendar.MONTH) + 1);
 			session.setAttribute("year", calendar.get(Calendar.YEAR));
 			session.setAttribute("accountIdExpense", 0);
+			session.setAttribute("budgetAccount", "sum");
 			response.sendRedirect("./");
 		} else {
 			request.setAttribute("wrongUser", "Incorrect email or password!");

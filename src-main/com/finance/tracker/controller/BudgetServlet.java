@@ -40,15 +40,11 @@ public class BudgetServlet extends BaseServlet {
 		}
 		// request.setAttribute("budgets", budgets);
 		request.setAttribute("sums", sumsPerDay);
-		Collection<String> type =new ArrayList<>();
-		type.add("acc");
-		type.add("sum");
-		session.setAttribute("type", type);
 		if (budgets.isEmpty()) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/BlanckBudget.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/BudgetOnAccount.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/Budget.jsp");
 			dispatcher.forward(request, response);
 		}
 

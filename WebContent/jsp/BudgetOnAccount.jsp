@@ -13,6 +13,13 @@
 <link href="resources/css/double_table.css" rel='stylesheet'
 	type='text/css' />
 <link href="resources/css/budget.css" rel='stylesheet' type='text/css' />
+<style type="text/css">
+#chartdiv {
+	width: 100%;
+	height: 435px;
+	font-size: 11px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="partials/header.jsp" />
@@ -31,12 +38,32 @@
 				<div class="grid-form1"
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
-						<div id="content1" class="demo">
+						<div id="content1">
 							<jsp:include page="partials/budgetChartHead.jsp" />
-							<c:forEach var="type" items="${type}">
-								<%-- <c:if test="${type eq 'acc'}"> <jsp:include page="partials/budgetAccountFilter.jsp" /></c:if>--%>
-								<c:if test="${type eq 'sum'}"><jsp:include page="partials/budgetSumFilter.jsp" /></c:if>
-							</c:forEach>
+							<div id="chartdiv"></div>
+							<div class="container-fluid">
+								<div class="row text-center" style="overflow: hidden;">
+									<div class="col-sm-3"
+										style="float: none !important; display: inline-block;">
+										<label class="text-left">Angle:</label> <input
+											class="chart-input" data-property="angle" type="range"
+											min="0" max="60" value="30" step="1" />
+									</div>
+
+									<div class="col-sm-3"
+										style="float: none !important; display: inline-block;">
+										<label class="text-left">Depth:</label> <input
+											class="chart-input" data-property="depth3D" type="range"
+											min="1" max="25" value="10" step="1" />
+									</div>
+									<div class="col-sm-3"
+										style="float: none !important; display: inline-block;">
+										<label class="text-left">Inner-Radius:</label> <input
+											class="chart-input" data-property="innerRadius" type="range"
+											min="0" max="80" value="0" step="1" />
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div id="sidebar1">
@@ -92,6 +119,45 @@
 	<!--scrolling js-->
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
+	<script type="text/javascript">
+		$
+				.get("./budgetAccount")
+				.success(
+						function(data) {
+							var chart = AmCharts
+									.makeChart(
+											"chartdiv",
+											{
+												"type" : "pie",
+												"theme" : "light",
+												"dataProvider" : data,
+												"valueField" : "sum",
+												"titleField" : "title",
+												"outlineAlpha" : 0.4,
+												"depth3D" : 15,
+												"balloonText" : "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+												"angle" : 30,
+												"export" : {
+													"enabled" : true
+												}
+											});
+							jQuery('.chart-input').off().on(
+									'input change',
+									function() {
+										var property = jQuery(this).data(
+												'property');
+										var target = chart;
+										var value = Number(this.value);
+										chart.startDuration = 0;
 
+										if (property == 'innerRadius') {
+											value += "%";
+										}
+
+										target[property] = value;
+										chart.validateNow();
+									});
+						});
+	</script>
 </body>
 </html>

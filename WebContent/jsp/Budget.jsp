@@ -38,12 +38,8 @@
 				<div class="grid-form1"
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
-
-						<div id="content1" class="demo">
-							<jsp:include page="partials/budgetChartHead.jsp" />
-
 							<div id="content1">
-
+								<jsp:include page="partials/budgetChartHead.jsp" />
 								<div id="chartdiv"></div>
 								<div class="container-fluid">
 									<div class="row text-center" style="overflow: hidden;">
@@ -124,7 +120,7 @@
 		<script src="resources/js/scripts.js"></script>
 		<script type="text/javascript">
 			$
-					.get("./budgetChart")
+					.get("./budgetAccount")
 					.success(
 							function(data) {
 								var chart = AmCharts

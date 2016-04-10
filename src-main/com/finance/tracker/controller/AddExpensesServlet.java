@@ -52,8 +52,6 @@ public class AddExpensesServlet extends BaseServlet {
 			tags.addAll(new TagDao().getAllTagsByCategory(category));
 		}
 		request.setAttribute("tags", tags);
-		RepeatType[] repeats = RepeatType.values();
-		request.setAttribute("repeats", repeats);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/addExpenses.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -70,10 +68,9 @@ public class AddExpensesServlet extends BaseServlet {
 		int catetogoryId = Integer.parseInt(request.getParameter("category"));
 		String dat = request.getParameter("date");
 		String[] tags = request.getParameterValues("tags");
-		String repeat = request.getParameter("repeat");
 		try {
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dat);
-			IFinanceOperation operation = new FinanceOperation( sum, date, description, "", new CategoryDao().foundById(catetogoryId),RepeatType.valueOf(repeat) , FinanceOperationType.EXPENCES, (Account) new AccountDAO().getAccount(accountId));
+			IFinanceOperation operation = new FinanceOperation( sum, date, description, "", new CategoryDao().foundById(catetogoryId),RepeatType.NO_REPEAT, FinanceOperationType.EXPENCES, (Account) new AccountDAO().getAccount(accountId));
 			for (String string : tags) {
 				operation.addTag(new TagDao().foundTagByName(string));
 			}

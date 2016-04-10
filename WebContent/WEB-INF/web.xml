@@ -5,7 +5,7 @@
     <url-pattern>/resources/*</url-pattern>
   </servlet-mapping>
   <error-page>
-  <exception-type>Exception</exception-type>
-  <location>/WEB-INF/jsp/error.jsp</location>
-</error-page>
+    <exception-type>Exception</exception-type>
+    <location>/WEB-INF/jsp/error.jsp</location>
+  </error-page>
 </web-app>

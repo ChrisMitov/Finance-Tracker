@@ -47,7 +47,7 @@
 							<tr>
 								<th><label style="font-size: 28px" for="account">Choose
 										account: </label></th>
-								<td><select class="option3" name="account">
+								<td><select class="option3" name="account" style="margin-left: -2px;">
 										<c:forEach var="account" items="${accounts}">
 											<option value="${account.id}">${account.title}</option>
 										</c:forEach>
@@ -57,7 +57,7 @@
 								<th><label style="font-size: 28px" for="category">Choose
 										category: </label></th>
 								<td><select class="option4" id="cat_id" name="category"
-									onchange="refreshTags()">
+									onchange="refreshTags()" style="margin-left: -2px;">
 										<c:forEach var="category" items="${categories}">
 											<option value="${category.id}">${category.name}</option>
 										</c:forEach>
@@ -71,15 +71,6 @@
 									name="date" type="date" class="form-control"
 									placeholder="YYYY-MM-DD" value='${myDate}'
 									style="width: 200px; color: black;"></td>
-							</tr>
-							<tr>
-								<th><label style="font-size: 28px" for="repeat">Repeat:
-								</label></th>
-								<td><select class="option3" name="repeat">
-										<c:forEach var="repeat" items="${repeats}">
-											<option value="${repeat}">${repeat}</option>
-										</c:forEach>
-								</select></td>
 							</tr>
 							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:

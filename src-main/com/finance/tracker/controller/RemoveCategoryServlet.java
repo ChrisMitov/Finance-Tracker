@@ -3,15 +3,22 @@ package com.finance.tracker.controller;
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.finance.tracker.model.Category;
+import com.finance.tracker.model.IFinanceOperation;
 import com.finance.tracker.model.Tag;
 import com.finance.tracker.model.dao.CategoryDao;
+import com.finance.tracker.model.dao.FinanceOperationDao;
 import com.finance.tracker.model.dao.TagDao;
 
-@WebServlet("/category/remove")
+@WebServlet("/categoryRemove")
 public class RemoveCategoryServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +29,7 @@ public class RemoveCategoryServlet extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		response.sendRedirect("../category");
+		response.sendRedirect("./category");
 	}
 
 	@Override
@@ -33,12 +40,23 @@ public class RemoveCategoryServlet extends BaseServlet {
 			return;
 		}
 		int categoryId = Integer.parseInt(request.getParameter("id"));
-		Collection<Tag> tags = new TagDao().getAllTagsByCategory(new CategoryDao().foundById(categoryId));
+		Category category = new CategoryDao().foundById(categoryId);
+		Collection<IFinanceOperation> operations = new FinanceOperationDao()
+				.getAllFInanceOperationsByCategory(category);
+		if (!operations.isEmpty()) {
+//			request.setAttribute("operationsCategory", "First delete all finance operations");
+//			System.out.println("HERE");
+//			ServletContext servletContext = getServletContext();
+//			RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/category");
+//			requestDispatcher.forward(request, response);
+			return;
+		}
+		Collection<Tag> tags = new TagDao().getAllTagsByCategory(category);
 		for (Tag tag : tags) {
 			new TagDao().removeTag(tag.getId());
 		}
 		new CategoryDao().removeCategory(categoryId);
-		response.sendRedirect("../category");
+		response.sendRedirect("./category");
 	}
 
 }

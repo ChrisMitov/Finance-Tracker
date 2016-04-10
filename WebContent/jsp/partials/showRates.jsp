@@ -6,8 +6,8 @@
 
 <div class="panel panel-danger">
 	<form method="get" action="./login">
-		<div class="panel-heading">
-			<h4>Exchange rates</h4>
+		<div class="panel-heading" style="background-color: #D95459;">
+			<h4 >Exchange rates</h4>
 		</div>
 		<table>
 			<c:forEach var="entity" items="${rates}">

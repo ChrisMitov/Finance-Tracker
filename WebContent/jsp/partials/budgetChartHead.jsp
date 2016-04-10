@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<form name="" action="./budget" method="get" class="demo">
+<form name="" action="./chooseBudget" method="get" class="demo">
 	<span style="float: left"><label>Choose format to
 			display: </label> <select class="option3" name="display">
 

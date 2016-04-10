@@ -69,15 +69,6 @@
 									style="width: 200px;"></td>
 							</tr>
 							<tr>
-								<th><label style="font-size: 28px" for="repeat">Repeat:
-								</label></th>
-								<td><select class="option3" name="repeat">
-										<c:forEach var="repeat" items="${repeats}">
-											<option value="${repeat}">${repeat}</option>
-										</c:forEach>
-								</select></td>
-							</tr>
-							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:
 								</label></th>
 								<td><div id="tags"> <c:forEach var="tag"

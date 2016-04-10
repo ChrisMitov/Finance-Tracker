@@ -28,6 +28,7 @@ public class RemoveAccountServlet extends BaseServlet {
 			return;
 		}
 		int accountId = Integer.parseInt(request.getParameter("id"));
+		
 		new AccountDAO().deleteAccount(accountId);
 		response.sendRedirect("../account");
 	}

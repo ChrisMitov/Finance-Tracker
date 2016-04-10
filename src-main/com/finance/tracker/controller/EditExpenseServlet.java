@@ -50,8 +50,6 @@ public class EditExpenseServlet extends BaseServlet {
 			tags.addAll(new TagDao().getAllTagsByCategory(category));
 		}
 		request.setAttribute("tags", tags);
-		RepeatType[] repeats = RepeatType.values();
-		request.setAttribute("repeats", repeats);
 		request.setAttribute("expense", operation);
 		session.setAttribute("expenseId", id);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/editExpense.jsp");
@@ -72,7 +70,6 @@ public class EditExpenseServlet extends BaseServlet {
 		int catetogoryId = Integer.parseInt(request.getParameter("category"));
 		String dat = request.getParameter("date");
 		String[] tags = request.getParameterValues("tags");
-		String repeat = request.getParameter("repeat");
 		try {
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dat);
 			IFinanceOperation operation = new FinanceOperationDao().foundById(operationId);
@@ -80,7 +77,7 @@ public class EditExpenseServlet extends BaseServlet {
 			operation.setDate(date);
 			operation.setDescription(description);
 			operation.setAccount((Account) new AccountDAO().getAccount(accountId));
-			operation.setRepeatType(RepeatType.valueOf(repeat));
+			operation.setRepeatType(RepeatType.NO_REPEAT);
 			operation.setCategory(new CategoryDao().foundById(catetogoryId));
 			for (String string : tags) {
 				operation.addTag(new TagDao().foundTagByName(string));
