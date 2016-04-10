@@ -20,7 +20,7 @@
 			<!--banner-->
 			<div class="banner">
 				<h2>
-					<a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>Expense</span>
+					<a href="./">Home</a> <i class="fa fa-angle-right"></i> <span>Expense</span>
 				</h2>
 			</div>
 			<!--//banner-->

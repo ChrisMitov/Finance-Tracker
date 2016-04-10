@@ -18,6 +18,7 @@ import com.finance.tracker.model.dao.UserDAO;
 
 public class ExchangeRateTest {
 
+
 	@Test
 	public void test() throws Exception {
 		System.out.println("Test 1");

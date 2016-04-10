@@ -2,6 +2,7 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,6 +18,7 @@ import com.finance.tracker.model.Currency;
 import com.finance.tracker.model.ExchangeRate;
 import com.finance.tracker.model.IUser;
 import com.finance.tracker.model.dao.CurrencyDAO;
+
 import com.finance.tracker.model.dao.LogInDAO;
 import com.finance.tracker.model.dao.UserDAO;
 import com.finance.tracker.validation.HashPassword;
@@ -49,6 +51,7 @@ public class LogInServlet extends BaseServlet {
 			// session.setMaxInactiveInterval(-1);
 			int userId = userDao.getUserId(username);
 			session.setAttribute("userId", userId);
+
 			IUser user = userDao.getUser(userId);
 			
 			try {
@@ -82,6 +85,7 @@ public class LogInServlet extends BaseServlet {
 		}
 
 	}
+
 
 
 }

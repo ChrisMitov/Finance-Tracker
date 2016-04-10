@@ -38,6 +38,7 @@ public class CurrencyDAO {
 
 				Gson gson = new Gson();
 				JsonObject jsonObj = gson.fromJson(builder.toString(), JsonObject.class);
+				System.out.println(jsonObj);
 				ExchangeRate data = new ExchangeRate();
 				String name = currency.toString();
 				double rate = jsonObj.getAsJsonObject("rates").get(name).getAsDouble();
@@ -45,7 +46,6 @@ public class CurrencyDAO {
 				data.setRate(rate);
 				data.setBase(source);
 				data.setToGet(currency);
-				System.out.println(jsonObj);
 				return data;
 			}
 
