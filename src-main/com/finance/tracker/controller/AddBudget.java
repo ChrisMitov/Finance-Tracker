@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.finance.tracker.exception.FinanceTrackerException;
+import com.finance.tracker.model.Account;
 import com.finance.tracker.model.Budget;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
@@ -55,35 +56,39 @@ public class AddBudget extends BaseServlet {
 			String title = request.getParameter("title");
 			double sum = Double.parseDouble(request.getParameter("sum"));
 			Date date = DEFAULT_DATE;
+			Date date2 = DEFAULT_DATE;
 			String calendar = request.getParameter("start");
-			String type = request.getParameter("repeat");
+			String end = request.getParameter("end");
+			System.out.println(end + "!!");
+			// String type = request.getParameter("repeat");
 			String selects[] = request.getParameterValues("selected");
-			List<IAccount> allAcounts = (List<IAccount>) new UserDAO().getAllAccounts(user.getUserId());
-			List<IAccount> matches = new ArrayList<IAccount>();
 			try {
 				date = new SimpleDateFormat("yyyy-MM-dd").parse(calendar);
-				IBudget budget = new Budget(title, sum, date, RepeatType.valueOf(type), user);
+				date2 = new SimpleDateFormat("yyyy-MM-dd").parse(end);
+				IBudget budget = new Budget(title, sum, date, date2, user);
 				for (int select = 0; select < selects.length; select++) {
-					for (IAccount a : allAcounts) {
-						if (selects[select].equals(a.getTitle())) {
-							matches.add(a);
-						}
-					}
+					int id = Integer.parseInt(selects[select]);
+					budget.addAccount((Account) new AccountDAO().getAccount(id));
 				}
-				new BudgetDao().addAccounts(budget, matches);
-				user.addBudget(budget);
+				if (checkDates(date, date2)) {
+					request.setAttribute("dates", "Start date must be before end date!");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
+					dispatcher.forward(request, response);
+				}
+				new BudgetDao().addBudget(budget);
 
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			} catch (FinanceTrackerException e) {
 				e.printStackTrace();
 			}
-			if (checkType(type)) {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("./repeatBudget");
-				dispatcher.forward(request, response);
-			} else {
-				response.sendRedirect("./budget");
-			}
+			// if (checkType(type)) {
+			// RequestDispatcher dispatcher =
+			// request.getRequestDispatcher("./repeatBudget");
+			// dispatcher.forward(request, response);
+			// } else {
+			 response.sendRedirect("./budget");
+			// }
 		} else {
 			request.setAttribute("emptyField", "All fields are obligatory!");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
@@ -96,20 +101,21 @@ public class AddBudget extends BaseServlet {
 		String title = request.getParameter("title");
 		String sum = request.getParameter("sum");
 		String calendar = request.getParameter("start");
-		String type = request.getParameter("repeat");
+		// String type = request.getParameter("repeat");
 		String selects[] = request.getParameterValues("selected");
+		String end = request.getParameter("end");
 		if (title == null || title.equals("")) {
 			return false;
 		}
 		if (sum == null || sum.equals("")) {
 			return false;
 		}
-		if (calendar == null || calendar.equals("")) {
+		if (calendar == null || calendar.equals("") && end == null || end.equals("")) {
 			return false;
 		}
-		if (type.equals("") || type == null) {
-			return false;
-		}
+		// if (type.equals("") || type == null) {
+		// return false;
+		// }
 		if (!checkSelect(selects)) {
 			return false;
 		} else {
@@ -118,12 +124,12 @@ public class AddBudget extends BaseServlet {
 
 	}
 
-	private boolean checkType(String type) {
-		if (type.equals("NO_REPEAT")) {
-			return true;
-		}
-		return false;
-	}
+	// private boolean checkType(String type) {
+	// if (type.equals("NO_REPEAT")) {
+	// return true;
+	// }
+	// return false;
+	// }
 
 	private boolean checkSelect(String select[]) {
 		for (int index = 0; index < select.length; index++) {
@@ -132,5 +138,9 @@ public class AddBudget extends BaseServlet {
 			}
 		}
 		return false;
+	}
+
+	private boolean checkDates(Date d, Date d2) {
+		return (d.after(d2));
 	}
 }

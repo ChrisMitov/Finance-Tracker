@@ -40,7 +40,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
 
 
 
@@ -131,20 +139,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<tr>
 										<td>Title</td>
 										<td>:</td>
-										<td>${budget.title}</td>
+										<td style="width: 40px;">${budget.title}</td>
 										<td><input type="text" placeholder="Title"
 											name="newTitle" /></td>
 									</tr>
 									<tr>
 										<td>Sum</td>
 										<td>:</td>
-										<td>${budget.totalAmount}</td>
+										<td style="width:40px;">${budget.totalAmount}</td>
 										<td><input type="text" placeholder="Sum" name="newSum" /></td>
 									</tr>
 									<tr>
 										<td>Start date</td>
 										<td>:</td>
-										<td><fmt:formatDate value="${budget.startDate}"
+										<td style="width:40px;"><fmt:formatDate value="${budget.startDate}"
 												pattern="yyyy-MM-dd" var="myDate" /> ${myDate}</td>
 										<td><input type="date" placeholder="Start date"
 											name="newStart" /></td>
@@ -152,10 +160,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<tr>
 										<td>End date</td>
 										<td>:</td>
-										<td><fmt:formatDate value="${budget.endDate}"
-												pattern="yyyy-MM-dd" var="myDate" />${myDate}</td>
+										<td style="width:40px;"><fmt:formatDate value="${budget.endDate}"
+												pattern="yyyy-MM-dd" var="myDate" /> ${myDate}</td>
+										<td><input type="date" placeholder="End date"
+											name="newEnd" /></td>
 									</tr>
-									<tr>
+									<!-- <tr>
 										<td>Repeat type</td>
 										<td>:</td>
 										<td>${budget.repeatType}</td>
@@ -167,13 +177,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option value="MONTHLY">MONTHLY</option>
 												<option value="YEARLY">YEARLY</option>
 										</select></td>
-									</tr>
+									</tr> -->
 									<tr>
-										<td>Choose account:</td>
-										<td><div class="account">
+										<td>Choose account</td>
+										<td>:</td>
+										<td style="width: 40px;"><div class="account">
 												<c:forEach var="account" items="${accounts}">
 													<input type="checkbox" name="selected"
-														value="${account.id}">${account.title}<br>
+														value="${account.id}"> ${account.title}<br>
 												</c:forEach>
 											</div></td>
 									</tr>
@@ -186,6 +197,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<input type="submit" value="Edit budget" class="btn btn-primary" />
 							<div class="clearfix"></div>
 						</div>
+						<c:if test="${not empty dates}">
+							<p style="color: red">
+								<c:out value="${dates}"></c:out>
+						</c:if>
 					</form>
 				</div>
 			</div>

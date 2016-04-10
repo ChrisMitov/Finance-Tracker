@@ -2,7 +2,11 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.finance.tracker.model.Currency;
+import com.finance.tracker.model.ExchangeRate;
 import com.finance.tracker.model.IUser;
+import com.finance.tracker.model.dao.CurrencyDAO;
+
 import com.finance.tracker.model.dao.LogInDAO;
 import com.finance.tracker.model.dao.UserDAO;
 import com.finance.tracker.validation.HashPassword;
@@ -43,7 +51,22 @@ public class LogInServlet extends BaseServlet {
 			// session.setMaxInactiveInterval(-1);
 			int userId = userDao.getUserId(username);
 			session.setAttribute("userId", userId);
+
 			IUser user = userDao.getUser(userId);
+			
+			try {
+				List<Currency> toConvert = new ArrayList<Currency>();
+				toConvert.add(Currency.EUR);
+				toConvert.add(Currency.USD);
+				Currency base = Currency.BGN;
+				ExchangeRate rate = new CurrencyDAO().getManyRates(toConvert, base);
+				Map<Currency, Double> rates = rate.getManyResults();
+				request.getSession().setAttribute("base", base);
+				request.getSession().setAttribute("rates", rates);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			session.setAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME, user);
 			session.setAttribute("userName", user.getFirstName());
 			session.setAttribute("lastName", user.getLastName());
@@ -62,6 +85,7 @@ public class LogInServlet extends BaseServlet {
 		}
 
 	}
+
 
 
 }

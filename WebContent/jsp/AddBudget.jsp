@@ -47,6 +47,10 @@
 											name="start" /></td>
 									</tr>
 									<tr>
+										<td>End date:</td>
+										<td><input type="date" placeholder="End date" name="end" /></td>
+									</tr>
+									<!--  <tr>
 										<td>Repeat type:</td>
 										<td><select name="repeat">
 												<option value="blanck"></option>
@@ -56,12 +60,13 @@
 												<option value="MONTHLY">MONTHLY</option>
 												<option value="MONTHLY">YEARLY</option>
 										</select></td>
-									</tr>
+									</tr>-->
 									<tr>
 										<td>Choose account:</td>
 										<td><div class="account">
 												<c:forEach var="account" items="${accounts}">
-													<input type="checkbox" name="selected" value="${account.id}"> ${account.title}<br>
+													<input type="checkbox" name="selected"
+														value="${account.id}"> ${account.title}<br>
 												</c:forEach>
 											</div></td>
 									</tr>
@@ -77,6 +82,10 @@
 						<c:if test="${not empty emptyField}">
 							<p style="color: red">
 								<c:out value="${emptyField}"></c:out>
+						</c:if>
+						<c:if test="${not empty dates}">
+							<p style="color: red">
+								<c:out value="${dates}"></c:out>
 						</c:if>
 					</form>
 				</div>

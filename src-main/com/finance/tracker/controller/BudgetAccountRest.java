@@ -36,8 +36,7 @@ public class BudgetAccountRest extends BaseServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IBudget> budgets = new UserDAO().getAllBudgetsByUser(user.getUserId());
-		List<IAccount> accounts = (List<IAccount>) new UserDAO().getAllAccounts(user.getUserId());
-
+		Collection<IAccount> accounts = (List<IAccount>) new UserDAO().getAllAccounts(user.getUserId());
 		Map<IAccount, Integer> map = new HashMap<IAccount, Integer>();
 		Collection<BudgetByAccount> makeJason = new HashSet<BudgetByAccount>();
 		for (IBudget budget : budgets) {
@@ -45,7 +44,7 @@ public class BudgetAccountRest extends BaseServlet {
 			for (IAccount a : accounts) {
 				for (Account acc : accountsPerBudget) {
 					if (acc.equals(a)) {
-						if (map.containsKey(a)) {
+						if (!map.containsKey(a)) {
 							map.put(a, 1);
 						} else {
 							int number = map.get(a);

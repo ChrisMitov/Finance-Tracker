@@ -1,7 +1,6 @@
 package com.finance.tracker.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -10,28 +9,22 @@ import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.finance.tracker.exception.FinanceTrackerException;
-import com.finance.tracker.model.Currency;
+import com.finance.tracker.model.Account;
 import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.IBudget;
-import com.finance.tracker.model.IUser;
-import com.finance.tracker.model.RepeatType;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.AccountDAO;
 import com.finance.tracker.model.dao.BudgetDao;
 import com.finance.tracker.model.dao.IBudgetDao;
-import com.finance.tracker.model.dao.IUserDAO;
-import com.finance.tracker.model.dao.UserDAO;
-import com.finance.tracker.validation.HashPassword;
 
 @WebServlet("/editBudget")
 public class EditBudget extends BaseServlet {
 	private static final long serialVersionUID = 1L;
+	private boolean dateCorrectness = true;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -60,7 +53,14 @@ public class EditBudget extends BaseServlet {
 		IBudgetDao budget = new BudgetDao();
 		IBudget budgetToUpdate = validateUpdates(request, response);
 		budget.updateBudget(budgetToUpdate);
-		response.sendRedirect("./budget");
+		System.out.println("Datecorrectness: "+dateCorrectness);
+		if (dateCorrectness) {
+			response.sendRedirect("./budget");
+		} else {
+			request.setAttribute("dates", "Start date must be before end date!");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/editBudget.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	private IBudget validateUpdates(HttpServletRequest request, HttpServletResponse response)
@@ -69,9 +69,28 @@ public class EditBudget extends BaseServlet {
 		int id = (int) session.getAttribute("budgetId");
 		String sum = request.getParameter("newSum");
 		String date = request.getParameter("newStart");
+		String end = request.getParameter("newEnd");
 		String title = (String) request.getParameter("newTitle");
-		String type = (String) request.getParameter("newRepeat");
+		// String type = (String) request.getParameter("newRepeat");
 		IBudget budget = (IBudget) request.getSession().getAttribute("budget");
+		String selects[] = request.getParameterValues("selected");
+		if (!checkSelect(selects)) {
+			budget.deleteAllAccounts();
+			System.out.println("Accounts");
+			for (int select = 0; select < selects.length; select++) {
+				try {
+					int idAcc = Integer.parseInt(selects[select]);
+					Account a = (Account) new AccountDAO().getAccount(idAcc);
+					System.out.println("Account "+a.getId());
+					System.out.println(a.getTitle());
+					budget.addAccount(a);
+				} catch (FinanceTrackerException e) {
+					e.printStackTrace();
+				}
+			}
+			new BudgetDao().updateBudget(budget);
+
+		}
 		if (sum != null && sum.length() > 0 && !sum.equals("")) {
 			double newSum = Double.parseDouble(sum);
 			budget.setTotalAmount(newSum);
@@ -86,19 +105,57 @@ public class EditBudget extends BaseServlet {
 			} catch (FinanceTrackerException e) {
 				e.printStackTrace();
 			}
-		} else if (title != null && title.length() > 0 && !title.equals("")) {
+		}
+		if (!(end.equals("")) && end != null && end.length() > 0) {
+			try {
+				Date startDate = new Date();
+				Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(end);
+				if (date != null && !date.equals("") && date.length() > 0) {
+					startDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				} else {
+					startDate = budget.getStartDate();
+				}
+
+				if (!checkDates(startDate, endDate)) {
+					budget.setEndDate(endDate);
+				} else {
+					dateCorrectness = false;
+				}
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} catch (FinanceTrackerException e) {
+				e.printStackTrace();
+			}
+		}
+		if (title != null && title.length() > 0 && !title.equals(""))
+
+		{
 			try {
 				budget.setTitle(title);
 			} catch (FinanceTrackerException e) {
 				e.printStackTrace();
 			}
-		} else if (!(type.equals("blanck"))) {
-			RepeatType newType = RepeatType.valueOf(type);
-			System.out.println(newType + "!!");
-			budget.setRepeatType(newType);
 		}
+		// if (!(type.equals("blanck"))) {
+		// RepeatType newType = RepeatType.valueOf(type);
+		// System.out.println(newType + "!!");
+		// budget.setRepeatType(newType);
+		// }
 
 		budget.setId(id);
 		return budget;
 	}
+
+	private boolean checkSelect(String select[]) {
+		if (select == null) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean checkDates(Date d, Date d2) {
+		return (d.after(d2) && d2.before(d));
+	}
+
 }

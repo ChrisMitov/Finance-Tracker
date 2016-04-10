@@ -12,7 +12,7 @@
 		<table>
 			<c:forEach var="entity" items="${rates}">
 				<tr class="danger">
-					<td class="danger">1 ${base}</td>
+					<td class="danger">1${base}</td>
 					<td class="danger">=</td>
 					<td class="danger">${entity.value}${ entity.key}</td>
 				</tr>

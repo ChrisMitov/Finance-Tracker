@@ -32,16 +32,11 @@
 					style="overflow: hidden; height: 1%; position: relative;">
 					<div id="wrapper1">
 						<div id="content1" class="demo">
-							<form name="" action="./charts" method="get" class="demo">
-								<span style="float: left"><label>Choose format to
-										display: </label> <select class="option3" name="display">
-										<option value="blanck"></option>
-										<option value="sum">By sums</option>
-										<option value="acc">By accounts</option>
-								</select> </span>
-							</form>
-							<div id="chartdiv"
-								style="width: 100%; height: 500px; font-size: 11px;"></div>
+							<jsp:include page="partials/budgetChartHead.jsp" />
+							<c:forEach var="type" items="${type}">
+								<%-- <c:if test="${type eq 'acc'}"> <jsp:include page="partials/budgetAccountFilter.jsp" /></c:if>--%>
+								<c:if test="${type eq 'sum'}"><jsp:include page="partials/budgetSumFilter.jsp" /></c:if>
+							</c:forEach>
 						</div>
 					</div>
 					<div id="sidebar1">
@@ -97,47 +92,6 @@
 	<!--scrolling js-->
 	<script src="resources/js/jquery.nicescroll.js"></script>
 	<script src="resources/js/scripts.js"></script>
-	<script type="text/javascript">
-		var chart = AmCharts.makeChart("chartdiv", {
-			"type" : "funnel",
-			"theme" : "light",
-			"dataProvider" : [ {
-				"title" : "Website visits",
-				"value" : 300
-			}, {
-				"title" : "Downloads",
-				"value" : 123
-			}, {
-				"title" : "Requested price list",
-				"value" : 98
-			}, {
-				"title" : "Contaced for more info",
-				"value" : 72
-			}, {
-				"title" : "Purchased",
-				"value" : 35
-			}, {
-				"title" : "Contacted for support",
-				"value" : 15
-			}, {
-				"title" : "Purchased additional products",
-				"value" : 8
-			} ],
-			"balloon" : {
-				"fixedPosition" : true
-			},
-			"valueField" : "value",
-			"titleField" : "title",
-			"marginRight" : 240,
-			"marginLeft" : 50,
-			"startX" : -500,
-			"rotate" : true,
-			"labelPosition" : "right",
-			"balloonText" : "[[title]]: [[value]]n[[description]]",
-			"export" : {
-				"enabled" : true
-			}
-		});
-	</script>
+
 </body>
 </html>

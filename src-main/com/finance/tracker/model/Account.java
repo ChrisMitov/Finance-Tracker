@@ -31,14 +31,16 @@ public class Account implements IAccount {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
-//	private Set<FinanceOperation> operations;
-//	@OneToMany
-//	private List<FinanceOperation> operations;
-//	@ManyToMany
-//	@ElementCollection
-//	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+	// private Set<FinanceOperation> operations;
+	// @OneToMany
+	// private List<FinanceOperation> operations;
+	// @ManyToMany
+	// @ElementCollection
+	// @JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name =
+	// "account_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
 	@ManyToMany(mappedBy = "accounts")
 	private List<Budget> allBudgets = new ArrayList<Budget>();
+
 	public Account() {
 
 	}
@@ -49,7 +51,7 @@ public class Account implements IAccount {
 	}
 
 	public Account(String title, int sum, User owner) throws FinanceTrackerException {
-		this(title,sum);
+		this(title, sum);
 		this.setOwner(owner);
 	}
 
@@ -74,24 +76,26 @@ public class Account implements IAccount {
 		}
 	}
 
-//	@Override
-//	public void addFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(operation);
-//		synchronized (operations) {
-//			operations.add(operation);
-//		}
-//	}
-//
-//	@Override
-//	public void removeFinanceOperation(FinanceOperation operation) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(operation);
-//		if (!operations.contains(operations)) {
-//			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
-//		}
-//		synchronized (operations) {
-//			operations.remove(operation);
-//		}
-//	}
+	// @Override
+	// public void addFinanceOperation(FinanceOperation operation) throws
+	// FinanceTrackerException {
+	// new Validation().validateNotNullObject(operation);
+	// synchronized (operations) {
+	// operations.add(operation);
+	// }
+	// }
+	//
+	// @Override
+	// public void removeFinanceOperation(FinanceOperation operation) throws
+	// FinanceTrackerException {
+	// new Validation().validateNotNullObject(operation);
+	// if (!operations.contains(operations)) {
+	// throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+	// }
+	// synchronized (operations) {
+	// operations.remove(operation);
+	// }
+	// }
 
 	@Override
 	public int getId() {
@@ -124,22 +128,27 @@ public class Account implements IAccount {
 	public void setSum(int sum) throws FinanceTrackerException {
 		this.sum = sum;
 	}
-	
-//	public void addBudget(Budget budget) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(budget);
-//		synchronized (this.allBudgets) {
-//			this.allBudgets.add(budget);
-//		}
-//	}
-//
-//	public void removeBudget(Budget budget) throws FinanceTrackerException {
-//		new Validation().validateNotNullObject(budget);
-//		if (!allBudgets.contains(budget)) {
-//			throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
-//		}
-//		synchronized (budget) {
-//			allBudgets.remove(budget);
-//		}
-//	}
+
+	// public void addBudget(Budget budget) throws FinanceTrackerException {
+	// new Validation().validateNotNullObject(budget);
+	// synchronized (this.allBudgets) {
+	// this.allBudgets.add(budget);
+	// }
+	// }
+	//
+	// public void removeBudget(Budget budget) throws FinanceTrackerException {
+	// new Validation().validateNotNullObject(budget);
+	// if (!allBudgets.contains(budget)) {
+	// throw new FinanceTrackerException(OPERATION_CONTAINS_ERROR);
+	// }
+	// synchronized (budget) {
+	// allBudgets.remove(budget);
+	// }
+	// }
+
+	@Override
+	public boolean equals(Object obj) {
+		return ((this.getTitle().equals(((Account) obj).getTitle())) && (this.getSum() == ((Account) obj).getSum()));
+	}
 
 }
