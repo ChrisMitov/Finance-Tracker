@@ -63,7 +63,7 @@ public class CurrencyDAO {
 		throw new Exception();
 	}
 
-	public double convert(int sum, Currency currency, Currency source) throws Exception {
+	public double convert(int sum, Currency currency, Currency source) {
 		String url = "http://api.fixer.io/latest?base=" + source + "&symbols=" + currency;
 		BufferedReader reader = null;
 		try {
@@ -82,6 +82,7 @@ public class CurrencyDAO {
 
 				Gson gson = new Gson();
 				JsonObject jsonObj = gson.fromJson(builder.toString(), JsonObject.class);
+				System.out.println(jsonObj);
 				String name = currency.toString();
 				double rate = jsonObj.getAsJsonObject("rates").get(name).getAsDouble();
 				System.out.println(rate + "RATE");
@@ -99,7 +100,7 @@ public class CurrencyDAO {
 				e.printStackTrace();
 			}
 		}
-		throw new Exception();
+		return 0;
 	}
 
 	public ExchangeRate getManyRates(List<Currency> currencies, Currency source) throws Exception {

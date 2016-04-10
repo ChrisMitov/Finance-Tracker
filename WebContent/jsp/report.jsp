@@ -77,7 +77,6 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	</div>
 	<!---->
 	<!--scrolling js-->
 	<script src="resources/js/jquery.nicescroll.js"></script>

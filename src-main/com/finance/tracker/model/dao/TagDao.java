@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.finance.tracker.exception.FinanceTrackerException;
-import com.finance.tracker.model.Category;
 import com.finance.tracker.model.ICategory;
 import com.finance.tracker.model.Tag;
 import com.finance.tracker.validation.Validation;

@@ -2,7 +2,6 @@ package com.finance.tracker.model.dao;
 
 import java.util.Collection;
 
-import com.finance.tracker.model.Category;
 import com.finance.tracker.model.ICategory;
 import com.finance.tracker.model.Tag;
 

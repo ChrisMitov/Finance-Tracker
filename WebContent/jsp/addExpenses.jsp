@@ -80,14 +80,11 @@
 							<tr>
 								<th><label style="font-size: 28px" for="account">Tags:
 								</label></th>
-								<td><div id="tags"></div> <c:forEach var="tag"
+								<td><div id="tags"> <c:forEach var="tag"
 										items="${tags}">
-										<span style="display: inline-block;"> <label
-											for="${tag.name}"
-											style="color: black; display: inline-block;">${tag.name}</label>
-											<input id="${tag.id}" name="tags" type="checkbox"
-											class="form-control" value="${tag.name}"></span>
-									</c:forEach></td>
+										 <input id="tagsCat" name="tags" type="checkbox" value="${ tag.name}"> <input type="hidden" name="_tags" value="on">
+												<label for="tag${tag.name}">${tag.name}</label>
+									</c:forEach></div></td>
 							</tr>
 						</table>
 						<br /> <input type="submit" value="Submit "
@@ -102,7 +99,6 @@
 		<jsp:include page="partials/footer.jsp" />
 	</div>
 	<div class="clearfix"></div>
-	</div>
 
 	<!---->
 	<!--scrolling js-->
@@ -111,26 +107,23 @@
 	<script type="text/javascript">
 		function refreshTags() {
 			var category = $("#cat_id").val();
-	<%--
-			$
-					.ajax({
+
+			$.ajax({
 						url : './showTags?catId=' + category,
 						type : 'GET',
-						contentType : 'application/json',
+						dataType: "json",
 						success : function(data) {
 							$("#tags").empty();
-							$.each(
-											data,
-											function(index, tag) {
-												$("#tags").html(
-														"<span style='display: inline-block;'> <label	for='tag.name' style='color: black; display: inline-block;'>tag.name</label>	
-														<input id='tag.id' name="tags" type="checkbox"	class="form-control" value='tag.name'></span>");
+							$.each(data,function(index, tag) {
+												var html = ' <input id="tagsCat" name="tags" type="checkbox" value="' + tag.name + '"> ';
+												html += ' <input type="hidden" name="_tags" value="on"> ';
+												html += ' <label for="tag' + tag.name + '">'
+														+ tag.name + '</label> ';
+												$("#tags").append(html);
 											});
-
 						}
 					});
-
-		}--%>
+		}
 	</script>
 </body>
 </html>

@@ -35,8 +35,8 @@ public class MonthlyOverviewServlet extends BaseServlet {
 		if (session.getAttribute("year") != null) {
 			year = (int) session.getAttribute("year");
 		}
-		request.setAttribute("month", month);
-		request.setAttribute("year", year);
+		session.setAttribute("month", month);
+		session.setAttribute("year", year);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/index.jsp");
 		dispatcher.forward(request, response);
 	}

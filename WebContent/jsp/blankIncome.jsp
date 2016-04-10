@@ -31,39 +31,9 @@
 				<div class="grid-form1"
 					style="width: 1200px; overflow: hidden; height: 1%; display: table-cell; text-align: center; vertical-align: middle;">
 					<form name="" action="./incomePeriod" method="get" class="demo">
-						<span style="float: left;"> <label> Choose period:
-						</label> <select class="option3" name="month">
-								<c:forEach var="i" begin="1" end="12">
-									<c:choose>
-										<c:when test="${ month == i }">
-											<option value="<c:out value = "${i}" />" selected><c:out
-													value="${i}" /></option>
-										</c:when>
-										<c:otherwise>
-											<option value="<c:out value = "${i}" />"><c:out
-													value="${i}" /></option>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-						</select> <select class="option3" name="year">
-								<c:forEach var="i" begin="${year-5}" end="${year+5}">
-									<c:choose>
-										<c:when test="${ year == i }">
-											<option value="<c:out value = "${i}" />" selected><c:out
-													value="${i}" /></option>
-										</c:when>
-										<c:otherwise>
-											<option value="<c:out value = "${i}" />"><c:out
-													value="${i}" /></option>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-						</select> <span style="float: right"><input type="submit"
-								value="Change" class="btn btn-sm btn-danger warning_1"
-								style="margin: 0 auto; margin-left: 10px; display: block;" /></span> <br />
-							<br />
-						</span> <span style="float: left"><label>Choose account to
-								display: </label> <select class="option3" name="fromAccount">
+						<jsp:include page="partials/select.jsp" />
+						<span style="float: left"><label>Choose account to
+								display: </label> <select class="option3" name="fromAccount" style="margin-top: 10px;">
 								<option value="0">All accounts</option>
 								<c:forEach var="account" items="${accounts}">
 									<option value="${account.id}">${account.title}</option>
