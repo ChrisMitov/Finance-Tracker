@@ -50,12 +50,13 @@ public class EditBudget extends BaseServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		int id = Integer.parseInt(request.getParameter("id"));
+		HttpSession session = request.getSession();
+		int id = (int) session.getAttribute("budgetId");
 		IBudget budget = new BudgetDao().foundById(id);
 		budget = validateUpdates(request, response);
 		IBudgetDao dao = new BudgetDao();
 		dao.updateBudget(budget);
-		System.out.println("Datecorrectness: "+dateCorrectness);
+		System.out.println("Datecorrectness: " + dateCorrectness);
 		if (dateCorrectness) {
 			response.sendRedirect("./budget");
 		} else {
@@ -83,7 +84,7 @@ public class EditBudget extends BaseServlet {
 				try {
 					int idAcc = Integer.parseInt(selects[select]);
 					Account a = (Account) new AccountDAO().getAccount(idAcc);
-					System.out.println("Account "+a.getId());
+					System.out.println("Account " + a.getId());
 					System.out.println(a.getTitle());
 					budget.addAccount(a);
 				} catch (FinanceTrackerException e) {
