@@ -19,6 +19,7 @@ public class CurrencyDAO {
 
 	private static final int HTTP_SUCCESS = 200;
 
+	// get the rate between two currencies
 	public ExchangeRate getRate(Currency currency, Currency source) throws Exception {
 		String url = "http://api.fixer.io/latest?base=" + source + "&symbols=" + currency;
 		BufferedReader reader = null;
@@ -63,6 +64,7 @@ public class CurrencyDAO {
 		throw new Exception();
 	}
 
+	// return sum convert from one currency to another
 	public double convert(int sum, Currency currency, Currency source) {
 		String url = "http://api.fixer.io/latest?base=" + source + "&symbols=" + currency;
 		BufferedReader reader = null;
@@ -102,7 +104,7 @@ public class CurrencyDAO {
 		}
 		return 0;
 	}
-
+// return rate from one base currency to a basket of currencies
 	public ExchangeRate getManyRates(List<Currency> currencies, Currency source) throws Exception {
 		StringBuilder all = new StringBuilder();
 		for (int index = 0; index < currencies.size() - 1; index++) {

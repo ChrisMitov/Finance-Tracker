@@ -103,8 +103,4 @@ public class Tag {
 			return false;
 		return true;
 	}
-
-//	public TagModel getViewModelTag(String name) {
-//		return new TagModel(name);
-//	}
 }
