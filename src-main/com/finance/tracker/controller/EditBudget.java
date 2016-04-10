@@ -70,13 +70,14 @@ public class EditBudget extends BaseServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int id = (int) session.getAttribute("budgetId");
-		String sum = request.getParameter("newSum");
+//		String sum = request.getParameter("newSum");
 		String date = request.getParameter("newStart");
 		String end = request.getParameter("newEnd");
 		String title = (String) request.getParameter("newTitle");
 		// String type = (String) request.getParameter("newRepeat");
 		IBudget budget = (IBudget) request.getSession().getAttribute("budget");
 		String selects[] = request.getParameterValues("selected");
+		double sum = 0.0;
 		if (!checkSelect(selects)) {
 			budget.deleteAllAccounts();
 			System.out.println("Accounts");
@@ -84,6 +85,7 @@ public class EditBudget extends BaseServlet {
 				try {
 					int idAcc = Integer.parseInt(selects[select]);
 					Account a = (Account) new AccountDAO().getAccount(idAcc);
+					sum+= new AccountDAO().getAccount(idAcc).getSum();
 					System.out.println("Account " + a.getId());
 					System.out.println(a.getTitle());
 					budget.addAccount(a);
@@ -91,13 +93,14 @@ public class EditBudget extends BaseServlet {
 					e.printStackTrace();
 				}
 			}
+			budget.setTotalAmount(sum);
 			new BudgetDao().updateBudget(budget);
 
 		}
-		if (sum != null && sum.length() > 0 && !sum.equals("")) {
-			double newSum = Double.parseDouble(sum);
-			budget.setTotalAmount(newSum);
-		}
+//		if (sum != null && sum.length() > 0 && !sum.equals("")) {
+//			double newSum = Double.parseDouble(sum);
+//			budget.setTotalAmount(newSum);
+//		}
 
 		if (!(date.equals("")) && date != null && date.length() > 0) {
 			try {

@@ -43,12 +43,12 @@
 										<td><input type="text" placeholder="Title"
 											name="newTitle" /></td>
 									</tr>
-									<tr>
+									<!--  <tr>
 										<td>Sum</td>
 										<td>:</td>
 										<td style="width:40px;">${budget.totalAmount}</td>
 										<td><input type="text" placeholder="Sum" name="newSum" /></td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td>Start date</td>
 										<td>:</td>
