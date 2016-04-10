@@ -14,13 +14,14 @@ import com.finance.tracker.model.IAccount;
 import com.finance.tracker.model.User;
 import com.finance.tracker.model.dao.AccountDAO;
 
-
 @WebServlet("/addAccount")
 public class AddAccountServlet extends BaseServlet {
+	private static final int MAX_SIZE_OF_ACCOUNT_TITLE = 45;
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
 			response.sendRedirect("./login");
 			return;
@@ -30,7 +31,8 @@ public class AddAccountServlet extends BaseServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
 			response.sendRedirect("./login");
 			return;
@@ -38,7 +40,13 @@ public class AddAccountServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		String title = request.getParameter("name");
-		int sum =  Integer.parseInt(request.getParameter("sum"));
+		int sum = Integer.parseInt(request.getParameter("sum"));
+		if (title.equals("") || title.length() >= MAX_SIZE_OF_ACCOUNT_TITLE || sum < 0) {
+			request.setAttribute("error", "You have add incorect data");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/addAccount.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
 		try {
 			IAccount account = new Account(title, sum, user);
 			new AccountDAO().createAccount(account);
@@ -46,7 +54,7 @@ public class AddAccountServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 		response.sendRedirect("./account");
-		
+
 	}
 
 }

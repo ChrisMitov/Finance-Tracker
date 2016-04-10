@@ -28,7 +28,7 @@ import com.finance.tracker.validation.Validation;
 
 @Entity
 @Table(name = "budget")
-public class Budget implements IBudget, Comparable<Budget>{
+public class Budget implements IBudget, Comparable<Budget> {
 	private static final int PLUS_ONE_DAY = 1 * 24 * 60 * 60 * 100;
 	private static final int PLUS_ONE_WEEK = 7 * 24 * 60 * 60 * 100;
 	private static final int PLUS_ONE_MONTH = 30 * 24 * 60 * 60 * 100;
@@ -40,7 +40,7 @@ public class Budget implements IBudget, Comparable<Budget>{
 	private String title;
 	@Column(name = "sum")
 	private double totalAmount;
-//	private double sumPerDay;
+	// private double sumPerDay;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
 	private Date startDate;
@@ -56,7 +56,7 @@ public class Budget implements IBudget, Comparable<Budget>{
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "budget_has_account", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "account_id"))
 	private List<Account> accounts = new ArrayList<Account>();
-	
+
 	public Budget() {
 		this.accounts = new ArrayList<>();
 	}
@@ -68,25 +68,23 @@ public class Budget implements IBudget, Comparable<Budget>{
 		this.setUser(user);
 	}
 
-	public Budget(String title, double totalAmount, Date startDate,  User user)
-			throws FinanceTrackerException {
-//		this.setRepeatType(repeatType);
+	public Budget(String title, double totalAmount, Date startDate, User user) throws FinanceTrackerException {
+		// this.setRepeatType(repeatType);
 		this.setTotalAmount(totalAmount);
 		this.setTitle(title);
-//		sumPerDay = totalAmount / LocalDate.now().getMonthValue();
+		// sumPerDay = totalAmount / LocalDate.now().getMonthValue();
 		setStartDate(startDate);
-//		generateEndDate(repeatType);
+		// generateEndDate(repeatType);
 		setUser(user);
 	}
 
-	public Budget(String title, double totalAmount, Date startDate, Date endDate, 
-			User user) throws FinanceTrackerException {
+	public Budget(String title, double totalAmount, Date startDate, Date endDate, User user)
+			throws FinanceTrackerException {
 		this(title, totalAmount, startDate, user);
 		this.setEndDate(endDate);
 		this.setRepeatType(RepeatType.NO_REPEAT);
 	}
 
-	
 	@Override
 	public int getId() {
 		return id;
@@ -203,38 +201,35 @@ public class Budget implements IBudget, Comparable<Budget>{
 		this.startDate = startDate;
 	}
 
-//	private void generateEndDate(RepeatType type) {
-//		if (type.equals(RepeatType.DAILY)) {
-//			endDate = new Date(startDate.getTime() + PLUS_ONE_DAY);
-//		}
-//		if (type.equals(RepeatType.MONTHLY)) {
-//			endDate = new Date(startDate.getTime() + PLUS_ONE_MONTH);
-//		}
-//		if (type.equals(RepeatType.NO_REPEAT)) {
-//			// to be added
-//		}
-//		if (type.equals(RepeatType.WEEKLY)) {
-//			endDate = new Date(startDate.getTime() + PLUS_ONE_WEEK);
-//		}
-//		if (type.equals(RepeatType.YEARLY)) {
-//			endDate = new Date(startDate.getTime() + PLUS_ONE_YEAR);
-//		}
-//	}
-	
-	public void deleteAllAccounts(){
-		this.accounts=new ArrayList<Account>();
+	// private void generateEndDate(RepeatType type) {
+	// if (type.equals(RepeatType.DAILY)) {
+	// endDate = new Date(startDate.getTime() + PLUS_ONE_DAY);
+	// }
+	// if (type.equals(RepeatType.MONTHLY)) {
+	// endDate = new Date(startDate.getTime() + PLUS_ONE_MONTH);
+	// }
+	// if (type.equals(RepeatType.NO_REPEAT)) {
+	// // to be added
+	// }
+	// if (type.equals(RepeatType.WEEKLY)) {
+	// endDate = new Date(startDate.getTime() + PLUS_ONE_WEEK);
+	// }
+	// if (type.equals(RepeatType.YEARLY)) {
+	// endDate = new Date(startDate.getTime() + PLUS_ONE_YEAR);
+	// }
+	// }
+
+	public void deleteAllAccounts() {
+		this.accounts = new ArrayList<Account>();
 	}
 
-@Override
-public int compareTo(Budget o) {
-	return this.getTitle().compareTo(o.getTitle());
-}
+	@Override
+	public int compareTo(Budget o) {
+		return this.getTitle().compareTo(o.getTitle());
+	}
 
-
-	
-	
-//	public double getSumPerDay(){
-//		return this.sumPerDay;
-//	}
+	// public double getSumPerDay(){
+	// return this.sumPerDay;
+	// }
 
 }

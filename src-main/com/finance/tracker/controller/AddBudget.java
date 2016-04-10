@@ -77,6 +77,7 @@ public class AddBudget extends BaseServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/AddBudget.jsp");
 				dispatcher.forward(request, response);
 			}
+
 			budget.setTotalAmount(sum);
 			new BudgetDao().addBudget(budget);
 
@@ -88,6 +89,7 @@ public class AddBudget extends BaseServlet {
 
 		response.sendRedirect("./budget");
 		// return;
+
 
 		// } else {
 		// request.setAttribute("emptyField", "All fields are obligatory!");

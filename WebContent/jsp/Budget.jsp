@@ -102,7 +102,7 @@
 										</div>
 									</div>
 								</c:forEach>
-								<form action="./addBudget">
+								<form action="./MyAddBudget">
 									<input type="submit" value="Add new budget"
 										class="btn btn-lg btn-success warning_1"
 										style="width: 200px; margin: 0 auto; display: block;" />
