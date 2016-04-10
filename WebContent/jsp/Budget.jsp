@@ -80,7 +80,7 @@
 											<br /> <br /> <span
 												style="font-weight: bold; position: relative; left: 25%;">Sum
 												per day: ${ entity.value} ${currency}</span> <br /> <span
-												style="font-weight: bold; position: relative; left: 25%;">Accounts
+												style="font-weight: bold; position: relative; left: 25%;">Accounts:
 												<c:forEach var="account" items="${entity.key.accounts}">
 												${account.title}
 												</c:forEach>
