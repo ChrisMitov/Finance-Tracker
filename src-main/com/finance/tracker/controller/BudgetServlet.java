@@ -47,6 +47,7 @@ public class BudgetServlet extends BaseServlet {
 		session.setAttribute("accounts", accounts);
 
 		for (Budget b : budgets) {
+			checkBalances(b);
 			int days = dateDifference(b.getStartDate(), b.getEndDate()) + 1;
 			sumsPerDay.put(b, (int) (b.getTotalAmount() / days));
 		}
@@ -92,4 +93,13 @@ public class BudgetServlet extends BaseServlet {
 
 	}
 
+	private void checkBalances(IBudget budget) {
+		double sum = 0.0;
+		Collection<Account> accounts = new BudgetDao().foundBudgetByTitle(budget.getTitle()).getAllAccounts();
+		for(Account a:accounts){
+			sum+=a.getSum();
+		}
+		budget.setTotalAmount(sum);
+		new BudgetDao().updateBudget(budget);
+	}
 }
