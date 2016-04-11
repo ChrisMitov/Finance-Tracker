@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 public class OverviewRest extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
+	// Rest Service for overview graphic by days
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
@@ -69,6 +70,7 @@ public class OverviewRest extends BaseServlet {
 		response.getWriter().println(new Gson().toJson(overview));
 	}
 
+	// Get all Finance operations
 	private void getAllFinanceOperations(Collection<IAccount> accounts, Collection<Expense> expenses,
 			Collection<Income> incomes) {
 		for (IAccount account : accounts) {
@@ -77,6 +79,7 @@ public class OverviewRest extends BaseServlet {
 		}
 	}
 
+	// Write to model with specific numbers
 	private void writeToModel(Map<Integer, Integer> mapExpenses, Map<Integer, Integer> mapIncomes, int monthMaxDays,
 			Collection<OverviewModel> overview) {
 		for (int i = 1; i <= monthMaxDays; i++) {
@@ -92,6 +95,7 @@ public class OverviewRest extends BaseServlet {
 		}
 	}
 
+	// add days of month
 	private void addDays(Map<Integer, Integer> mapExpenses, Map<Integer, Integer> mapIncomes, int monthMaxDays) {
 		for (int i = 1; i <= monthMaxDays; i++) {
 			mapExpenses.put(i, 0);
@@ -99,6 +103,7 @@ public class OverviewRest extends BaseServlet {
 		}
 	}
 
+	// insert Incomes
 	private void insertIncomes(Calendar calendar, int month, int year, Collection<Income> incomes,
 			Map<Integer, Integer> mapIncomes) {
 		for (IFinanceOperation income : incomes) {
@@ -111,6 +116,7 @@ public class OverviewRest extends BaseServlet {
 		}
 	}
 
+	// insert Expense
 	private void insertMaps(Calendar calendar, int month, int year, Collection<Expense> expenses,
 			Map<Integer, Integer> mapExpenses) {
 		for (IFinanceOperation expense : expenses) {

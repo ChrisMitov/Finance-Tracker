@@ -38,18 +38,11 @@ public class AccountTest {
 
 	@Test
 	public void getAllAcountsByOneUser() {
-		Collection<IAccount> list = account.getAllAccountsByUser(userDao.getUser(1001));
+		Collection<IAccount> list = account.getAllAccountsByUser(userDao.getUser(1101));
 		for (IAccount acc : list) {
 			System.out.println(acc.getTitle());
 			System.out.println(acc.getSum());
 		}
 	}
-
-		
-	 @Test
-	 public void updateAccount() {
-	 account.updateAccount(account.getAccount(1));
-	 assertNotNull(account);
-	 }
 
 }

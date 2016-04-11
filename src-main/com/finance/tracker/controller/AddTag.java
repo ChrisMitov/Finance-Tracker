@@ -41,6 +41,12 @@ public class AddTag extends BaseServlet {
 		HttpSession session = request.getSession();
 		int categoryId = (int) session.getAttribute("categoryId");
 		try {
+			if(name.equals("")){
+				request.setAttribute("error", "Incorrect name");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/addTag.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
 			Tag tag = new Tag(name, (Category) new CategoryDao().foundById(categoryId));
 			new TagDao().addTag(tag);
 		} catch (FinanceTrackerException e) {

@@ -61,6 +61,7 @@ public class ReportServlet extends BaseServlet {
 	private static final int NUMBER_OF_CELLS = 6;
 	private static final long serialVersionUID = 1L;
 
+	// Visualization of Report page
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
@@ -85,6 +86,7 @@ public class ReportServlet extends BaseServlet {
 		dispatcher.forward(request, response);
 	}
 
+	// Make PDF Report for specific period and type
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!super.isAuthenticated(request)) {
@@ -155,6 +157,7 @@ public class ReportServlet extends BaseServlet {
 		}
 	}
 
+	// Create Table for any type of finance operation
 	private void createTable(Document doc, Collection<IFinanceOperation> incomes, DateFormat dateFormat, Font font,
 			Font tagFont) throws DocumentException {
 		PdfPTable table = new PdfPTable(NUMBER_OF_CELLS);
@@ -179,6 +182,7 @@ public class ReportServlet extends BaseServlet {
 		doc.add(table);
 	}
 
+	// Ads finance operation to table
 	private void addOperation(PdfPTable table, DateFormat dateFormat, IFinanceOperation operation, Font tagFont)
 			throws FinanceTrackerException {
 		Collection<Tag> tags = operation.getAllTags();
@@ -198,6 +202,7 @@ public class ReportServlet extends BaseServlet {
 		table.addCell(new Paragraph(String.valueOf(dateFormat.format(operation.getDate()))));
 	}
 
+	// get all finance operations
 	private void addFinanceOperations(Collection<IAccount> accounts, Collection<Expense> expenseAccount,
 			Collection<Income> incomesAccount) {
 		for (IAccount iAccount : accounts) {
@@ -207,6 +212,7 @@ public class ReportServlet extends BaseServlet {
 		}
 	}
 
+	// filter by period
 	private void addFinanceOperationByPeriod(Calendar calendar, int month, int year, Collection<Expense> expenseAccount,
 			Collection<IFinanceOperation> expenses) {
 		for (IFinanceOperation expense : expenseAccount) {
@@ -217,7 +223,8 @@ public class ReportServlet extends BaseServlet {
 		}
 		Collections.sort((List<IFinanceOperation>) expenses, (e1, e2) -> e1.getDate().compareTo(e2.getDate()));
 	}
-
+	
+	// filter by period
 	private void addIncomesByPeriod(Calendar calendar, int month, int year, Collection<Income> incomeAccount,
 			Collection<IFinanceOperation> incomes) {
 		for (IFinanceOperation income : incomeAccount) {

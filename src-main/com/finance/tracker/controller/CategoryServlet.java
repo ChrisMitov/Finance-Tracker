@@ -17,6 +17,7 @@ import com.finance.tracker.model.dao.CategoryDao;
 
 @WebServlet("/category")
 public class CategoryServlet extends BaseServlet {
+	private static final int MAX_SIZE_OF_NAME = 45;
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -29,7 +30,7 @@ public class CategoryServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		String operationsSession = request.getParameter("operationsCategory");
-		if(operationsSession != null){
+		if (operationsSession != null) {
 			request.setAttribute("operationsCategory", operationsSession);
 		}
 		Collection<Category> categories = new CategoryDao().getAllCategoriesByUser(user);
@@ -49,6 +50,12 @@ public class CategoryServlet extends BaseServlet {
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 			String name = request.getParameter("name");
+			if (name.equals("") || name.length() < MAX_SIZE_OF_NAME) {
+				request.setAttribute("error", "Incorrect name");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/addCategory.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
 			ICategory category = new Category(name, user);
 			new CategoryDao().addCategory(category);
 

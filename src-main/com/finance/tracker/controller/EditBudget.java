@@ -54,10 +54,10 @@ public class EditBudget extends BaseServlet {
 		int id = (int) session.getAttribute("budgetId");
 		IBudget budget = new BudgetDao().foundById(id);
 		budget = validateUpdates(request, response);
-		IBudgetDao dao = new BudgetDao();
-		dao.updateBudget(budget);
 		System.out.println("Datecorrectness: " + dateCorrectness);
 		if (dateCorrectness) {
+			IBudgetDao dao = new BudgetDao();
+			dao.updateBudget(budget);
 			response.sendRedirect("./budget");
 			return;
 		} else {
@@ -98,13 +98,8 @@ public class EditBudget extends BaseServlet {
 				}
 			}
 			budget.setTotalAmount(sum);
-			new BudgetDao().updateBudget(budget);
 
 		}
-//		if (sum != null && sum.length() > 0 && !sum.equals("")) {
-//			double newSum = Double.parseDouble(sum);
-//			budget.setTotalAmount(newSum);
-//		}
 
 		if (!(date.equals("")) && date != null && date.length() > 0) {
 			try {
@@ -147,12 +142,6 @@ public class EditBudget extends BaseServlet {
 				e.printStackTrace();
 			}
 		}
-		// if (!(type.equals("blanck"))) {
-		// RepeatType newType = RepeatType.valueOf(type);
-		// System.out.println(newType + "!!");
-		// budget.setRepeatType(newType);
-		// }
-
 		budget.setId(id);
 		return budget;
 	}
