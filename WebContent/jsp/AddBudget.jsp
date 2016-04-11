@@ -38,11 +38,15 @@
 										<td>Title:</td>
 										<td><input type="text" placeholder="Title" name="title" /></td>
 									</tr>
+
 									<%-- <tr>
 										<td>Sum:</td>
 										<td><input type="text" placeholder="Sum" name="sum" /></td>
 									</tr>
 									--%>
+
+
+
 									<tr>
 										<td>Start date:</td>
 										<td><input type="date" placeholder="Start date"

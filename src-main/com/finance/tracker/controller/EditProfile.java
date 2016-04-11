@@ -88,8 +88,7 @@ public class EditProfile extends BaseServlet {
 	}
 
 	// checks what information the user has changed
-	private IUser validateUpdates(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	private IUser validateUpdates(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		String firstName = request.getParameter("newFirstName");
 		String lastName = request.getParameter("newLastName");
@@ -146,6 +145,7 @@ public class EditProfile extends BaseServlet {
 		return userToUpdate;
 	}
 
+	// changing the sums of all budgets when converting currency
 	private void changeAllBudgets(HttpServletRequest request, Currency newCurrency) throws Exception {
 		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IBudget> budgets = new UserDAO().getAllBudgetsByUser(user.getUserId());
@@ -158,6 +158,7 @@ public class EditProfile extends BaseServlet {
 		}
 	}
 
+	// changing the sums of all accounts when converting currency
 	private void changeAllAccounts(HttpServletRequest request, Currency newCurrency) throws Exception {
 		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IAccount> accounts = new UserDAO().getAllAccounts(user.getUserId());
@@ -169,11 +170,12 @@ public class EditProfile extends BaseServlet {
 			new AccountDAO().updateAccount(b);
 		}
 	}
-	
+
+	// changing the opeartions of all budgets when converting currency
 	private void changeAllOperations(HttpServletRequest request, Currency newCurrency) throws Exception {
 		User user = (User) request.getSession().getAttribute(BaseServlet.LOGGED_USER_ATTRIBUTE_NAME);
 		Collection<IAccount> accounts = new UserDAO().getAllAccounts(user.getUserId());
-		Collection<IFinanceOperation> operations  = new LinkedList<IFinanceOperation>();
+		Collection<IFinanceOperation> operations = new LinkedList<IFinanceOperation>();
 		for (IAccount iAccount : accounts) {
 			Collection<Expense> expense = new FinanceOperationDao().getAllExpencesByAccount((Account) iAccount);
 			Collection<Income> incomes = new FinanceOperationDao().getAllIncomeByAccount((Account) iAccount);
@@ -188,6 +190,7 @@ public class EditProfile extends BaseServlet {
 		}
 	}
 
+	// decide which currency to be base
 	private List<Currency> getCurrencies(IUser user) {
 		List<Currency> all = new ArrayList<Currency>();
 		all.add(Currency.BGN);

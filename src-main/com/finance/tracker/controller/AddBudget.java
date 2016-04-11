@@ -72,6 +72,7 @@ public class AddBudget extends BaseServlet {
 				budget.addAccount(a);
 				sum += new AccountDAO().getAccount(idAcc).getSum();
 			}
+
 			if (checkDates(date, date2)) {
 				Collection<IAccount> accounts = new AccountDAO().getAllAccountsByUser(user);
 				request.setAttribute("accounts", accounts);
@@ -80,6 +81,7 @@ public class AddBudget extends BaseServlet {
 				dispatcher.forward(request, response);
 				return;
 			}
+
 
 			budget.setTotalAmount(sum);
 			new BudgetDao().addBudget(budget);
